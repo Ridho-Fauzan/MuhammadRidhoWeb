@@ -15,7 +15,7 @@ export const profile = {
   /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
-  avatarUrl: "",
+  avatarUrl: "/plo.jpg",
   /** Teks yang bergantian diketik di hero ("Hi, I'm ...") */
   typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer"],
   tagline: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
