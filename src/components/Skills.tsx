@@ -1,16 +1,16 @@
-import { Braces, Gamepad2, PencilRuler, Wrench } from "lucide-react";
+import { Braces, Gamepad2, Globe, PencilRuler, Wrench } from "lucide-react";
 import { skills } from "@/data/profile";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 
-const icons = [Gamepad2, Braces, PencilRuler, Wrench];
+const icons = [Gamepad2, Braces, Globe, PencilRuler, Wrench];
 
 export default function Skills() {
   return (
     <section id="skills" className="py-24 px-6 bg-surface/60 border-y border-border">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title="Skills" subtitle="Teknologi dan tools yang saya gunakan sehari-hari." />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {skills.map((s, i) => {
             const Icon = icons[i % icons.length];
             return (
