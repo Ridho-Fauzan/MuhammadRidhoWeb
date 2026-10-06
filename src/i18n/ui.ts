@@ -3,9 +3,21 @@
  * Kalau menambah key baru di `id`, TypeScript akan memaksa key yang sama ada di `en`.
  */
 const id = {
-  nav: { about: "Tentang", skills: "Keahlian", projects: "Proyek", experience: "Pengalaman", contact: "Kontak" },
+  nav: { home: "Beranda", about: "Tentang", skills: "Keahlian", projects: "Proyek", experience: "Pengalaman", contact: "Kontak" },
   hero: { greeting: "Halo, saya", iAm: "Saya seorang", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah", hint: "Tarik & lempar kartunya" },
   stack: { title: "Teknologi yang saya pakai" },
+  explore: {
+    title: "Jelajahi",
+    subtitle: "Pilih bagian yang ingin kamu lihat.",
+    cards: {
+      about: "Siapa saya, statistik singkat, dan terminal interaktif.",
+      skills: "Kemampuan game development, programming, desain, dan web.",
+      projects: "Karya dan proyek yang pernah saya buat.",
+      experience: "Perjalanan pendidikan dan karier saya.",
+      contact: "Ajak kolaborasi atau sekadar menyapa.",
+    },
+  },
+  pager: { next: "Selanjutnya", back: "Kembali ke beranda" },
   about: { title: "Tentang Saya", terminalHint: "Coba terminal interaktif di bawah ini:" },
   skills: { title: "Keahlian", subtitle: "Teknologi dan tools yang saya gunakan sehari-hari." },
   projects: {
@@ -38,11 +50,13 @@ const id = {
       experience: "Riwayat pengalaman",
       social: "Link media sosial",
       contact: "Cara menghubungi saya",
+      cd: "Pindah halaman (cd projects, cd ~)",
       lang: "Ganti bahasa (lang en / lang id)",
       clear: "Bersihkan terminal",
     },
     tip: "Tip: tekan Tab untuk autocomplete, ↑/↓ untuk riwayat.",
     notFound: "perintah tidak ditemukan:",
+    noDir: "halaman tidak ada",
     emailMe: "Kirim email ke",
     denied: "Nice try. Akses ditolak.",
     langChanged: "Bahasa diganti ke Bahasa Indonesia.",
@@ -51,9 +65,21 @@ const id = {
 };
 
 const en: typeof id = {
-  nav: { about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" },
+  nav: { home: "Home", about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" },
   hero: { greeting: "Hi, I'm", iAm: "I'm a", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down", hint: "Drag & toss the card" },
   stack: { title: "Tech I work with" },
+  explore: {
+    title: "Explore",
+    subtitle: "Pick the part you want to see.",
+    cards: {
+      about: "Who I am, quick stats, and an interactive terminal.",
+      skills: "Game development, programming, design, and web skills.",
+      projects: "Work and projects I have built.",
+      experience: "My education and career journey.",
+      contact: "Reach out to collaborate or just say hi.",
+    },
+  },
+  pager: { next: "Next", back: "Back to home" },
   about: { title: "About Me", terminalHint: "Try the interactive terminal below:" },
   skills: { title: "Skills", subtitle: "Technologies and tools I use every day." },
   projects: {
@@ -86,11 +112,13 @@ const en: typeof id = {
       experience: "Experience history",
       social: "Social media links",
       contact: "How to reach me",
+      cd: "Go to a page (cd projects, cd ~)",
       lang: "Change language (lang en / lang id)",
       clear: "Clear the terminal",
     },
     tip: "Tip: press Tab to autocomplete, ↑/↓ for history.",
     notFound: "command not found:",
+    noDir: "no such page",
     emailMe: "Send an email to",
     denied: "Nice try. Permission denied.",
     langChanged: "Language switched to English.",
