@@ -76,10 +76,12 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "Kawan Aksi",
-    description: "Deskripsi singkat proyek: masalah apa yang diselesaikan, fitur utama, dan peranmu di proyek ini.",
-    tags: ["Next.js", "Tailwind CSS", "Supabase"],
-    demoUrl: "#",
-    repoUrl: "#",
+    description:
+      "A web platform that connects volunteers with social activities hosted by local communities and NGOs. Users can browse events, view details (location, schedule, organizer, requirements), register as volunteers, and contact organizers.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    image: "/projects/kawanaksi.png",
+    demoUrl: "https://kawanaksi.vercel.app",
+    repoUrl: "https://github.com/Akashimoke/KawanAksi",
     featured: true,
   },
   {
