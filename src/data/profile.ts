@@ -63,7 +63,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Proyek Pertama",
+    title: "Kawan Aksi",
     description: "Deskripsi singkat proyek: masalah apa yang diselesaikan, fitur utama, dan peranmu di proyek ini.",
     tags: ["Next.js", "Tailwind CSS", "Supabase"],
     demoUrl: "#",
