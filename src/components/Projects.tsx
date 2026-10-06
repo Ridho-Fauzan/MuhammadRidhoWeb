@@ -174,6 +174,8 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
   const closeRef = useRef<HTMLButtonElement>(null);
   const title = tx(p.title);
   const titleId = `project-title-${index}`;
+  const shots = [p.image, ...(p.gallery ?? [])].filter((x): x is string => !!x);
+  const [shot, setShot] = useState(0);
 
   useEffect(() => {
     // Kunci scroll halaman di belakang modal (Lenis di desktop, overflow di HP)
@@ -234,7 +236,38 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
       >
         <div className="relative aspect-video sm:aspect-[21/9] overflow-hidden border-b-2 border-border bg-gradient-to-br from-accent/20 via-surface to-accent-2/20">
           <ProjectImage project={p} index={index} sizes="(min-width: 672px) 672px, 100vw" />
+          <AnimatePresence>
+            {shot > 0 && (
+              <motion.div
+                key={shot}
+                className="absolute inset-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <Image src={shots[shot]} alt={`${title} — ${shot + 1}`} fill sizes="672px" className="object-cover object-top" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
+
+        {shots.length > 1 && (
+          <div className="flex gap-2 px-6 sm:px-8 pt-4 overflow-x-auto">
+            {shots.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setShot(i)}
+                aria-label={`${title} — ${i + 1}`}
+                aria-pressed={shot === i}
+                className={`relative shrink-0 w-24 aspect-video border-2 overflow-hidden transition-[border-color,opacity] ${shot === i ? "border-accent" : "border-border opacity-60 hover:opacity-100"}`}
+              >
+                <Image src={src} alt="" fill sizes="96px" className="object-cover object-top" />
+              </button>
+            ))}
+          </div>
+        )}
 
         <motion.button
           {...pressButton}

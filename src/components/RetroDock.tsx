@@ -8,73 +8,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { pages, type PageKey } from "@/data/pages";
+import { pages } from "@/data/pages";
 import { profile } from "@/data/profile";
 import { setLang, useLang } from "@/i18n/useLang";
+import { PAGE_ICONS as ICONS } from "./pixelIcons";
 import { createRetroPixelField } from "./threeui/retroPixelField";
 import { createTopDockController } from "./threeui/topDockController";
 import { useTheme } from "./ThemeToggle";
 import "./RetroDock.css";
-
-/* Ikon digambar di grid 7x7 agar sejajar dengan pixel shader (gaya ikon asli ThreeUI) */
-const ICONS: Record<PageKey, React.ReactNode> = {
-  home: (
-    <>
-      <rect x="3" y="0" width="1" height="1" />
-      <rect x="2" y="1" width="3" height="1" />
-      <rect x="1" y="2" width="5" height="1" />
-      <rect x="0" y="3" width="7" height="1" />
-      <rect x="1" y="4" width="5" height="3" />
-      <rect x="3" y="5" width="1" height="2" fill="var(--rd-bar)" />
-    </>
-  ),
-  about: (
-    <>
-      <rect x="2" y="0" width="3" height="3" />
-      <rect x="1" y="4" width="5" height="1" />
-      <rect x="0" y="5" width="7" height="2" />
-    </>
-  ),
-  skills: (
-    <>
-      <rect x="2" y="1" width="1" height="1" />
-      <rect x="1" y="2" width="1" height="1" />
-      <rect x="0" y="3" width="1" height="1" />
-      <rect x="1" y="4" width="1" height="1" />
-      <rect x="2" y="5" width="1" height="1" />
-      <rect x="4" y="1" width="1" height="1" />
-      <rect x="5" y="2" width="1" height="1" />
-      <rect x="6" y="3" width="1" height="1" />
-      <rect x="5" y="4" width="1" height="1" />
-      <rect x="4" y="5" width="1" height="1" />
-    </>
-  ),
-  projects: (
-    <>
-      <rect x="0" y="1" width="3" height="1" />
-      <rect x="0" y="2" width="7" height="5" />
-    </>
-  ),
-  experience: (
-    <>
-      <rect x="2" y="0" width="3" height="1" />
-      <rect x="2" y="1" width="1" height="1" />
-      <rect x="4" y="1" width="1" height="1" />
-      <rect x="0" y="2" width="7" height="5" />
-      <rect x="3" y="4" width="1" height="1" fill="var(--rd-bar)" />
-    </>
-  ),
-  contact: (
-    <>
-      <rect x="0" y="1" width="7" height="5" />
-      <rect x="1" y="2" width="1" height="1" fill="var(--rd-bar)" />
-      <rect x="2" y="3" width="1" height="1" fill="var(--rd-bar)" />
-      <rect x="3" y="4" width="1" height="1" fill="var(--rd-bar)" />
-      <rect x="4" y="3" width="1" height="1" fill="var(--rd-bar)" />
-      <rect x="5" y="2" width="1" height="1" fill="var(--rd-bar)" />
-    </>
-  ),
-};
 
 const SUN = (
   <>

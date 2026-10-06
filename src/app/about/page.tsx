@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CardRow } from "@/components/PickCards";
 import PageBackground from "@/components/PageBackground";
 import About from "@/components/About";
 
@@ -10,6 +11,7 @@ export default function AboutPage() {
       <PageBackground variant="terminal" />
       <div className="relative">
         <About />
+        <CardRow current="about" />
       </div>
     </div>
   );
