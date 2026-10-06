@@ -13,9 +13,8 @@ export default function Experience() {
               <span className="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-background border-2 border-accent" />
               <Reveal delay={i * 0.1}>
                 <p className="text-xs text-accent mb-1">{e.period}</p>
-                <h3 className="text-lg font-semibold">
-                  {e.role} <span className="text-muted font-normal">@ {e.company}</span>
-                </h3>
+                <h3 className="text-lg font-semibold">{e.role}</h3>
+                <p className="mt-0.5 text-muted">{e.company}</p>
                 <p className="mt-2 text-sm text-muted">{e.description}</p>
                 {e.tech && (
                   <div className="mt-3 flex flex-wrap gap-2">
