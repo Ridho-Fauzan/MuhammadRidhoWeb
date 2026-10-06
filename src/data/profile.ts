@@ -18,6 +18,8 @@ export const profile: {
   role: L;
   location: L;
   email: string;
+  whatsapp: string;
+  whatsappMessage: string;
   resumeUrl: string;
   avatarUrl: string;
   handle: string;
@@ -32,6 +34,13 @@ export const profile: {
   role: "Game Developer",
   location: "Jakarta, Indonesia",
   email: "muhammadridhofathifauzan@gmail.com",
+  /**
+   * Nomor WhatsApp format internasional TANPA "+", spasi, atau "0" di depan.
+   * Contoh: 081234567890 → "6281234567890". Kosong = tombol WhatsApp disembunyikan.
+   */
+  whatsapp: "6285179621456",
+  /** Pesan yang otomatis terisi saat pengunjung membuka chat WhatsApp */
+  whatsappMessage: "Hi Ridho! I’d love to connect and get to know you better.",
   /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
@@ -71,13 +80,18 @@ export const profile: {
   ],
 };
 
-export type SocialKey = "github" | "linkedin" | "instagram" | "x" | "email";
+export type SocialKey = "github" | "linkedin" | "instagram" | "whatsapp" | "email";
+
+/** Link chat WhatsApp dengan pesan otomatis (kosong jika nomor belum diisi) */
+export const whatsappUrl = profile.whatsapp
+  ? `https://wa.me/${profile.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(profile.whatsappMessage)}`
+  : "";
 
 export const socials: { key: SocialKey; label: string; url: string }[] = [
   { key: "github", label: "GitHub", url: "https://github.com/Akashimoke" },
   { key: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/muhammad-ridho-fathi-fauzan-6131bb327/" },
   { key: "instagram", label: "Instagram", url: "https://www.instagram.com/biasadipanggilepep/" },
-  { key: "x", label: "X / Twitter", url: "https://x.com/Waswer____" },
+  ...(whatsappUrl ? [{ key: "whatsapp" as const, label: "WhatsApp", url: whatsappUrl }] : []),
   { key: "email", label: "Email", url: "mailto:muhammadridhofathifauzan@gmail.com" },
 ];
 
