@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, MapPin, MousePointer2 } from "lucide-react";
+import { ArrowDown, Hand, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
 import DecryptedText from "./reactbits/DecryptedText";
@@ -11,16 +12,30 @@ import Magnet from "./reactbits/Magnet";
 import RotatingText from "./reactbits/RotatingText";
 import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
+import { drawCardArt } from "./lanyardArt";
 
 // Komponen berat (WebGL / tilt) dimuat hanya di browser agar halaman awal tetap ringan
 const EmeraldHorizon = dynamic(
   () => import("./threeui/EmeraldHorizonBackground").then((m) => m.EmeraldHorizonBackground),
   { ssr: false },
 );
-const ProfileCard = dynamic(() => import("./reactbits/ProfileCard"), { ssr: false });
+const Lanyard = dynamic(() => import("./reactbits/Lanyard"), { ssr: false });
 
 export default function Hero() {
   const { lang, t, tx } = useLang();
+  const role = tx(profile.role);
+
+  // Gambar kartu & tali dibuat dari data profile.ts, lalu dipasang ke Lanyard
+  const [art, setArt] = useState<{ front: string; back: string; strap: string } | null>(null);
+  useEffect(() => {
+    let alive = true;
+    drawCardArt({ name: profile.name, role, handle: profile.handle, avatarUrl: profile.avatarUrl, shortName: profile.shortName }).then(
+      (a) => alive && setArt(a),
+    );
+    return () => {
+      alive = false;
+    };
+  }, [role]);
 
   return (
     <section className="relative min-h-[100svh] flex items-center px-6 pt-28 pb-20 overflow-hidden noise">
@@ -35,6 +50,31 @@ export default function Hero() {
       <div className="dark:hidden absolute -top-32 right-0 w-[36rem] h-[36rem] rounded-full bg-accent/15 blur-3xl pointer-events-none" />
       <div className="dark:hidden absolute bottom-0 -left-40 w-[30rem] h-[30rem] rounded-full bg-accent-2/15 blur-3xl pointer-events-none" />
 
+      {/* Lanyard: kartu ID 3D yang tergantung dari atas & bisa ditarik (desktop) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="hidden lg:block absolute inset-y-0 right-0 w-[48%] z-10"
+      >
+        {art && (
+          <WebGLBoundary>
+            <Lanyard
+              key={art.front.length}
+              className="w-full h-full"
+              position={[0, 0, 20]}
+              gravity={[0, -40, 0]}
+              frontImage={art.front}
+              backImage={art.back}
+              lanyardImage={art.strap}
+            />
+          </WebGLBoundary>
+        )}
+        <p className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 text-xs text-muted font-mono">
+          <Hand className="w-3.5 h-3.5 text-accent" /> {t.hero.hint}
+        </p>
+      </motion.div>
+
       <div className="relative max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-8 items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -42,8 +82,8 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center lg:text-left"
         >
-          {/* Foto bulat hanya di mobile; di desktop diganti ProfileCard */}
-          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 rounded-full p-[3px] bg-gradient-to-br from-accent to-accent-2 shadow-[0_0_40px_-8px] shadow-accent/60">
+          {/* Foto bulat hanya di mobile; di desktop diganti Lanyard */}
+          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 rounded-full p-[3px] bg-border shadow-xl">
             <div className="relative w-full h-full rounded-full overflow-hidden bg-surface">
               {profile.avatarUrl && <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />}
             </div>
@@ -109,31 +149,8 @@ export default function Hero() {
           <SocialIcons className="mt-8 justify-center lg:justify-start" />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden lg:flex flex-col items-center"
-        >
-          <ProfileCard
-            avatarUrl={profile.avatarUrl}
-            miniAvatarUrl={profile.avatarUrl}
-            iconUrl=""
-            grainUrl=""
-            name={profile.name.split(" ").slice(0, 2).join(" ")}
-            title={tx(profile.role)}
-            handle={profile.handle}
-            status={tx(profile.status)}
-            contactText={t.hero.cardContact}
-            behindGlowColor="rgba(52, 211, 153, 0.55)"
-            innerGradient="linear-gradient(145deg, rgba(16,185,129,0.35) 0%, rgba(34,211,238,0.25) 100%)"
-            enableTilt
-            onContactClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-          />
-          <p className="mt-5 inline-flex items-center gap-1.5 text-xs text-muted font-mono">
-            <MousePointer2 className="w-3.5 h-3.5 text-accent" /> {t.hero.hint}
-          </p>
-        </motion.div>
+        {/* Kolom kanan dikosongkan untuk Lanyard */}
+        <div className="hidden lg:block" aria-hidden />
       </div>
 
       <a

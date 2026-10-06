@@ -4,7 +4,7 @@ Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](
 
 ## Tech Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · OGL · lucide-react · react-icons
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · lucide-react · react-icons
 
 ## Menjalankan
 
@@ -33,12 +33,16 @@ Tombol **ID / EN** ada di navbar. Pilihan pengunjung disimpan di browser. Pengun
 - **Isi data** (`src/data/profile.ts`): tulis `{ id: "...", en: "..." }` untuk teks yang berbeda per bahasa, atau string biasa kalau sama, mis. `"Unity"`.
 - **Teks antarmuka** (tombol, judul section, footer, terminal): `src/i18n/ui.ts`.
 
+## Kartu Lanyard
+
+Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.ts` (`name`, `role`, `handle`, `avatarUrl`, `shortName`) lewat `src/components/lanyardArt.ts`. Ganti datanya, kartunya ikut berubah. Warna kartu sengaja netral (hitam/putih/abu).
+
 ## Komponen & Aset Pihak Ketiga
 
 | Dipakai di | Komponen | Sumber | Lisensi |
 |---|---|---|---|
 | Latar hero (mode gelap) | Emerald Horizon | [ThreeUI Community](https://threeui.com) · `src/components/threeui/` | MIT |
-| Kartu foto hero (desktop) | ProfileCard | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
+| Kartu ID tergantung di hero (desktop) | Lanyard (model `public/lanyard/card.glb`) | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
 | Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
 | Peran di hero | RotatingText | React Bits | MIT + Commons Clause |
 | Tombol CTA | Magnet | React Bits | MIT + Commons Clause |
