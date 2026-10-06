@@ -42,7 +42,7 @@ const logos: LogoItem[] = tech.map((x) => ({
   node: (
     <span className="inline-flex items-center gap-2.5 text-muted hover:text-accent transition-colors">
       {x.node}
-      <span className="text-sm font-medium">{x.title}</span>
+      <span className="text-sm uppercase tracking-[0.12em]">{x.title}</span>
     </span>
   ),
 }));
@@ -50,7 +50,7 @@ const logos: LogoItem[] = tech.map((x) => ({
 export default function TechMarquee() {
   const { t } = useLang();
   return (
-    <section id="stack" aria-label={t.stack.title} className="py-10 border-y border-border">
+    <section id="stack" aria-label={t.stack.title} className="py-8 border-y-2 border-border bg-surface">
       <p className="text-center font-mono text-xs uppercase tracking-[0.25em] text-muted mb-6">{t.stack.title}</p>
       <LogoLoop
         logos={logos}
@@ -61,7 +61,7 @@ export default function TechMarquee() {
         pauseOnHover
         scaleOnHover
         fadeOut
-        fadeOutColor="var(--background)"
+        fadeOutColor="var(--surface)"
         ariaLabel={t.stack.title}
       />
     </section>

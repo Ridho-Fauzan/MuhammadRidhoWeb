@@ -25,7 +25,7 @@ export default function About() {
             <Reveal delay={0.3}>
               <div className="grid grid-cols-3 gap-3 pt-4">
                 {profile.stats.map((s, i) => (
-                  <SpotlightCard key={i} className="p-4 sm:p-5 text-center bg-surface" spotlightColor="rgba(52, 211, 153, 0.18)">
+                  <SpotlightCard key={i} className="p-4 sm:p-5 text-center bg-surface" spotlightColor="rgba(249, 199, 79, 0.18)">
                     <p className="font-display text-3xl sm:text-4xl font-bold gradient-text">
                       <CountUp to={s.value} duration={1.6} />
                       {s.suffix}

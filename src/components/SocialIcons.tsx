@@ -31,7 +31,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
           rel="noopener noreferrer"
           aria-label={s.label}
           title={s.label}
-          className="p-2.5 rounded-lg border border-border text-muted hover:text-accent hover:border-accent/50 hover:-translate-y-0.5 transition-all"
+          className="retro-btn p-2.5 bg-surface text-foreground hover:bg-accent hover:text-on-accent"
         >
           <SocialIcon k={s.key} className="w-4 h-4" />
         </a>

@@ -1,0 +1,221 @@
+/* ==========================================================================
+   Navbar bergaya ThreeUI "Animated Top Dock — Retro"
+   (https://threeui.com/css/animated-top-dock/retro, MIT).
+   Diadaptasi dari CSS .atd-retro: ukuran tetap untuk navbar, sel menu memakai
+   <Link>, halaman aktif = [aria-current="page"], ditambah sel bahasa & tema.
+   ========================================================================== */
+
+.rd {
+  --rd-h: 48px;
+  --rd-ink: #f4e6c8; /* garis tepi krem */
+  --rd-rule: #4b2f7e; /* pemisah sel */
+  --rd-bar: #1a1030;
+  --rd-cell: rgba(36, 21, 72, 0.86);
+  --rd-cell-near: rgba(58, 33, 112, 0.92);
+  --rd-text: #b9a7e8;
+  --rd-hi: #fff4d6;
+  --rd-gold: #f9c74f;
+  --rd-coral: #f47b5c;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: var(--rd-h);
+  overflow: hidden;
+  border: 2px solid var(--rd-ink);
+  background: var(--rd-bar);
+  box-shadow: 6px 6px 0 rgba(6, 4, 16, 0.55);
+  font-family: var(--font-retro), ui-monospace, monospace;
+  font-weight: 400;
+  -webkit-font-smoothing: none;
+}
+
+/* Latar shader dither (canvas kecil yang diperbesar tanpa smoothing) */
+.rd__field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+/* Garis scanline CRT di resolusi layar */
+.rd::after {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  content: "";
+  opacity: 0.45;
+  background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0 1px, transparent 1px 3px);
+}
+
+.rd > *:not(.rd__field) {
+  position: relative;
+  z-index: 2;
+}
+
+.rd__brand {
+  display: inline-flex;
+  flex: none;
+  gap: 10px;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  border-right: 2px solid var(--rd-rule);
+  color: var(--rd-gold);
+  background: rgba(21, 12, 40, 0.92);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rd__brand:hover,
+.rd__brand:focus-visible {
+  color: var(--rd-hi);
+  outline: none;
+}
+
+.rd__dock {
+  display: flex;
+  flex: 1 1 0;
+  align-items: stretch;
+  min-width: 0;
+  height: 100%;
+}
+
+.rd__item,
+.rd__action {
+  display: inline-flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 0;
+  border-right: 2px solid var(--rd-rule);
+  color: var(--rd-text);
+  background: var(--rd-cell);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  transform-origin: 50% 0;
+  will-change: width;
+  transition: color 0.1s steps(2), background 0.1s steps(2);
+}
+
+.rd__item:last-child {
+  border-right: 0;
+}
+
+.rd__item[data-dock-near="true"],
+.rd__item:focus-visible,
+.rd__action:hover,
+.rd__action:focus-visible {
+  color: var(--rd-hi);
+  background: var(--rd-cell-near);
+}
+
+.rd__item[aria-current="page"] {
+  color: var(--rd-bar);
+  background: var(--rd-gold);
+}
+
+/* Sel kanan: bahasa & tema */
+.rd__actions {
+  display: flex;
+  flex: none;
+  align-items: stretch;
+  border-left: 2px solid var(--rd-ink);
+}
+
+.rd__action {
+  padding: 0 14px;
+}
+
+.rd__action:last-child {
+  border-right: 0;
+  color: var(--rd-bar);
+  background: var(--rd-coral);
+}
+
+.rd__action:last-child:hover,
+.rd__action:last-child:focus-visible {
+  color: var(--rd-bar);
+  background: var(--rd-gold);
+}
+
+.rd__lang b {
+  color: var(--rd-hi);
+  font-weight: 400;
+}
+
+.rd__lang span {
+  opacity: 0.45;
+}
+
+.rd__icon {
+  display: inline-flex;
+  flex: none;
+  width: 12px;
+  height: 12px;
+}
+
+.rd__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  shape-rendering: crispEdges;
+}
+
+/* Tablet & HP: label hanya untuk halaman aktif, sisanya ikon */
+@media (max-width: 1023px) {
+  .rd__item:not([aria-current="page"]) .rd__label {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .rd__brand-text {
+    display: none;
+  }
+
+  .rd__brand {
+    padding: 0 12px;
+  }
+
+  .rd__item {
+    padding: 0 10px;
+  }
+
+  .rd__action {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .rd__item[aria-current="page"] .rd__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd__item {
+    transition: none;
+  }
+}

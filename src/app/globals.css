@@ -2,26 +2,40 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ==========================================================================
+   Tema RETRO — palet "dusk" dari ThreeUI Animated Top Dock (retro)
+   https://threeui.com/css/animated-top-dock/retro
+   Mode gelap  = layar CRT ungu malam.  Mode terang = kertas krem + tinta ungu.
+   ========================================================================== */
+
 :root {
-  --background: #fafaf9;
-  --surface: #ffffff;
-  --foreground: #0c0a09;
-  --muted: #57534e;
-  --border: #e7e5e4;
-  --accent: #059669;
-  --accent-dark: #047857;
-  --accent-2: #0891b2;
+  /* mode terang: kertas krem */
+  --background: #f4e6c8;
+  --surface: #fff4d6;
+  --foreground: #1a1030;
+  --muted: #5b4a86;
+  --border: #1a1030;
+  --rule: #c9b48a;
+  --accent: #c2410c; /* bata */
+  --accent-dark: #9a3412;
+  --accent-2: #6d28d9; /* ungu */
+  --on-accent: #fff4d6;
+  --shadow: #1a1030;
 }
 
 .dark {
-  --background: #09090b;
-  --surface: #111113;
-  --foreground: #fafafa;
-  --muted: #a1a1aa;
-  --border: #27272a;
-  --accent: #34d399;
-  --accent-dark: #10b981;
-  --accent-2: #22d3ee;
+  /* mode gelap: CRT ungu */
+  --background: #0b0819;
+  --surface: #1a1030;
+  --foreground: #f4e6c8;
+  --muted: #b9a7e8;
+  --border: #4b2f7e;
+  --rule: #4b2f7e;
+  --accent: #f9c74f; /* emas */
+  --accent-dark: #f4a93a;
+  --accent-2: #f47b5c; /* koral */
+  --on-accent: #1a1030;
+  --shadow: #050310;
 }
 
 @theme inline {
@@ -30,12 +44,15 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-rule: var(--rule);
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-dark);
   --color-accent-2: var(--accent-2);
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-code);
-  --font-display: var(--font-heading);
+  --color-on-accent: var(--on-accent);
+  --color-shadow: var(--shadow);
+  --font-sans: var(--font-retro);
+  --font-mono: var(--font-retro);
+  --font-display: var(--font-pixel);
 }
 
 html {
@@ -46,23 +63,72 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.2s steps(3), color 0.2s steps(3);
 }
 
+/* --- Retro: semua sudut kotak (pixel grid). Tambah .keep-round untuk pengecualian. --- */
+*:not(.keep-round):not(.keep-round *) {
+  border-radius: 0 !important;
+}
+
+/* --- Scanline CRT tipis di seluruh layar --- */
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  content: "";
+  opacity: 0.22;
+  background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px);
+}
+:root:not(.dark) body::after {
+  opacity: 0.07;
+}
+
+/* --- Judul memakai font pixel --- */
+h1, h2, h3, h4 {
+  font-family: var(--font-pixel), ui-monospace, monospace;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* --- Kartu & tombol retro: garis tepi tebal + bayangan keras --- */
+.retro-box {
+  border: 2px solid var(--border);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+.retro-btn {
+  border: 2px solid var(--foreground);
+  box-shadow: 4px 4px 0 var(--shadow);
+  transition: transform 0.08s steps(2), box-shadow 0.08s steps(2), background-color 0.1s steps(2), color 0.1s steps(2);
+}
+.retro-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--shadow);
+}
+.retro-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--shadow);
+}
+
+/* Teks bergradasi emas → koral (ditampilkan bertingkat seperti palet pixel) */
 .gradient-text {
-  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent) 50%, var(--accent-2) 50%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Grid halus di latar hero */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+/* Pola titik pixel untuk latar */
+.bg-pixel-dots {
+  background-image: radial-gradient(color-mix(in srgb, var(--rule) 70%, transparent) 1px, transparent 1px);
+  background-size: 12px 12px;
 }
 
 @keyframes blink {
@@ -71,22 +137,13 @@ body {
 }
 .animate-blink { animation: blink 1s step-end infinite; }
 
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-.animate-spin-slow { animation: spin-slow 8s linear infinite; }
-
-.terminal-scroll::-webkit-scrollbar { width: 8px; }
-.terminal-scroll::-webkit-scrollbar-track { background: transparent; }
-.terminal-scroll::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+.terminal-scroll::-webkit-scrollbar { width: 10px; }
+.terminal-scroll::-webkit-scrollbar-track { background: #0b0819; }
+.terminal-scroll::-webkit-scrollbar-thumb { background: #4b2f7e; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-spin-slow, .animate-blink { animation: none; }
+  .animate-blink { animation: none; }
+  .retro-btn, .retro-btn:hover, .retro-btn:active { transform: none; }
 }
 
-/* Judul memakai font display */
-h1, h2, h3, h4 { font-family: var(--font-heading), ui-sans-serif, system-ui; letter-spacing: -0.02em; }
-
-/* Noise halus agar latar tidak flat */
-.noise::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.035; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+.noise { position: relative; }
