@@ -12,7 +12,7 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center px-6 pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-grid pointer-events-none" />
       <div className="absolute -top-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-[28rem] h-[28rem] rounded-full bg-accent-2/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -left-60 w-[28rem] h-[28rem] rounded-full bg-accent-2/10 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto w-full grid md:grid-cols-[1.4fr_1fr] gap-12 items-center">
         <motion.div
@@ -62,7 +62,7 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
             <a
               href="#projects"
-              className="px-6 py-3 rounded-lg bg-accent text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
+              className="px-6 py-3 rounded-lg bg-accent text-white dark:text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
             >
               Lihat Proyek
             </a>
