@@ -33,7 +33,7 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 | `/experience` | Timeline pendidikan & karier |
 | `/contact` | Ajakan kontak + latar partikel |
 
-Daftar halaman ada di `src/data/pages.ts` (dipakai navbar, kartu Jelajahi, dan tombol "Selanjutnya"). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
+Daftar halaman ada di `src/data/pages.ts` (dipakai navbar dan kartu Jelajahi). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
 
 ## Dua Bahasa (ID / EN)
 
