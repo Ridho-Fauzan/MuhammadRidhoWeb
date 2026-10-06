@@ -1,8 +1,11 @@
 'use client';
 // Source: React Bits (https://reactbits.dev) by David Haz — MIT + Commons Clause. See ./LICENSE.md
-// Diubah: border tebal + bayangan keras (tema retro); background & padding diatur lewat className.
+// Diubah: border tebal + bayangan keras (tema retro); background & padding diatur lewat className;
+// prop `interactive` menambah gerak hover/klik dari Motion (motion.dev).
 
 import React, { useRef, useState } from 'react';
+import { motion } from 'motion/react';
+import { pressCard } from '../motion/press';
 
 interface Position {
   x: number;
@@ -12,12 +15,14 @@ interface Position {
 interface SpotlightCardProps extends React.PropsWithChildren {
   className?: string;
   spotlightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
+  interactive?: boolean;
 }
 
 const SpotlightCard: React.FC<SpotlightCardProps> = ({
   children,
   className = '',
-  spotlightColor = 'rgba(255, 255, 255, 0.25)'
+  spotlightColor = 'rgba(255, 255, 255, 0.25)',
+  interactive = false
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -50,8 +55,9 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   };
 
   return (
-    <div
+    <motion.div
       ref={divRef}
+      {...(interactive ? pressCard : {})}
       onMouseMove={handleMouseMove}
       onFocus={handleFocus}
       onBlur={handleBlur}
@@ -67,7 +73,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
         }}
       />
       {children}
-    </div>
+    </motion.div>
   );
 };
 

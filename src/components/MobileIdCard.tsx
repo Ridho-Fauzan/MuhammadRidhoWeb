@@ -8,7 +8,7 @@
  *  - dimiringkan HP (Android, giroskop) -> ikut miring.
  * Gambar depan/belakang memakai art yang sama dengan Lanyard (lanyardArt.ts).
  */
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
