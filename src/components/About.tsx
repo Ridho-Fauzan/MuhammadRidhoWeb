@@ -7,7 +7,7 @@ export default function About() {
   return (
     <section id="about" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle index="01" title="About Me" />
+        <SectionTitle title="About Me" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start [&>*]:min-w-0">
           <div className="space-y-5 text-muted leading-relaxed">
             {profile.about.map((p, i) => (

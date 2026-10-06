@@ -12,7 +12,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle index="03" title="Projects" subtitle="Beberapa proyek yang pernah saya kerjakan." />
+        <SectionTitle title="Projects" subtitle="Beberapa proyek yang pernah saya kerjakan." />
 
         <div className="grid md:grid-cols-2 gap-6">
           {featured.map((p, i) => (
@@ -61,7 +61,7 @@ export default function Projects() {
           <>
             <Reveal>
               <h3 className="mt-16 mb-6 text-lg font-semibold">
-                <span className="text-accent">$</span> ls ./other-projects
+                Proyek Lainnya
               </h3>
             </Reveal>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
