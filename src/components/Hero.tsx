@@ -86,7 +86,7 @@ export default function Hero() {
           </div>
 
           <p className="text-sm uppercase tracking-[0.25em] text-accent">&gt; {t.hero.greeting}</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-[1.1] [text-shadow:4px_4px_0_var(--shadow)]">
+          <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
             <DecryptedText
               key={lang}
               text={profile.name}

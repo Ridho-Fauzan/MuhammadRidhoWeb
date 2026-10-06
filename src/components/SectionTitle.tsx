@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 export default function SectionTitle({ title, subtitle, center = false }: { title: string; subtitle?: string; center?: boolean }) {
   return (
     <Reveal className={`mb-14 ${center ? "text-center" : ""}`}>
-      <h2 className="text-3xl sm:text-5xl [text-shadow:3px_3px_0_var(--shadow)]">
+      <h2 className="text-3xl sm:text-5xl">
         <span className="text-accent">&gt;</span> {title}
         <span className="text-accent animate-blink">_</span>
       </h2>

@@ -24,7 +24,7 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 
 ## Tema Retro
 
-Seluruh situs memakai tema dari [ThreeUI Animated Top Dock — Retro](https://threeui.com/css/animated-top-dock/retro): palet *dusk* (ungu, emas, koral, krem), sudut kotak, garis tebal, bayangan keras, dan scanline CRT. Warna diatur di `src/app/globals.css` (`:root` = mode terang/kertas, `.dark` = mode gelap/CRT). Navbar: `src/components/RetroDock.tsx` + `RetroDock.css`.
+Seluruh situs memakai tema dari [ThreeUI Animated Top Dock — Retro](https://threeui.com/css/animated-top-dock/retro): palet *dusk* (ungu, emas, koral, krem), sudut kotak, garis tebal, bayangan keras, dan scanline CRT. Warna diatur di `src/app/globals.css` (`:root` = mode terang/kertas, `.dark` = mode gelap/CRT). Navbar: `src/components/RetroDock.tsx` + `RetroDock.css`. Latar animasi tiap halaman: `src/components/PageBackground.tsx` (`variant`: `terminal`, `dots`, `grid`, `grid-diagonal`, `snow`).
 
 ## Halaman
 
@@ -65,6 +65,10 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 | Kartu skill / proyek / statistik | SpotlightCard | React Bits | MIT + Commons Clause |
 | Statistik About | CountUp | React Bits | MIT + Commons Clause |
 | Latar Contact | Particles | React Bits | MIT + Commons Clause |
+| Latar halaman About | FaultyTerminal | React Bits | MIT + Commons Clause |
+| Latar halaman Skills | Dot Matrix (warna diubah ke palet retro) | [ThreeUI](https://threeui.com) · `src/components/threeui/` | MIT |
+| Latar halaman Projects & bagian Jelajahi | ShapeGrid | React Bits | MIT + Commons Clause |
+| Latar halaman Experience | PixelSnow | React Bits | MIT + Commons Clause |
 | Logo teknologi | Simple Icons | [react-icons](https://react-icons.github.io/react-icons/) | MIT / CC0 |
 
 Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
