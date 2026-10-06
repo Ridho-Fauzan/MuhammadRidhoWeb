@@ -38,16 +38,29 @@ export const socials: { key: SocialKey; label: string; url: string }[] = [
   { key: "github", label: "GitHub", url: "https://github.com/Akashimoke" },
   { key: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/muhammad-ridho-fathi-fauzan-6131bb327/" },
   { key: "instagram", label: "Instagram", url: "https://www.instagram.com/biasadipanggilepep/" },
-  { key: "x", label: "X / Twitter", url: "https://x.com/username" },
+  { key: "x", label: "X / Twitter", url: "https://x.com/Waswer____" },
   { key: "email", label: "Email", url: "mailto:muhammadridhofathifauzan@gmail.com" },
 ];
 
 export const skills: { category: string; items: string[] }[] = [
-  { category: "Frontend", items: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"] },
-  { category: "Backend", items: ["Node.js", "Express", "PHP", "Laravel", "REST API"] },
-  { category: "Database", items: ["MySQL", "PostgreSQL", "MongoDB"] },
-  { category: "Tools", items: ["Git", "GitHub", "Figma", "VS Code", "Docker"] },
+  {
+    category: "Game-Dev",
+    items: ["Unity", "C#", "Gameplay Programming", "Game Mechanics", "2D / 3D Development", "Physics"],
+  },
+  {
+    category: "Programming",
+    items: ["Object-Oriented Programming", "Game Systems", "AI / Enemy Behavior", "Input System", "Collision & Interaction", "Debugging"],
+  },
+  {
+    category: "Game Design",
+    items: ["Level Design", "Game Design", "Prototyping", "UI/UX", "Game Balancing"],
+  },
+  {
+    category: "Tools",
+    items: ["Git", "GitHub", "Visual Studio", "Figma"],
+  },
 ];
+
 
 export type Project = {
   title: string;
@@ -107,7 +120,7 @@ export const experiences: {
     tech: ["Study", "Projects", "Research"],
   },
   {
-    role: "Junior High School - Senior High School Majoring in NaturalScience",
+    role: "Junior High School - Senior High School Majoring in Natural Science",
     company: "Pondok Pesantren Modern Daar el-Qolam",
     period: "2018 — 2024",
     description: "Studying at Pondok Pesantren Modern Daar el-Qolam, focusing on both academic and extracurricular activities.",

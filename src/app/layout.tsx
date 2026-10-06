@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 
-const mono = JetBrains_Mono({
+const mono = Poppins({
   variable: "--font-mono",
   subsets: ["latin"],
 });
