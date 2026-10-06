@@ -7,6 +7,10 @@ import { profile } from "@/data/profile";
 import SocialIcons from "./SocialIcons";
 import Typewriter from "./Typewriter";
 
+// Inisial otomatis dari nama, mis. "Muhammad Ridho Fathi Fauzan" -> "MF" (huruf depan kata pertama & terakhir)
+const words = profile.name.trim().split(/\s+/);
+const initials = (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase();
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center px-6 pt-24 pb-16 overflow-hidden">
@@ -90,7 +94,7 @@ export default function Hero() {
                 {profile.avatarUrl ? (
                   <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />
                 ) : (
-                  <span className="text-5xl sm:text-7xl font-bold gradient-text">{profile.initials}</span>
+                  <span className="text-5xl sm:text-7xl font-bold gradient-text">{initials}</span>
                 )}
               </div>
             </div>
