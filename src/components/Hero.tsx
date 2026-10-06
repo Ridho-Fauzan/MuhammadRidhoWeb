@@ -3,13 +3,12 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Hand, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
+import MobileIdCard from "./MobileIdCard";
 import DecryptedText from "./reactbits/DecryptedText";
-import Magnet from "./reactbits/Magnet";
 import RotatingText from "./reactbits/RotatingText";
 import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
@@ -78,11 +77,17 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center lg:text-left"
         >
-          {/* Foto bulat hanya di mobile; di desktop diganti Lanyard */}
-          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 retro-box bg-surface">
-            <div className="relative w-full h-full overflow-hidden" style={{ imageRendering: "pixelated" }}>
-              {profile.avatarUrl && <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />}
-            </div>
+          {/* Mobile & tablet: kartu ID interaktif (ayun, balik, giroskop); di desktop diganti Lanyard 3D */}
+          <div className="lg:hidden -mt-10 mb-8">
+            <MobileIdCard
+              front={art?.front}
+              back={art?.back}
+              avatarUrl={profile.avatarUrl}
+              name={profile.name}
+              shortName={profile.shortName}
+              flipLabel={t.hero.flipCard}
+              hint={t.hero.hintMobile}
+            />
           </div>
 
           <p className="text-sm uppercase tracking-[0.25em] text-accent">&gt; {t.hero.greeting}</p>
@@ -124,28 +129,24 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <Magnet padding={60} magnetStrength={4}>
-              <Link
-                href="/projects"
-                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
-              >
-                <svg viewBox="0 0 7 7" className="w-3 h-3 fill-current" style={{ shapeRendering: "crispEdges" }} aria-hidden>
-                  <rect x="1" y="0" width="2" height="7" />
-                  <rect x="3" y="1" width="2" height="5" />
-                  <rect x="5" y="2" width="1" height="3" />
-                  <rect x="6" y="3" width="1" height="1" />
-                </svg>
-                {t.hero.viewProjects}
-              </Link>
-            </Magnet>
-            <Magnet padding={60} magnetStrength={4}>
-              <Link
-                href="/contact"
-                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
-              >
-                {t.hero.contactMe}
-              </Link>
-            </Magnet>
+            <Link
+              href="/projects"
+              className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
+            >
+              <svg viewBox="0 0 7 7" className="w-3 h-3 fill-current" style={{ shapeRendering: "crispEdges" }} aria-hidden>
+                <rect x="1" y="0" width="2" height="7" />
+                <rect x="3" y="1" width="2" height="5" />
+                <rect x="5" y="2" width="1" height="3" />
+                <rect x="6" y="3" width="1" height="1" />
+              </svg>
+              {t.hero.viewProjects}
+            </Link>
+            <Link
+              href="/contact"
+              className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
+            >
+              {t.hero.contactMe}
+            </Link>
           </div>
 
           <SocialIcons className="mt-8 justify-center lg:justify-start" />
