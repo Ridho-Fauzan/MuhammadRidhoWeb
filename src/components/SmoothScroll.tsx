@@ -12,6 +12,10 @@ import "lenis/dist/lenis.css";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
+let current: Lenis | null = null;
+/** Instance Lenis aktif (null di HP / sebelum mount) — dipakai mis. untuk mengunci scroll saat modal terbuka */
+export const getLenis = () => current;
+
 export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
   const pathname = usePathname();
@@ -25,10 +29,10 @@ export default function SmoothScroll() {
       allowNestedScroll: true,
       stopInertiaOnNavigate: true,
     });
-    lenisRef.current = lenis;
+    lenisRef.current = current = lenis;
     return () => {
       lenis.destroy();
-      lenisRef.current = null;
+      lenisRef.current = current = null;
     };
   }, []);
 

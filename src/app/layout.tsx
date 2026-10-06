@@ -5,7 +5,6 @@ import { profile } from "@/data/profile";
 import { tr } from "@/i18n/types";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 
 // Tema retro: Silkscreen (pixel) untuk judul, Fragment Mono untuk teks — font yang dipakai ThreeUI retro dock
@@ -35,7 +34,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={`${pixel.variable} ${retro.variable} ${nav.variable} font-sans antialiased`}>
         <SmoothScroll />
-        <ScrollProgress />
         <Navbar />
         <main className="min-h-[100svh]">{children}</main>
         <Footer />
