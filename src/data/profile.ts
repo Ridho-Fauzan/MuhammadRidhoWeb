@@ -11,7 +11,7 @@ export const profile = {
   shortName: "Ridho",
   role: "Game Developer",
   location: "Jakarta, Indonesia",
-  email: "muhammadridho@gmail.com",
+  email: "muhammadridhofathifauzan@gmail.com",
   /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
@@ -19,7 +19,7 @@ export const profile = {
   /** Teks yang bergantian diketik di hero ("Hi, I'm ...") */
   typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer"],
   tagline: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
-  heroBadges: ["Unity", "C#", 'three.js', "Unreal Engine"],
+  heroBadges: ["Unity", "C#", 'three.js'],
   openToWork: true,
   about: [
     "Halo! Ini adalah paragraf perkenalan singkat. Ceritakan siapa kamu, apa yang sedang kamu pelajari atau kerjakan, dan apa yang membuatmu tertarik di dunia teknologi.",
@@ -40,7 +40,7 @@ export const socials: { key: SocialKey; label: string; url: string }[] = [
   { key: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/username" },
   { key: "instagram", label: "Instagram", url: "https://instagram.com/username" },
   { key: "x", label: "X / Twitter", url: "https://x.com/username" },
-  { key: "email", label: "Email", url: "mailto:email@contoh.com" },
+  { key: "email", label: "Email", url: "mailto:muhammadridhofathifauzan@gmail.com" },
 ];
 
 export const skills: { category: string; items: string[] }[] = [
