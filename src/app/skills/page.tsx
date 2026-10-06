@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
+import PageBackground from "@/components/PageBackground";
 import Skills from "@/components/Skills";
 
 export const metadata: Metadata = { title: "Skills" };
 
 export default function SkillsPage() {
   return (
-    <div className="pt-10">
-      <Skills />
+    <div className="relative pt-10 min-h-[100svh]">
+      <PageBackground variant="dots" />
+      <div className="relative">
+        <Skills />
+      </div>
     </div>
   );
 }

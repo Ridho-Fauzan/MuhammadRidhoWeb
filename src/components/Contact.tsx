@@ -34,7 +34,7 @@ export default function Contact() {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_75%)]" />
 
       <Reveal className="relative w-full max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl sm:text-6xl [text-shadow:4px_4px_0_var(--shadow)]">
+        <h2 className="text-4xl sm:text-6xl">
           {t.contact.title1} <span className="gradient-text">{t.contact.title2}</span>
         </h2>
         <p className="mt-6 text-muted text-lg">{t.contact.text}</p>
