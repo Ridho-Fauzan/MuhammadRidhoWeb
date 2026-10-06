@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Komponen pihak ketiga (React Bits & ThreeUI) disalin apa adanya dari sumbernya
+    "src/components/reactbits/**",
+    "src/components/threeui/**",
   ]),
 ]);
 
