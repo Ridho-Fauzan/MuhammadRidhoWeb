@@ -25,19 +25,6 @@ export default function Hero() {
           transition={{ duration: 0.7 }}
           className="order-2 md:order-1 text-center md:text-left"
         >
-          {profile.openToWork && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs">
-              <span className="relative flex w-2 h-2">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-accent opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2 h-2 rounded-full bg-accent" />
-              </span>
-              Terbuka untuk peluang baru
-            </div>
-          )}
-
-          <p className="text-muted mb-3">
-            <span className="text-accent">$</span> whoami
-          </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight min-h-[2.5em] sm:min-h-[2.4em]">
             Hi, I&apos;m <br />
             <Typewriter texts={profile.typewriter} className="gradient-text" />

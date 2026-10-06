@@ -7,9 +7,6 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 px-6">
       <Reveal className="max-w-3xl mx-auto text-center">
-        <p className="text-accent text-sm mb-2">
-          05. <span className="text-muted">{"// what's next?"}</span>
-        </p>
         <h2 className="text-3xl sm:text-5xl font-bold">
           Mari <span className="gradient-text">Terhubung</span>
         </h2>
