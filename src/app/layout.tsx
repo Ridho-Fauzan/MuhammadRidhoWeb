@@ -6,6 +6,7 @@ import { profile } from "@/data/profile";
 const mono = Poppins({
   variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
