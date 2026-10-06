@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, MapPin } from "lucide-react";
 import Image from "next/image";
 import { profile } from "@/data/profile";
+import { useLang } from "@/i18n/useLang";
 import SocialIcons from "./SocialIcons";
 import Typewriter from "./Typewriter";
 
@@ -12,6 +13,8 @@ const words = profile.name.trim().split(/\s+/);
 const initials = (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase();
 
 export default function Hero() {
+  const { lang, t, tx } = useLang();
+
   return (
     <section className="relative min-h-screen flex items-center px-6 pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-grid pointer-events-none" />
@@ -26,14 +29,14 @@ export default function Hero() {
           className="order-2 md:order-1 text-center md:text-left"
         >
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight min-h-[2.5em] sm:min-h-[2.4em]">
-            Hi, I&apos;m <br />
-            <Typewriter texts={profile.typewriter} className="gradient-text" />
+            {t.hero.greeting} <br />
+            <Typewriter key={lang} texts={profile.typewriter.map(tx)} className="gradient-text" />
           </h1>
 
-          <p className="mt-6 text-base sm:text-lg text-muted max-w-xl mx-auto md:mx-0">{profile.tagline}</p>
+          <p className="mt-6 text-base sm:text-lg text-muted max-w-xl mx-auto md:mx-0">{tx(profile.tagline)}</p>
 
           <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
-            <MapPin className="w-4 h-4 text-accent" /> {profile.location}
+            <MapPin className="w-4 h-4 text-accent" /> {tx(profile.location)}
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2 justify-center md:justify-start">
@@ -55,13 +58,13 @@ export default function Hero() {
               href="#projects"
               className="px-6 py-3 rounded-lg bg-accent text-white dark:text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
             >
-              Lihat Proyek
+              {t.hero.viewProjects}
             </a>
             <a
               href="#contact"
               className="px-6 py-3 rounded-lg border border-border hover:border-accent hover:text-accent transition-colors"
             >
-              Hubungi Saya
+              {t.hero.contactMe}
             </a>
           </div>
 
@@ -91,7 +94,7 @@ export default function Hero() {
 
       <a
         href="#about"
-        aria-label="Scroll ke bawah"
+        aria-label={t.hero.scrollDown}
         className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-muted hover:text-accent animate-bounce"
       >
         <ArrowDown className="w-5 h-5" />
