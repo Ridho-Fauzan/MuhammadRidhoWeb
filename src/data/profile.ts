@@ -43,7 +43,7 @@ export const profile: {
     "Game Developer",
     "Web Developer",
     "Tech Enthusiast",
-    { id: "Gamer Sejati", en: "Dedicated Gamer" },
+    "Dedicated Gamer" ,
   ],
   tagline: {
     id: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
@@ -172,8 +172,8 @@ export const experiences: {
     company: "Bina Nusantara University",
     period: { id: "2024 — Sekarang", en: "2024 — Now" },
     description: {
-      id: "Sedang menempuh studi Ilmu Komputer dengan fokus pada pengembangan perangkat lunak dan desain game.",
-      en: "Actively pursuing a degree in Computer Science, focusing on software development and game design.",
+      id: "Sedang menempuh studi Ilmu Komputer dengan fokus pada pengembangan perangkat lunak dan multimedia interaktif.",
+      en: "Actively pursuing a degree in Computer Science, focusing on software development and interactive multimedia.",
     },
     tech: [
       { id: "Studi", en: "Study" },
