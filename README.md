@@ -4,7 +4,7 @@ Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](
 
 ## Tech Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · GSAP · lucide-react · react-icons
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · lucide-react · react-icons
 
 ## Menjalankan
 
