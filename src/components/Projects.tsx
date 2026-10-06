@@ -41,7 +41,7 @@ export default function Projects() {
               <Reveal key={i} delay={i * 0.1} className="h-full">
                 <SpotlightCard
                   className="group h-full flex flex-col bg-surface hover:border-accent/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300"
-                  spotlightColor="rgba(52, 211, 153, 0.12)"
+                  spotlightColor="rgba(249, 199, 79, 0.12)"
                 >
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-accent/20 via-surface to-accent-2/20">
                     {p.image ? (
@@ -60,7 +60,7 @@ export default function Projects() {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full bg-background/80 backdrop-blur text-accent ring-1 ring-accent/30">
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full bg-background/80 backdrop-blur text-accent border-2 border-accent/60">
                       <Star className="w-3 h-3 fill-current" />{" "}
                       {t.projects.featured}
                     </span>
@@ -77,7 +77,7 @@ export default function Projects() {
                     )}
                   </div>
                   <div className="relative flex-1 flex flex-col p-6">
-                    <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors">
+                    <h3 className="text-2xl group-hover:text-accent transition-colors">
                       {tx(p.title)}
                     </h3>
                     <p className="mt-3 text-sm text-muted leading-relaxed flex-1">
@@ -87,7 +87,7 @@ export default function Projects() {
                       {p.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2.5 py-1 text-xs font-mono rounded-md bg-accent/10 text-accent"
+                          className="px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-on-accent"
                         >
                           {tag}
                         </span>
@@ -108,7 +108,7 @@ export default function Projects() {
         {others.length > 0 && (
           <>
             <Reveal>
-              <h3 className="mt-20 mb-6 text-2xl font-semibold">
+              <h3 className="mt-20 mb-6 text-2xl">
                 {t.projects.others}
               </h3>
             </Reveal>
@@ -126,10 +126,10 @@ export default function Projects() {
                   <Reveal key={i} delay={i * 0.08} className="h-full">
                     <SpotlightCard
                       className="h-full flex flex-col p-6 bg-surface hover:border-accent/40 transition-colors"
-                      spotlightColor="rgba(52, 211, 153, 0.12)"
+                      spotlightColor="rgba(249, 199, 79, 0.12)"
                     >
                       <FolderGit2 className="relative w-8 h-8 text-accent mb-4" />
-                      <h4 className="relative text-lg font-semibold">
+                      <h4 className="relative text-lg">
                         {tx(p.title)}
                       </h4>
                       <p className="relative mt-2 text-sm text-muted flex-1">
@@ -170,7 +170,7 @@ function ComingSoonCard({
   return (
     <div
       aria-label={label}
-      className="h-full flex flex-col rounded-2xl border-2 border-dashed border-border bg-surface/40 overflow-hidden"
+      className="h-full flex flex-col border-2 border-dashed border-muted bg-surface/40 overflow-hidden"
     >
       {large && (
         <div className="relative aspect-video flex items-center justify-center bg-[repeating-linear-gradient(135deg,transparent_0,transparent_14px,color-mix(in_srgb,var(--border)_55%,transparent)_14px,color-mix(in_srgb,var(--border)_55%,transparent)_15px)]">

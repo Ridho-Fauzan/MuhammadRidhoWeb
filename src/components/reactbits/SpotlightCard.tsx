@@ -1,6 +1,6 @@
 'use client';
 // Source: React Bits (https://reactbits.dev) by David Haz — MIT + Commons Clause. See ./LICENSE.md
-// Diubah: border memakai token tema; background & padding diatur lewat className.
+// Diubah: border tebal + bayangan keras (tema retro); background & padding diatur lewat className.
 
 import React, { useRef, useState } from 'react';
 
@@ -57,7 +57,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-2xl border border-border overflow-hidden ${className}`}
+      className={`relative border-2 border-border overflow-hidden shadow-[5px_5px_0_var(--shadow)] ${className}`}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out"

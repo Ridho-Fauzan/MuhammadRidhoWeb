@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Fragment_Mono, Silkscreen } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 import { tr } from "@/i18n/types";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
-const display = Space_Grotesk({ variable: "--font-heading", subsets: ["latin"], weight: ["500", "600", "700"] });
-const sans = Inter({ variable: "--font-body", subsets: ["latin"] });
-const mono = JetBrains_Mono({ variable: "--font-code", subsets: ["latin"] });
+// Tema retro: Silkscreen (pixel) untuk judul, Fragment Mono untuk teks — font yang dipakai ThreeUI retro dock
+const pixel = Silkscreen({ variable: "--font-pixel", subsets: ["latin"], weight: ["400", "700"] });
+const retro = Fragment_Mono({ variable: "--font-retro", subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
   title: { default: `${profile.name} | ${tr(profile.role, "en")}`, template: `%s | ${profile.name}` },
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
-      <body className={`${display.variable} ${sans.variable} ${mono.variable} font-sans antialiased`}>
+      <body className={`${pixel.variable} ${retro.variable} font-sans antialiased`}>
         <Navbar />
         <main className="min-h-[100svh]">{children}</main>
         <Footer />

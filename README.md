@@ -4,7 +4,7 @@ Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](
 
 ## Tech Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · GSAP · lucide-react · react-icons
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · lucide-react · react-icons
 
 ## Menjalankan
 
@@ -21,6 +21,10 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 - Foto profil: taruh di `public/` (mis. `public/foto.jpg`), lalu isi `avatarUrl: "/foto.jpg"`.
 - CV: taruh di `public/` (mis. `public/cv.pdf`), lalu isi `resumeUrl: "/cv.pdf"`. Tombol CV akan muncul di navbar.
 - Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek.
+
+## Tema Retro
+
+Seluruh situs memakai tema dari [ThreeUI Animated Top Dock — Retro](https://threeui.com/css/animated-top-dock/retro): palet *dusk* (ungu, emas, koral, krem), sudut kotak, garis tebal, bayangan keras, dan scanline CRT. Warna diatur di `src/app/globals.css` (`:root` = mode terang/kertas, `.dark` = mode gelap/CRT). Navbar: `src/components/RetroDock.tsx` + `RetroDock.css`.
 
 ## Halaman
 
@@ -50,9 +54,8 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 
 | Dipakai di | Komponen | Sumber | Lisensi |
 |---|---|---|---|
-| Navbar | PillNav | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
 | Kartu proyek "Coming Soon" | ShinyText | React Bits | MIT + Commons Clause |
-| Latar hero (mode gelap) | Emerald Horizon | [ThreeUI Community](https://threeui.com) · `src/components/threeui/` | MIT |
+| Tema seluruh situs, navbar dock & latar dither (hero) | Animated Top Dock — Retro | [ThreeUI](https://threeui.com/css/animated-top-dock/retro) · `src/components/threeui/` | MIT |
 | Kartu ID tergantung di hero (desktop) | Lanyard (model `public/lanyard/card.glb`) | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
 | Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
 | Peran di hero | RotatingText | React Bits | MIT + Commons Clause |
@@ -66,7 +69,7 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 
 Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
 
-Font: Space Grotesk (judul), Inter (teks), JetBrains Mono (kode/terminal), via `next/font/google`.
+Font: Silkscreen (judul, pixel) dan Fragment Mono (teks) via `next/font/google` — keduanya SIL Open Font License.
 
 ## Proyek "Coming Soon"
 
