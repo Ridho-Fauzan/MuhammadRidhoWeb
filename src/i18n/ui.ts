@@ -1,0 +1,99 @@
+/**
+ * Teks antarmuka (tombol, judul section, dll) dalam 2 bahasa.
+ * Kalau menambah key baru di `id`, TypeScript akan memaksa key yang sama ada di `en`.
+ */
+const id = {
+  nav: { about: "Tentang", skills: "Keahlian", projects: "Proyek", experience: "Pengalaman", contact: "Kontak" },
+  hero: { greeting: "Halo, saya", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah" },
+  about: { title: "Tentang Saya", terminalHint: "Coba terminal interaktif di bawah ini:" },
+  skills: { title: "Keahlian", subtitle: "Teknologi dan tools yang saya gunakan sehari-hari." },
+  projects: {
+    title: "Proyek",
+    subtitle: "Beberapa proyek yang pernah saya kerjakan.",
+    featured: "Unggulan",
+    others: "Proyek Lainnya",
+    code: "Kode",
+    demo: "Demo",
+  },
+  experience: { title: "Pengalaman", subtitle: "Perjalanan karier dan pendidikan saya." },
+  contact: {
+    title1: "Mari",
+    title2: "Terhubung",
+    text: "Punya proyek, tawaran kerja, atau sekadar ingin menyapa? Inbox saya selalu terbuka.",
+    button: "Kirim Email",
+  },
+  footer: { builtWith: "Dibuat dengan Next.js & Tailwind CSS." },
+  toggles: { toLight: "Ganti ke mode terang", toDark: "Ganti ke mode gelap", lang: "Switch to English" },
+  terminal: {
+    welcome: "Selamat datang di terminal portfolio saya!",
+    type: "Ketik",
+    forHelp: "untuk melihat perintah yang tersedia.",
+    available: "Perintah yang tersedia:",
+    cmds: {
+      whoami: "Info singkat",
+      about: "Tentang saya",
+      skills: "Daftar keahlian",
+      projects: "Daftar proyek",
+      experience: "Riwayat pengalaman",
+      social: "Link media sosial",
+      contact: "Cara menghubungi saya",
+      lang: "Ganti bahasa (lang en / lang id)",
+      clear: "Bersihkan terminal",
+    },
+    tip: "Tip: tekan Tab untuk autocomplete, ↑/↓ untuk riwayat.",
+    notFound: "perintah tidak ditemukan:",
+    emailMe: "Kirim email ke",
+    denied: "Nice try. Akses ditolak.",
+    langChanged: "Bahasa diganti ke Bahasa Indonesia.",
+    input: "Input terminal",
+  },
+};
+
+const en: typeof id = {
+  nav: { about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" },
+  hero: { greeting: "Hi, I'm", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down" },
+  about: { title: "About Me", terminalHint: "Try the interactive terminal below:" },
+  skills: { title: "Skills", subtitle: "Technologies and tools I use every day." },
+  projects: {
+    title: "Projects",
+    subtitle: "Some of the projects I have worked on.",
+    featured: "Featured",
+    others: "Other Projects",
+    code: "Code",
+    demo: "Demo",
+  },
+  experience: { title: "Experience", subtitle: "My career and education journey." },
+  contact: {
+    title1: "Let's",
+    title2: "Connect",
+    text: "Have a project, a job offer, or just want to say hi? My inbox is always open.",
+    button: "Send Email",
+  },
+  footer: { builtWith: "Built with Next.js & Tailwind CSS." },
+  toggles: { toLight: "Switch to light mode", toDark: "Switch to dark mode", lang: "Ganti ke Bahasa Indonesia" },
+  terminal: {
+    welcome: "Welcome to my portfolio terminal!",
+    type: "Type",
+    forHelp: "to see the available commands.",
+    available: "Available commands:",
+    cmds: {
+      whoami: "Quick info",
+      about: "About me",
+      skills: "List of skills",
+      projects: "List of projects",
+      experience: "Experience history",
+      social: "Social media links",
+      contact: "How to reach me",
+      lang: "Change language (lang en / lang id)",
+      clear: "Clear the terminal",
+    },
+    tip: "Tip: press Tab to autocomplete, ↑/↓ for history.",
+    notFound: "command not found:",
+    emailMe: "Send an email to",
+    denied: "Nice try. Permission denied.",
+    langChanged: "Language switched to English.",
+    input: "Terminal input",
+  },
+};
+
+export const ui = { id, en };

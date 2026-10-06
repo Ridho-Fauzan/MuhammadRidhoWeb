@@ -2,53 +2,58 @@
 
 import { useEffect, useRef, useState } from "react";
 import { experiences, profile, projects, skills, socials } from "@/data/profile";
+import type { L, Lang } from "@/i18n/types";
+import { tr } from "@/i18n/types";
+import { ui } from "@/i18n/ui";
+import { setLang, useLang } from "@/i18n/useLang";
 
 type Line = { type: "in" | "out"; content: React.ReactNode };
+type Ui = (typeof ui)["id"];
 
 const user = profile.shortName.toLowerCase().replace(/\s+/g, "");
-const COMMANDS = ["help", "whoami", "about", "skills", "projects", "experience", "social", "contact", "clear", "date", "sudo"];
+const COMMANDS = ["help", "whoami", "about", "skills", "projects", "experience", "social", "contact", "lang", "clear", "date", "sudo"];
 
-function run(cmd: string): React.ReactNode | "clear" {
+function run(cmd: string, lang: Lang): React.ReactNode | "clear" {
   const c = cmd.trim().toLowerCase();
+  const t: Ui = ui[lang];
+  const tx = (v: L) => tr(v, lang);
+
+  if (c === "lang en" || c === "lang id") {
+    const next = c.slice(5) as Lang;
+    setLang(next);
+    return <p className="text-emerald-400">{ui[next].terminal.langChanged}</p>;
+  }
+
   switch (c) {
     case "":
       return null;
     case "help":
       return (
         <div className="space-y-0.5">
-          <p className="text-amber-300">Perintah yang tersedia:</p>
-          {[
-            ["whoami", "Info singkat"],
-            ["about", "Tentang saya"],
-            ["skills", "Daftar skill"],
-            ["projects", "Daftar proyek"],
-            ["experience", "Riwayat pengalaman"],
-            ["social", "Link media sosial"],
-            ["contact", "Cara menghubungi saya"],
-            ["clear", "Bersihkan terminal"],
-          ].map(([k, v]) => (
+          <p className="text-amber-300">{t.terminal.available}</p>
+          {(Object.keys(t.terminal.cmds) as (keyof Ui["terminal"]["cmds"])[]).map((k) => (
             <p key={k} className="pl-4">
-              <span className="text-cyan-400">{k}</span> <span className="text-zinc-400">- {v}</span>
+              <span className="text-cyan-400">{k}</span> <span className="text-zinc-400">- {t.terminal.cmds[k]}</span>
             </p>
           ))}
-          <p className="pt-2 text-zinc-400">Tip: tekan Tab untuk autocomplete, ↑/↓ untuk riwayat.</p>
+          <p className="pt-2 text-zinc-400">{t.terminal.tip}</p>
         </div>
       );
     case "whoami":
       return (
         <p>
-          <span className="text-emerald-400">{profile.name}</span> — {profile.role} @ {profile.location}
+          <span className="text-emerald-400">{profile.name}</span> — {tx(profile.role)} @ {tx(profile.location)}
         </p>
       );
     case "about":
-      return <p className="text-zinc-300">{profile.about[0]}</p>;
+      return <p className="text-zinc-300">{tx(profile.about[0])}</p>;
     case "skills":
       return (
         <div>
-          {skills.map((s) => (
-            <p key={s.category}>
-              <span className="text-amber-300">{s.category.padEnd(10)}</span>{" "}
-              <span className="text-zinc-300">{s.items.join(", ")}</span>
+          {skills.map((s, i) => (
+            <p key={i}>
+              <span className="text-amber-300">{tx(s.category)}</span>{" "}
+              <span className="text-zinc-300">{s.items.map(tx).join(", ")}</span>
             </p>
           ))}
         </div>
@@ -56,9 +61,9 @@ function run(cmd: string): React.ReactNode | "clear" {
     case "projects":
       return (
         <div>
-          {projects.map((p) => (
-            <p key={p.title}>
-              <span className="text-cyan-400">{p.title}</span> <span className="text-zinc-400">[{p.tags.join(", ")}]</span>
+          {projects.map((p, i) => (
+            <p key={i}>
+              <span className="text-cyan-400">{tx(p.title)}</span> <span className="text-zinc-400">[{p.tags.join(", ")}]</span>
             </p>
           ))}
         </div>
@@ -66,9 +71,9 @@ function run(cmd: string): React.ReactNode | "clear" {
     case "experience":
       return (
         <div>
-          {experiences.map((e) => (
-            <p key={e.role + e.period}>
-              <span className="text-zinc-400">{e.period}</span> <span className="text-emerald-400">{e.role}</span> @ {e.company}
+          {experiences.map((e, i) => (
+            <p key={i}>
+              <span className="text-zinc-400">{tx(e.period)}</span> <span className="text-emerald-400">{tx(e.role)}</span> @ {tx(e.company)}
             </p>
           ))}
         </div>
@@ -89,23 +94,26 @@ function run(cmd: string): React.ReactNode | "clear" {
     case "contact":
       return (
         <p>
-          Kirim email ke{" "}
+          {t.terminal.emailMe}{" "}
           <a href={`mailto:${profile.email}`} className="text-cyan-400 underline">
             {profile.email}
           </a>
         </p>
       );
+    case "lang":
+      return <p className="text-zinc-400">{t.terminal.cmds.lang}</p>;
     case "date":
-      return <p>{new Date().toString()}</p>;
+      return <p>{new Date().toLocaleString(lang === "id" ? "id-ID" : "en-US")}</p>;
     case "sudo":
     case "sudo rm -rf /":
-      return <p className="text-red-400">Nice try. Permission denied.</p>;
+      return <p className="text-red-400">{t.terminal.denied}</p>;
     case "clear":
       return "clear";
     default:
       return (
         <p>
-          <span className="text-red-400">command not found:</span> {cmd}. Ketik <span className="text-cyan-400">help</span>.
+          <span className="text-red-400">{t.terminal.notFound}</span> {cmd}. {t.terminal.type}{" "}
+          <span className="text-cyan-400">help</span>.
         </p>
       );
   }
@@ -123,17 +131,10 @@ function Prompt() {
 }
 
 export default function Terminal() {
-  const [lines, setLines] = useState<Line[]>([
-    { type: "out", content: <p>Selamat datang di terminal portfolio saya!</p> },
-    {
-      type: "out",
-      content: (
-        <p className="text-zinc-400">
-          Ketik <span className="text-cyan-400">help</span> untuk melihat perintah yang tersedia.
-        </p>
-      ),
-    },
-  ]);
+  const { lang, t } = useLang();
+  // Pesan sambutan dirender ulang sesuai bahasa; hanya output perintah yang disimpan di state
+  const [lines, setLines] = useState<Line[]>([]);
+  const [showWelcome, setShowWelcome] = useState(true);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [hIdx, setHIdx] = useState(-1);
@@ -145,9 +146,10 @@ export default function Terminal() {
   }, [lines]);
 
   const submit = () => {
-    const result = run(input);
+    const result = run(input, lang);
     if (result === "clear") {
       setLines([]);
+      setShowWelcome(false);
     } else {
       setLines((l) => [...l, { type: "in", content: input }, ...(result ? [{ type: "out" as const, content: result }] : [])]);
     }
@@ -189,6 +191,14 @@ export default function Terminal() {
         <span className="ml-3 text-zinc-400 text-xs">{user}@portfolio: ~</span>
       </div>
       <div ref={bodyRef} className="terminal-scroll h-80 overflow-y-auto p-4 space-y-1.5 cursor-text">
+        {showWelcome && (
+          <>
+            <p>{t.terminal.welcome}</p>
+            <p className="text-zinc-400">
+              {t.terminal.type} <span className="text-cyan-400">help</span> {t.terminal.forHelp}
+            </p>
+          </>
+        )}
         {lines.map((l, i) =>
           l.type === "in" ? (
             <div key={i} className="flex flex-wrap">
@@ -207,7 +217,7 @@ export default function Terminal() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
             className="flex-1 min-w-0 bg-transparent outline-none caret-emerald-400"
-            aria-label="Input terminal"
+            aria-label={t.terminal.input}
             autoComplete="off"
             spellCheck={false}
           />
