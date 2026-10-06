@@ -6,6 +6,7 @@ import { pages } from "@/data/pages";
 import { useLang } from "@/i18n/useLang";
 import SpotlightCard from "./reactbits/SpotlightCard";
 import Reveal from "./Reveal";
+import PageBackground from "./PageBackground";
 import SectionTitle from "./SectionTitle";
 
 const icons = { about: User, skills: Code2, projects: FolderGit2, experience: Briefcase, contact: Mail };
@@ -16,8 +17,9 @@ export default function Explore() {
   const items = pages.filter((p) => p.key !== "home") as Extract<(typeof pages)[number], { key: keyof typeof icons }>[];
 
   return (
-    <section className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative py-24 px-6">
+      <PageBackground variant="grid-diagonal" />
+      <div className="relative max-w-6xl mx-auto">
         <SectionTitle title={t.explore.title} subtitle={t.explore.subtitle} />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((p, i) => {
