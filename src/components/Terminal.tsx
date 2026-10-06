@@ -181,7 +181,7 @@ export default function Terminal() {
 
   return (
     <div
-      className="rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 text-zinc-100 shadow-2xl shadow-accent/5 text-sm"
+      className="font-mono rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 text-zinc-100 shadow-2xl shadow-accent/5 text-sm"
       onClick={() => inputRef.current?.focus()}
     >
       <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900 border-b border-zinc-800">

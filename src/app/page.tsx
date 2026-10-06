@@ -6,13 +6,18 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
+import HeroSpark from "@/components/HeroSpark";
+import TechMarquee from "@/components/TechMarquee";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
+        <HeroSpark>
+          <Hero />
+        </HeroSpark>
+        <TechMarquee />
         <About />
         <Skills />
         <Projects />
