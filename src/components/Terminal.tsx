@@ -31,7 +31,7 @@ function run(cmd: string): React.ReactNode | "clear" {
               <span className="text-cyan-400">{k}</span> <span className="text-zinc-400">- {v}</span>
             </p>
           ))}
-          <p className="pt-2 text-zinc-400">💡 Tip: tekan Tab untuk autocomplete, ↑/↓ untuk riwayat.</p>
+          <p className="pt-2 text-zinc-400">Tip: tekan Tab untuk autocomplete, ↑/↓ untuk riwayat.</p>
         </div>
       );
     case "whoami":
@@ -58,7 +58,7 @@ function run(cmd: string): React.ReactNode | "clear" {
         <div>
           {projects.map((p) => (
             <p key={p.title}>
-              <span className="text-cyan-400">📁 {p.title}</span> <span className="text-zinc-400">[{p.tags.join(", ")}]</span>
+              <span className="text-cyan-400">{p.title}</span> <span className="text-zinc-400">[{p.tags.join(", ")}]</span>
             </p>
           ))}
         </div>
@@ -92,15 +92,14 @@ function run(cmd: string): React.ReactNode | "clear" {
           Kirim email ke{" "}
           <a href={`mailto:${profile.email}`} className="text-cyan-400 underline">
             {profile.email}
-          </a>{" "}
-          📬
+          </a>
         </p>
       );
     case "date":
       return <p>{new Date().toString()}</p>;
     case "sudo":
     case "sudo rm -rf /":
-      return <p className="text-red-400">Nice try 😏 Permission denied.</p>;
+      return <p className="text-red-400">Nice try. Permission denied.</p>;
     case "clear":
       return "clear";
     default:
@@ -125,7 +124,7 @@ function Prompt() {
 
 export default function Terminal() {
   const [lines, setLines] = useState<Line[]>([
-    { type: "out", content: <p>Selamat datang di terminal portfolio saya! 👋</p> },
+    { type: "out", content: <p>Selamat datang di terminal portfolio saya!</p> },
     {
       type: "out",
       content: (
