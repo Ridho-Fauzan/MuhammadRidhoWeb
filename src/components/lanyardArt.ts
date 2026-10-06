@@ -1,7 +1,7 @@
 /**
  * Menggambar kartu ID & tali lanyard dari data profile.ts (di browser, via <canvas>).
  * Jadi kalau nama / role / foto / handle diganti, kartunya otomatis ikut berubah.
- * Warna sengaja netral (hitam, putih, abu-abu).
+ * Warna mengikuti palet retro "dusk" ThreeUI (ungu, emas, koral, krem).
  */
 
 type CardData = { name: string; role: string; handle: string; avatarUrl: string; shortName: string };
@@ -53,7 +53,7 @@ function nameLines(ctx: CanvasRenderingContext2D, name: string, maxW: number) {
 
 export async function drawCardArt(data: CardData) {
   await document.fonts.ready;
-  const heading = fontOf("h1", "system-ui");
+  const heading = fontOf("h1", "monospace");
   const mono = fontOf(".font-mono", "monospace");
   const photo = await loadImage(data.avatarUrl);
 
@@ -62,24 +62,31 @@ export async function drawCardArt(data: CardData) {
   front.width = W;
   front.height = H;
   let ctx = front.getContext("2d")!;
-  ctx.fillStyle = "#111113";
+  ctx.fillStyle = "#1a1030";
   ctx.fillRect(0, 0, W, H);
+  // bingkai krem + garis dalam ungu (gaya .atd-retro__bar)
+  ctx.fillStyle = "#f4e6c8";
+  ctx.fillRect(0, 0, W, 10); ctx.fillRect(0, H - 10, W, 10); ctx.fillRect(0, 0, 10, H); ctx.fillRect(W - 10, 0, 10, H);
+  ctx.fillStyle = "#241548";
+  ctx.fillRect(10, 10, W - 20, 100);
+  ctx.fillStyle = "#4b2f7e";
+  ctx.fillRect(10, 110, W - 20, 4);
 
-  ctx.fillStyle = "#a1a1aa";
-  ctx.font = `500 26px ${mono}`;
+  ctx.fillStyle = "#f9c74f";
+  ctx.font = `400 26px ${mono}`;
   ctx.letterSpacing = "5px";
   ctx.textBaseline = "middle";
-  ctx.fillText("PLAYER CARD", 64, 60);
+  ctx.fillText("PLAYER CARD", 64, 62);
   ctx.textAlign = "right";
-  ctx.fillText("ID · 001", W - 64, 60);
+  ctx.fillText("P1 · LV 01", W - 64, 62);
   ctx.textAlign = "left";
   ctx.letterSpacing = "0px";
 
   const px = 64, py = 150, pw = W - 128, ph = 640;
   ctx.save();
-  roundRect(ctx, px, py, pw, ph, 36);
+  roundRect(ctx, px, py, pw, ph, 0);
   ctx.clip();
-  ctx.fillStyle = "#27272a";
+  ctx.fillStyle = "#241548";
   ctx.fillRect(px, py, pw, ph);
   if (photo) {
     // object-fit: cover, fokus agak ke atas (wajah)
@@ -88,25 +95,30 @@ export async function drawCardArt(data: CardData) {
     ctx.drawImage(photo, px + (pw - dw) / 2, py + (ph - dh) * 0.3, dw, dh);
   }
   ctx.restore();
-  ctx.strokeStyle = "#27272a";
-  ctx.lineWidth = 2;
-  roundRect(ctx, px, py, pw, ph, 36);
-  ctx.stroke();
+  // bayangan keras + bingkai emas
+  ctx.fillStyle = "#050310";
+  ctx.fillRect(px + 12, py + ph, pw, 12);
+  ctx.fillRect(px + pw, py + 12, 12, ph);
+  ctx.strokeStyle = "#f9c74f";
+  ctx.lineWidth = 8;
+  ctx.strokeRect(px, py, pw, ph);
 
-  ctx.fillStyle = "#fafafa";
-  ctx.font = `700 76px ${heading}`;
+  ctx.fillStyle = "#f4e6c8";
+  ctx.font = `400 64px ${heading}`;
   ctx.textBaseline = "alphabetic";
   const lines = nameLines(ctx, data.name, pw);
-  lines.forEach((l, i) => ctx.fillText(l, 64, 900 + i * 80));
-  ctx.fillStyle = "#d4d4d8";
-  ctx.font = `500 40px ${heading}`;
-  ctx.fillText(data.role, 64, 900 + lines.length * 80 + 10);
+  lines.forEach((l, i) => ctx.fillText(l.toUpperCase(), 64, 900 + i * 76));
+  ctx.fillStyle = "#f47b5c";
+  ctx.font = `400 34px ${mono}`;
+  ctx.letterSpacing = "4px";
+  ctx.fillText(`> ${data.role.toUpperCase()}`, 64, 900 + lines.length * 76 + 14);
+  ctx.letterSpacing = "0px";
 
-  ctx.fillStyle = "#a1a1aa";
-  ctx.font = `500 28px ${mono}`;
+  ctx.fillStyle = "#b9a7e8";
+  ctx.font = `400 28px ${mono}`;
   ctx.fillText(`@${data.handle}`, 64, H - 72);
   // "barcode" dekoratif
-  ctx.fillStyle = "#fafafa";
+  ctx.fillStyle = "#f9c74f";
   let x = W - 64;
   [6, 3, 12, 6, 3, 6, 12, 3, 6, 6, 12, 3, 6, 3, 6, 6].forEach((bw) => {
     x -= bw;
@@ -119,25 +131,25 @@ export async function drawCardArt(data: CardData) {
   back.width = W;
   back.height = H;
   ctx = back.getContext("2d")!;
-  ctx.fillStyle = "#f4f4f5";
+  ctx.fillStyle = "#f4e6c8";
   ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = "#d4d4d8";
+  ctx.fillStyle = "#c9b48a";
   for (let yy = 18; yy < H; yy += 36) for (let xx = 18; xx < W; xx += 36) ctx.fillRect(xx - 1, yy - 1, 3, 3);
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.font = `700 110px ${mono}`;
+  ctx.font = `400 96px ${heading}`;
   const logo = ["~/", data.shortName, "_"];
   const widths = logo.map((p) => ctx.measureText(p).width);
   let lx = W / 2 - widths.reduce((a, b) => a + b, 0) / 2;
   ctx.textAlign = "left";
   logo.forEach((p, i) => {
-    ctx.fillStyle = i === 1 ? "#111113" : "#71717a";
+    ctx.fillStyle = i === 1 ? "#1a1030" : "#c2410c";
     ctx.fillText(p, lx, H / 2 - 30);
     lx += widths[i];
   });
   ctx.textAlign = "center";
-  ctx.fillStyle = "#52525b";
-  ctx.font = `500 30px ${mono}`;
+  ctx.fillStyle = "#4b2f7e";
+  ctx.font = `400 30px ${mono}`;
   ctx.letterSpacing = "5px";
   ctx.fillText(data.role.toUpperCase(), W / 2, H / 2 + 80);
 
@@ -146,17 +158,25 @@ export async function drawCardArt(data: CardData) {
   strap.width = 1025;
   strap.height = 250;
   ctx = strap.getContext("2d")!;
-  ctx.fillStyle = "#18181b";
+  ctx.fillStyle = "#241548";
   ctx.fillRect(0, 0, 1025, 250);
-  ctx.font = `700 64px ${mono}`;
+  ctx.fillStyle = "#f9c74f";
+  ctx.fillRect(0, 0, 1025, 14); ctx.fillRect(0, 236, 1025, 14);
+  ctx.font = `400 60px ${heading}`;
   ctx.letterSpacing = "8px";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  const items = [data.shortName.toUpperCase(), "•", data.role.toUpperCase(), "•"];
+  const items = [data.shortName.toUpperCase(), "■", data.role.toUpperCase(), "■"];
   const slot = 1025 / items.length;
   items.forEach((it, i) => {
-    ctx.fillStyle = it === "•" ? "#71717a" : "#fafafa";
-    ctx.fillText(it, slot * i + slot / 2, 128, slot - 10);
+    const cx = slot * i + slot / 2;
+    if (it === "■") {
+      ctx.fillStyle = "#f47b5c";
+      ctx.fillRect(cx - 14, 114, 28, 28);
+      return;
+    }
+    ctx.fillStyle = "#f4e6c8";
+    ctx.fillText(it, cx, 128, slot - 10);
   });
 
   return { front: front.toDataURL("image/png"), back: back.toDataURL("image/png"), strap: strap.toDataURL("image/png") };
