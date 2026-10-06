@@ -208,7 +208,7 @@ export default function Terminal() {
         <span className="w-3 h-3 rounded-full bg-[#b9a7e8]" />
         <span className="ml-3 text-[#b9a7e8] text-xs">{user}@portfolio: ~</span>
       </div>
-      <div ref={bodyRef} className="terminal-scroll h-80 overflow-y-auto p-4 space-y-1.5 cursor-text">
+      <div ref={bodyRef} data-lenis-prevent className="terminal-scroll h-80 overflow-y-auto overscroll-contain p-4 space-y-1.5 cursor-text">
         {showWelcome && (
           <>
             <p>{t.terminal.welcome}</p>

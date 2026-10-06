@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { ArrowDown, Hand, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import MotionLink from "./motion/MotionLink";
+import { pressButton } from "./motion/press";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
@@ -129,7 +130,8 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <Link
+            <MotionLink
+              {...pressButton}
               href="/projects"
               className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
             >
@@ -140,13 +142,14 @@ export default function Hero() {
                 <rect x="6" y="3" width="1" height="1" />
               </svg>
               {t.hero.viewProjects}
-            </Link>
-            <Link
+            </MotionLink>
+            <MotionLink
+              {...pressButton}
               href="/contact"
               className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
             >
               {t.hero.contactMe}
-            </Link>
+            </MotionLink>
           </div>
 
           <SocialIcons className="mt-8 justify-center lg:justify-start" />

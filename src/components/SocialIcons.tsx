@@ -1,6 +1,10 @@
+"use client";
+
 import { Mail } from "lucide-react";
+import { motion } from "motion/react";
 import { SiWhatsapp } from "react-icons/si";
 import { socials, type SocialKey } from "@/data/profile";
+import { pressButton } from "./motion/press";
 
 const paths: Record<Exclude<SocialKey, "email" | "whatsapp">, string> = {
   github:
@@ -25,7 +29,8 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {socials.map((s) => (
-        <a
+        <motion.a
+          {...pressButton}
           key={s.key}
           href={s.url}
           target={s.key === "email" ? undefined : "_blank"}
@@ -35,7 +40,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
           className="retro-btn p-2.5 bg-surface text-foreground hover:bg-accent hover:text-on-accent"
         >
           <SocialIcon k={s.key} className="w-4 h-4" />
-        </a>
+        </motion.a>
       ))}
     </div>
   );
