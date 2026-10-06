@@ -23,11 +23,12 @@ export default function Skills() {
             return (
               <Reveal key={i} delay={i * 0.08} className="h-full">
                 <SpotlightCard
-                  className="group h-full p-6 bg-background hover:border-accent/40 transition-colors"
+                  interactive
+                  className="lift group h-full p-6 bg-background"
                   spotlightColor="rgba(249, 199, 79, 0.14)"
                 >
                   <div className="relative flex items-center gap-3 mb-5">
-                    <div className="p-2.5 bg-accent text-on-accent border-2 border-foreground group-hover:-translate-y-0.5 transition-transform">
+                    <div className="p-2.5 bg-accent text-on-accent border-2 border-foreground group-hover:-translate-y-0.5 transition-transform duration-300 ease-[var(--ease-out)]">
                       <Icon className="w-5 h-5" />
                     </div>
                     <h3 className="text-lg">{tx(s.category)}</h3>
@@ -36,7 +37,7 @@ export default function Skills() {
                     {s.items.map((it, j) => (
                       <span
                         key={j}
-                        className="px-2.5 py-1 text-xs bg-surface border-2 border-border text-foreground/85 hover:bg-accent hover:text-on-accent hover:border-foreground"
+                        className="px-2.5 py-1 text-xs bg-surface border-2 border-border text-foreground/85 hover:bg-accent hover:text-on-accent hover:border-foreground transition-colors duration-150"
                       >
                         {tx(it)}
                       </span>
