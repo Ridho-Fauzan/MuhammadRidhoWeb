@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fragment_Mono, Silkscreen } from "next/font/google";
+import { Fragment_Mono, Pixelify_Sans, Silkscreen } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 import { tr } from "@/i18n/types";
@@ -9,6 +9,8 @@ import Navbar from "@/components/Navbar";
 // Tema retro: Silkscreen (pixel) untuk judul, Fragment Mono untuk teks — font yang dipakai ThreeUI retro dock
 const pixel = Silkscreen({ variable: "--font-pixel", subsets: ["latin"], weight: ["400", "700"] });
 const retro = Fragment_Mono({ variable: "--font-retro", subsets: ["latin"], weight: "400" });
+// Navbar: Pixelify Sans — pixel tapi tetap tebal & mudah dibaca di ukuran kecil
+const nav = Pixelify_Sans({ variable: "--font-nav", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   title: { default: `${profile.name} | ${tr(profile.role, "en")}`, template: `%s | ${profile.name}` },
@@ -29,7 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
-      <body className={`${pixel.variable} ${retro.variable} font-sans antialiased`}>
+      <body className={`${pixel.variable} ${retro.variable} ${nav.variable} font-sans antialiased`}>
         <Navbar />
         <main className="min-h-[100svh]">{children}</main>
         <Footer />
