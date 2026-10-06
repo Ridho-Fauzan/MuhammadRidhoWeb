@@ -30,7 +30,8 @@ export const profile: {
   heroBadges: string[];
   about: L[];
   stats: { value: number; suffix?: string; label: L }[];
-  quote: L;
+  quotes: L[];
+  quoteSeconds: number;
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
@@ -86,11 +87,26 @@ export const profile: {
     { value: 10, suffix: "+", label: { id: "Proyek Selesai", en: "Projects Done" } },
     { value: 5, suffix: "+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
   ],
-  /** Kutipan besar di footer — ganti dengan kalimatmu sendiri */
-  quote: {
-    id: "Belum game over selama masih mau menekan tombol continue.",
-    en: "It's never game over as long as you keep pressing continue.",
-  },
+  /**
+   * Kutipan besar di footer — bergantian otomatis. Tambah / hapus / ganti sesukamu.
+   * Boleh teks biasa ("...") atau dua bahasa ({ id: "...", en: "..." }).
+   */
+  quotes: [
+    {
+      id: "Belum game over selama masih mau menekan tombol continue.",
+      en: "It's never game over as long as you keep pressing continue.",
+    },
+    {
+      id: "Setiap bug adalah boss fight kecil. Kalahkan, lalu naik level.",
+      en: "Every bug is a tiny boss fight. Beat it, then level up.",
+    },
+    {
+      id: "Mulai dari prototipe kecil. Game besar juga lahir dari satu kotak yang bisa bergerak.",
+      en: "Start with a tiny prototype. Big games also began as one box that could move.",
+    },
+  ],
+  /** Lama tiap kutipan tampil sebelum berganti (detik) */
+  quoteSeconds: 6,
 };
 
 /**
