@@ -20,7 +20,16 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 
 - Foto profil: taruh di `public/` (mis. `public/foto.jpg`), lalu isi `avatarUrl: "/foto.jpg"`.
 - CV: taruh di `public/` (mis. `public/cv.pdf`), lalu isi `resumeUrl: "/cv.pdf"`. Tombol CV akan muncul di navbar.
-- Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek.
+- Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek. Screenshot tambahan (opsional): `gallery: ["/projects/a-2.png", ...]` → tampil sebagai thumbnail di detail proyek.
+- Kutipan footer: `quote` di `profile`.
+- Foto kartu "Pick your card" (opsional): isi `cardImages` (mis. `about: "/cards/about.jpg"`). Kosong = kartu memakai ikon pixel besar. Foto tampil hitam-putih dan berwarna saat di-hover.
+
+## Form Kontak
+
+Form "Kirim pesan" di `/contact` mengirim pesan lewat [Formspree](https://formspree.io); ID form-nya ada di `src/data/profile.ts` → `formspreeId`. Pesan masuk ke email akun Formspree, dan tombol **Reply** di email langsung membalas ke pengirim.
+
+- Ganti form: ubah `formspreeId` (atau isi env `NEXT_PUBLIC_FORMSPREE_ID`, yang lebih diprioritaskan).
+- Kosongkan `formspreeId` → tombol **Kirim** membuka aplikasi email pengunjung dengan pesan yang sudah terisi.
 
 ## Tema Retro
 
@@ -30,14 +39,14 @@ Seluruh situs memakai tema dari [ThreeUI Animated Top Dock — Retro](https://th
 
 | URL | Isi |
 |---|---|
-| `/` | Hero (Lanyard), marquee teknologi, kartu "Jelajahi" ke halaman lain |
+| `/` | Hero (Lanyard), marquee teknologi, kartu "Pick your card" ke halaman lain |
 | `/about` | Tentang saya, statistik, terminal interaktif |
 | `/skills` | Keahlian per kategori |
-| `/projects` | Proyek unggulan & lainnya |
+| `/projects` | Kartu proyek kecil; diklik → detail (deskripsi, link kode & demo) |
 | `/experience` | Timeline pendidikan & karier |
-| `/contact` | Ajakan kontak + latar partikel |
+| `/contact` | Ajakan kontak + form "Kirim pesan" + latar partikel |
 
-Daftar halaman ada di `src/data/pages.ts` (dipakai navbar dan kartu Jelajahi). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
+Di bawah tiap halaman ada baris "Pilih kartu berikutnya" ke halaman lain. Daftar halaman ada di `src/data/pages.ts` (dipakai navbar, kartu, dan footer). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
 
 ## Dua Bahasa (ID / EN)
 
@@ -54,26 +63,33 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 
 | Dipakai di | Komponen | Sumber | Lisensi |
 |---|---|---|---|
-| Kartu proyek "Coming Soon" | ShinyText | React Bits | MIT + Commons Clause |
+| Kartu proyek (efek pixel saat hover) | PixelCard | React Bits | MIT + Commons Clause |
+| Animasi hover/klik, navbar sembunyi saat scroll, detail proyek, kartu, kursor | Motion (`motion/react`) | [motion.dev](https://motion.dev) | MIT |
+| Scroll halus (mouse/trackpad) | Lenis | [lenis](https://github.com/darkroomengineering/lenis) | MIT |
 | Tema seluruh situs, navbar dock & latar dither (hero) | Animated Top Dock — Retro | [ThreeUI](https://threeui.com/css/animated-top-dock/retro) · `src/components/threeui/` | MIT |
 | Kartu ID tergantung di hero (desktop) | Lanyard (model `public/lanyard/card.glb`) | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
 | Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
 | Peran di hero | RotatingText | React Bits | MIT + Commons Clause |
-| Tombol CTA | Magnet | React Bits | MIT + Commons Clause |
 | Klik di hero | ClickSpark | React Bits | MIT + Commons Clause |
 | Marquee teknologi | LogoLoop | React Bits | MIT + Commons Clause |
-| Kartu skill / proyek / statistik | SpotlightCard | React Bits | MIT + Commons Clause |
+| Kartu skill / statistik | SpotlightCard | React Bits | MIT + Commons Clause |
 | Statistik About | CountUp | React Bits | MIT + Commons Clause |
 | Latar Contact | Particles | React Bits | MIT + Commons Clause |
 | Latar halaman About | FaultyTerminal | React Bits | MIT + Commons Clause |
 | Latar halaman Skills | Dot Matrix (warna diubah ke palet retro) | [ThreeUI](https://threeui.com) · `src/components/threeui/` | MIT |
-| Latar halaman Projects & bagian Jelajahi | ShapeGrid | React Bits | MIT + Commons Clause |
+| Latar halaman Projects & bagian "Pick your card" | ShapeGrid | React Bits | MIT + Commons Clause |
 | Latar halaman Experience | PixelSnow | React Bits | MIT + Commons Clause |
 | Logo teknologi | Simple Icons | [react-icons](https://react-icons.github.io/react-icons/) | MIT / CC0 |
 
 Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
 
-Font: Silkscreen (judul, pixel) dan Fragment Mono (teks) via `next/font/google` — keduanya SIL Open Font License.
+Font: Silkscreen (judul, pixel), Fragment Mono (teks), dan Pixelify Sans (navbar) via `next/font/google` — semuanya SIL Open Font License.
+
+## Detail Interaksi
+
+- **Layar boot** (`BootScreen.tsx`): muncul sekali per sesi tab, bisa dilewati dengan klik/tombol apa saja; tidak tampil kalau pengunjung memilih *reduce motion* atau JavaScript mati.
+- **Kursor retro** (`RetroCursor.tsx`): bingkai pixel yang mengikuti mouse; hanya di perangkat dengan mouse, kursor asli tetap tampil.
+- **Karakter pixel di footer** (`PixelBuddy.tsx`): digambar dari peta karakter di file itu — ubah huruf/warna di `BODY` & `PALETTE` untuk mengganti penampilannya.
 
 ## Proyek "Coming Soon"
 
