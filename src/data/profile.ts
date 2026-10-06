@@ -35,9 +35,9 @@ export const profile = {
 export type SocialKey = "github" | "linkedin" | "instagram" | "x" | "email";
 
 export const socials: { key: SocialKey; label: string; url: string }[] = [
-  { key: "github", label: "GitHub", url: "https://github.com/username" },
-  { key: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/username" },
-  { key: "instagram", label: "Instagram", url: "https://instagram.com/username" },
+  { key: "github", label: "GitHub", url: "https://github.com/Akashimoke" },
+  { key: "linkedin", label: "LinkedIn", url: "https://www.linkedin.com/in/muhammad-ridho-fathi-fauzan-6131bb327/" },
+  { key: "instagram", label: "Instagram", url: "https://www.instagram.com/biasadipanggilepep/" },
   { key: "x", label: "X / Twitter", url: "https://x.com/username" },
   { key: "email", label: "Email", url: "mailto:muhammadridhofathifauzan@gmail.com" },
 ];
@@ -98,24 +98,18 @@ export const experiences: {
   description: string;
   tech?: string[];
 }[] = [
+
   {
-    role: "Frontend Developer Intern",
-    company: "Nama Perusahaan",
-    period: "2025 — Sekarang",
-    description: "Ceritakan tanggung jawab dan pencapaianmu di posisi ini.",
-    tech: ["React", "TypeScript"],
+    role: "Undergraduate Computer Science Student",
+    company: "Bina Nusantara University",
+    period: "2024 — Now",
+    description: "Actively pursuing a degree in Computer Science, focusing on software development and game design.",
+    tech: ["Study", "Projects", "Research"],
   },
   {
-    role: "Freelance Web Developer",
-    company: "Mandiri",
-    period: "2024 — 2025",
-    description: "Membuat website untuk klien UMKM, mulai dari desain hingga deployment.",
-    tech: ["Next.js", "Tailwind CSS"],
-  },
-  {
-    role: "S1 / SMK — Jurusan",
-    company: "Nama Sekolah / Kampus",
-    period: "2021 — 2024",
-    description: "Pendidikan, organisasi, atau prestasi yang relevan.",
+    role: "Junior High School - Senior High School Majoring in NaturalScience",
+    company: "Pondok Pesantren Modern Daar el-Qolam",
+    period: "2018 — 2024",
+    description: "Studying at Pondok Pesantren Modern Daar el-Qolam, focusing on both academic and extracurricular activities.",
   },
 ];
