@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CardRow } from "@/components/PickCards";
 import PageBackground from "@/components/PageBackground";
 import Experience from "@/components/Experience";
 
@@ -10,6 +11,7 @@ export default function ExperiencePage() {
       <PageBackground variant="snow" />
       <div className="relative">
         <Experience />
+        <CardRow current="experience" />
       </div>
     </div>
   );

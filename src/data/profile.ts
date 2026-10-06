@@ -10,6 +10,7 @@
  *  Keduanya boleh dicampur di mana saja yang bertipe `L`.
  * ============================================================
  */
+import type { PageKey } from "@/data/pages";
 import type { L } from "@/i18n/types";
 
 export const profile: {
@@ -20,6 +21,7 @@ export const profile: {
   email: string;
   whatsapp: string;
   whatsappMessage: string;
+  formspreeId: string;
   resumeUrl: string;
   avatarUrl: string;
   handle: string;
@@ -28,6 +30,7 @@ export const profile: {
   heroBadges: string[];
   about: L[];
   stats: { value: number; suffix?: string; label: L }[];
+  quote: L;
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
@@ -41,6 +44,11 @@ export const profile: {
   whatsapp: "6285179621456",
   /** Pesan yang otomatis terisi saat pengunjung membuka chat WhatsApp */
   whatsappMessage: "Hi Ridho! I’d love to connect and get to know you better.",
+  /**
+   * ID form Formspree (https://formspree.io) untuk form "Kirim pesan" di /contact.
+   * Pesan dari pengunjung langsung masuk ke email. Kosong = form membuka aplikasi email pengunjung (mailto).
+   */
+  formspreeId: "xbgddovk",
   /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
@@ -78,6 +86,24 @@ export const profile: {
     { value: 10, suffix: "+", label: { id: "Proyek Selesai", en: "Projects Done" } },
     { value: 5, suffix: "+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
   ],
+  /** Kutipan besar di footer — ganti dengan kalimatmu sendiri */
+  quote: {
+    id: "Belum game over selama masih mau menekan tombol continue.",
+    en: "It's never game over as long as you keep pressing continue.",
+  },
+};
+
+/**
+ * Foto untuk kartu "Pick your card" (beranda & bawah tiap halaman).
+ * OPSIONAL: kosong = kartu tampil dengan ikon pixel besar.
+ * Isi dengan path di /public, mis. "/cards/about.jpg". Foto tampil hitam-putih, berwarna saat di-hover.
+ */
+export const cardImages: Partial<Record<Exclude<PageKey, "home">, string>> = {
+  about: "",
+  skills: "",
+  projects: "",
+  experience: "",
+  contact: "",
 };
 
 export type SocialKey = "github" | "linkedin" | "instagram" | "whatsapp" | "email";
@@ -124,6 +150,8 @@ export type Project = {
   tags: string[];
   /** Path gambar di /public, mis. "/projects/proyek-1.png". Kosong = placeholder gradient. */
   image?: string;
+  /** Screenshot tambahan (opsional) — tampil sebagai thumbnail di detail proyek */
+  gallery?: string[];
   demoUrl?: string;
   repoUrl?: string;
   featured?: boolean;
