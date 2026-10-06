@@ -3,10 +3,29 @@
  *  DATA PORTFOLIO — ganti semua isi di file ini dengan data dirimu.
  *  Semua komponen membaca dari sini, jadi kamu tidak perlu
  *  mengubah kode komponen sama sekali.
+ *
+ *  DUA BAHASA:
+ *  - Teks yang sama di kedua bahasa cukup ditulis biasa:  "Unity"
+ *  - Teks yang beda per bahasa ditulis:  { id: "Sekarang", en: "Now" }
+ *  Keduanya boleh dicampur di mana saja yang bertipe `L`.
  * ============================================================
  */
+import type { L } from "@/i18n/types";
 
-export const profile = {
+export const profile: {
+  name: string;
+  shortName: string;
+  role: L;
+  location: L;
+  email: string;
+  resumeUrl: string;
+  avatarUrl: string;
+  typewriter: L[];
+  tagline: L;
+  heroBadges: string[];
+  about: L[];
+  stats: { value: string; label: L }[];
+} = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
   role: "Game Developer",
@@ -16,19 +35,37 @@ export const profile = {
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
   avatarUrl: "/plo.jpg",
-  /** Teks yang bergantian diketik di hero ("Hi, I'm ...") */
-  typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer", "a Tech Enthusiast", "Web Developer"],
-  tagline: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
-  heroBadges: ["Unity", "C#", 'three.js'],
+  /** Teks yang bergantian diketik di hero ("Halo, saya ..." / "Hi, I'm ...") */
+  typewriter: [
+    "Muhammad Ridho Fathi Fauzan",
+    { id: "seorang Game Developer", en: "a Game Developer" },
+    { id: "seorang Gamer Sejati", en: "a Dedicated Gamer" },
+    { id: "seorang Tech Enthusiast", en: "a Tech Enthusiast" },
+    { id: "seorang Web Developer", en: "a Web Developer" },
+  ],
+  tagline: {
+    id: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
+    en: "Building immersive and fun games while continuously learning and growing in the world of game development.",
+  },
+  heroBadges: ["Unity", "C#", "three.js"],
   about: [
-    "Halo! Ini adalah paragraf perkenalan singkat. Ceritakan siapa kamu, apa yang sedang kamu pelajari atau kerjakan, dan apa yang membuatmu tertarik di dunia teknologi.",
-    "Paragraf kedua bisa berisi latar belakang pendidikan, pengalaman organisasi, atau proyek yang paling kamu banggakan.",
-    "Paragraf ketiga: tujuan karier dan jenis peluang yang sedang kamu cari.",
+    {
+      id: "Halo! Ini adalah paragraf perkenalan singkat. Ceritakan siapa kamu, apa yang sedang kamu pelajari atau kerjakan, dan apa yang membuatmu tertarik di dunia teknologi.",
+      en: "Hi! This is a short introduction paragraph. Tell visitors who you are, what you are learning or working on, and what got you interested in technology.",
+    },
+    {
+      id: "Paragraf kedua bisa berisi latar belakang pendidikan, pengalaman organisasi, atau proyek yang paling kamu banggakan.",
+      en: "The second paragraph can cover your education, organizational experience, or the project you are most proud of.",
+    },
+    {
+      id: "Paragraf ketiga: tujuan karier dan jenis peluang yang sedang kamu cari.",
+      en: "Third paragraph: your career goals and the kind of opportunities you are looking for.",
+    },
   ],
   stats: [
-    { value: "2+", label: "Tahun Belajar" },
-    { value: "10+", label: "Proyek Selesai" },
-    { value: "5+", label: "Teknologi Dikuasai" },
+    { value: "2+", label: { id: "Tahun Belajar", en: "Years Learning" } },
+    { value: "10+", label: { id: "Proyek Selesai", en: "Projects Done" } },
+    { value: "5+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
   ],
 };
 
@@ -42,7 +79,7 @@ export const socials: { key: SocialKey; label: string; url: string }[] = [
   { key: "email", label: "Email", url: "mailto:muhammadridhofathifauzan@gmail.com" },
 ];
 
-export const skills: { category: string; items: string[] }[] = [
+export const skills: { category: L; items: L[] }[] = [
   {
     category: "Game-Dev",
     items: ["Unity", "C#", "Gameplay Programming", "Game Mechanics", "2D / 3D Development", "Physics"],
@@ -65,10 +102,9 @@ export const skills: { category: string; items: string[] }[] = [
   },
 ];
 
-
 export type Project = {
-  title: string;
-  description: string;
+  title: L;
+  description: L;
   tags: string[];
   /** Path gambar di /public, mis. "/projects/proyek-1.png". Kosong = placeholder gradient. */
   image?: string;
@@ -80,8 +116,10 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "Kawan Aksi",
-    description:
-      "A web platform that connects volunteers with social activities hosted by local communities and NGOs. Users can browse events, view details (location, schedule, organizer, requirements), register as volunteers, and contact organizers.",
+    description: {
+      id: "Platform web yang menghubungkan relawan dengan kegiatan sosial dari komunitas lokal dan NGO. Pengguna bisa menjelajahi kegiatan, melihat detail (lokasi, jadwal, penyelenggara, syarat), mendaftar sebagai relawan, dan menghubungi penyelenggara.",
+      en: "A web platform that connects volunteers with social activities hosted by local communities and NGOs. Users can browse events, view details (location, schedule, organizer, requirements), register as volunteers, and contact organizers.",
+    },
     tags: ["HTML", "CSS", "JavaScript"],
     image: "/projects/kawanaksi.png",
     demoUrl: "https://kawanaksi.vercel.app",
@@ -89,46 +127,67 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Proyek Kedua",
-    description: "Aplikasi contoh untuk mengelola data. Ganti dengan proyek nyata milikmu.",
+    title: { id: "Proyek Kedua", en: "Second Project" },
+    description: {
+      id: "Aplikasi contoh untuk mengelola data. Ganti dengan proyek nyata milikmu.",
+      en: "A sample data management app. Replace it with one of your real projects.",
+    },
     tags: ["React", "Node.js", "MongoDB"],
     demoUrl: "#",
     repoUrl: "#",
     featured: true,
   },
   {
-    title: "Proyek Ketiga",
-    description: "Landing page responsif dengan animasi halus dan skor Lighthouse tinggi.",
+    title: { id: "Proyek Ketiga", en: "Third Project" },
+    description: {
+      id: "Landing page responsif dengan animasi halus dan skor Lighthouse tinggi.",
+      en: "A responsive landing page with smooth animations and a high Lighthouse score.",
+    },
     tags: ["HTML", "CSS", "JavaScript"],
     repoUrl: "#",
   },
   {
-    title: "Proyek Keempat",
-    description: "REST API sederhana dengan autentikasi JWT dan dokumentasi Swagger.",
+    title: { id: "Proyek Keempat", en: "Fourth Project" },
+    description: {
+      id: "REST API sederhana dengan autentikasi JWT dan dokumentasi Swagger.",
+      en: "A simple REST API with JWT authentication and Swagger documentation.",
+    },
     tags: ["Express", "PostgreSQL", "JWT"],
     repoUrl: "#",
   },
 ];
 
 export const experiences: {
-  role: string;
-  company: string;
-  period: string;
-  description: string;
-  tech?: string[];
+  role: L;
+  company: L;
+  period: L;
+  description: L;
+  tech?: L[];
 }[] = [
-
   {
-    role: "Undergraduate Computer Science Student",
+    role: { id: "Mahasiswa S1 Ilmu Komputer", en: "Undergraduate Computer Science Student" },
     company: "Bina Nusantara University",
-    period: "2024 — Now",
-    description: "Actively pursuing a degree in Computer Science, focusing on software development and game design.",
-    tech: ["Study", "Projects", "Research"],
+    period: { id: "2024 — Sekarang", en: "2024 — Now" },
+    description: {
+      id: "Sedang menempuh studi Ilmu Komputer dengan fokus pada pengembangan perangkat lunak dan desain game.",
+      en: "Actively pursuing a degree in Computer Science, focusing on software development and game design.",
+    },
+    tech: [
+      { id: "Studi", en: "Study" },
+      { id: "Proyek", en: "Projects" },
+      { id: "Riset", en: "Research" },
+    ],
   },
   {
-    role: "Junior High School - Senior High School Majoring in Natural Science",
+    role: {
+      id: "SMP - SMA Jurusan IPA",
+      en: "Junior High School - Senior High School Majoring in Natural Science",
+    },
     company: "Pondok Pesantren Modern Daar el-Qolam",
     period: "2018 — 2024",
-    description: "Studying at Pondok Pesantren Modern Daar el-Qolam, focusing on both academic and extracurricular activities.",
+    description: {
+      id: "Bersekolah di Pondok Pesantren Modern Daar el-Qolam, dengan fokus pada kegiatan akademik maupun ekstrakurikuler.",
+      en: "Studying at Pondok Pesantren Modern Daar el-Qolam, focusing on both academic and extracurricular activities.",
+    },
   },
 ];

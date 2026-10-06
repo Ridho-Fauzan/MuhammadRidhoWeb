@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
+import { useLang } from "@/i18n/useLang";
 
 // Membaca tema langsung dari class <html> (di-set oleh script di layout.tsx)
 const listeners = new Set<() => void>();
@@ -14,6 +15,7 @@ const getServerSnapshot = () => true;
 
 export default function ThemeToggle() {
   const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const { t } = useLang();
 
   const toggle = () => {
     const next = !dark;
@@ -28,7 +30,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label={dark ? "Ganti ke mode terang" : "Ganti ke mode gelap"}
+      aria-label={dark ? t.toggles.toLight : t.toggles.toDark}
       className="p-2 rounded-lg border border-border text-muted hover:text-accent hover:border-accent/50 transition-colors"
     >
       {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

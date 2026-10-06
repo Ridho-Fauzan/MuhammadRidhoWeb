@@ -25,3 +25,10 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 ## Section
 
 Hero (typewriter) → About + terminal interaktif → Skills → Projects → Experience (timeline) → Contact. Tersedia mode gelap dan terang.
+
+## Dua Bahasa (ID / EN)
+
+Tombol **ID / EN** ada di navbar. Pilihan pengunjung disimpan di browser. Pengunjung pertama kali otomatis mengikuti bahasa browser-nya (Indonesia → ID, lainnya → EN). Di terminal juga bisa ketik `lang en` / `lang id`.
+
+- **Isi data** (`src/data/profile.ts`): tulis `{ id: "...", en: "..." }` untuk teks yang berbeda per bahasa, atau string biasa kalau sama, mis. `"Unity"`.
+- **Teks antarmuka** (tombol, judul section, footer, terminal): `src/i18n/ui.ts`.

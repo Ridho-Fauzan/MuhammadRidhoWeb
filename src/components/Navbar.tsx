@@ -3,19 +3,17 @@
 import { FileDown, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
+import { useLang } from "@/i18n/useLang";
+import LangToggle from "./LangToggle";
 import ThemeToggle from "./ThemeToggle";
 
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-];
+const sections = ["about", "skills", "projects", "experience", "contact"] as const;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLang();
+  const links = sections.map((s) => ({ href: `#${s}`, label: t.nav[s] }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -53,12 +51,14 @@ export default function Navbar() {
               <FileDown className="w-4 h-4" /> CV
             </a>
           )}
-          <div className="ml-2">
+          <div className="ml-2 flex items-center gap-2">
+            <LangToggle />
             <ThemeToggle />
           </div>
         </div>
 
         <div className="flex md:hidden items-center gap-2">
+          <LangToggle />
           <ThemeToggle />
           <button
             type="button"
