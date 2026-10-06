@@ -57,7 +57,15 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+}
+
+/* Jarak anchor (#stack, #contact, ...) dari navbar fixed.
+   Sengaja pakai scroll-margin di elemen, BUKAN scroll-padding-top di <html>:
+   Next.js membaca scroll-padding <html> saat pindah halaman, dan karena puncak
+   halaman (y=0) < padding, Next mengira halaman belum terlihat lalu men-scroll
+   ke tengah (ke section #stack) alih-alih ke paling atas. */
+[id] {
+  scroll-margin-top: 5rem;
 }
 
 body {
