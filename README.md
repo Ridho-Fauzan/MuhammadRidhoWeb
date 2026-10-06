@@ -4,7 +4,7 @@ Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](
 
 ## Tech Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · lucide-react · react-icons
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · GSAP · lucide-react · react-icons
 
 ## Menjalankan
 
@@ -50,6 +50,8 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 
 | Dipakai di | Komponen | Sumber | Lisensi |
 |---|---|---|---|
+| Navbar | PillNav | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
+| Kartu proyek "Coming Soon" | ShinyText | React Bits | MIT + Commons Clause |
 | Latar hero (mode gelap) | Emerald Horizon | [ThreeUI Community](https://threeui.com) · `src/components/threeui/` | MIT |
 | Kartu ID tergantung di hero (desktop) | Lanyard (model `public/lanyard/card.glb`) | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
 | Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
@@ -65,3 +67,7 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
 
 Font: Space Grotesk (judul), Inter (teks), JetBrains Mono (kode/terminal), via `next/font/google`.
+
+## Proyek "Coming Soon"
+
+Di `src/data/profile.ts`, proyek dengan `comingSoon: true` tampil sebagai kartu **Segera Hadir / Coming Soon** tanpa link. Saat proyeknya sudah ada, hapus `comingSoon` lalu isi `title`, `description`, `tags`, `image`, `demoUrl`, dan `repoUrl`.

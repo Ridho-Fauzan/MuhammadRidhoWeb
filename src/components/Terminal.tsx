@@ -80,7 +80,7 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {projects.map((p, i) => (
             <p key={i}>
-              <span className="text-cyan-400">{tx(p.title)}</span> <span className="text-zinc-400">[{p.tags.join(", ")}]</span>
+              <span className="text-cyan-400">{tx(p.title)}</span> <span className="text-zinc-400">{p.comingSoon ? "(coming soon)" : `[${p.tags.join(", ")}]`}</span>
             </p>
           ))}
         </div>
