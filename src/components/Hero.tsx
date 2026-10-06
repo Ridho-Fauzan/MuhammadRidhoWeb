@@ -7,12 +7,16 @@ import { profile } from "@/data/profile";
 import SocialIcons from "./SocialIcons";
 import Typewriter from "./Typewriter";
 
+// Inisial otomatis dari nama, mis. "Muhammad Ridho Fathi Fauzan" -> "MF" (huruf depan kata pertama & terakhir)
+const words = profile.name.trim().split(/\s+/);
+const initials = (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase();
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center px-6 pt-24 pb-16 overflow-hidden">
       <div className="absolute inset-0 bg-grid pointer-events-none" />
       <div className="absolute -top-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-[28rem] h-[28rem] rounded-full bg-accent-2/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 -left-60 w-[28rem] h-[28rem] rounded-full bg-accent-2/10 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto w-full grid md:grid-cols-[1.4fr_1fr] gap-12 items-center">
         <motion.div
@@ -21,19 +25,6 @@ export default function Hero() {
           transition={{ duration: 0.7 }}
           className="order-2 md:order-1 text-center md:text-left"
         >
-          {profile.openToWork && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs">
-              <span className="relative flex w-2 h-2">
-                <span className="absolute inline-flex w-full h-full rounded-full bg-accent opacity-75 animate-ping" />
-                <span className="relative inline-flex w-2 h-2 rounded-full bg-accent" />
-              </span>
-              Terbuka untuk peluang baru
-            </div>
-          )}
-
-          <p className="text-muted mb-3">
-            <span className="text-accent">$</span> whoami
-          </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight min-h-[2.5em] sm:min-h-[2.4em]">
             Hi, I&apos;m <br />
             <Typewriter texts={profile.typewriter} className="gradient-text" />
@@ -62,7 +53,7 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
             <a
               href="#projects"
-              className="px-6 py-3 rounded-lg bg-accent text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
+              className="px-6 py-3 rounded-lg bg-accent text-white dark:text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
             >
               Lihat Proyek
             </a>
@@ -90,7 +81,7 @@ export default function Hero() {
                 {profile.avatarUrl ? (
                   <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />
                 ) : (
-                  <span className="text-5xl sm:text-7xl font-bold gradient-text">{profile.initials}</span>
+                  <span className="text-5xl sm:text-7xl font-bold gradient-text">{initials}</span>
                 )}
               </div>
             </div>
