@@ -18,7 +18,7 @@ export default function Contact() {
         </p>
         <a
           href={`mailto:${profile.email}`}
-          className="mt-10 inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-accent text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
+          className="mt-10 inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-accent text-white dark:text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
         >
           <Mail className="w-5 h-5" /> Kirim Email
         </a>
