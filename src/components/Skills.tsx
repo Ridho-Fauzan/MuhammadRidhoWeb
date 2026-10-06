@@ -1,9 +1,9 @@
-import { Code2, Database, Server, Wrench } from "lucide-react";
+import { Braces, Gamepad2, PencilRuler, Wrench } from "lucide-react";
 import { skills } from "@/data/profile";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 
-const icons = [Code2, Server, Database, Wrench];
+const icons = [Gamepad2, Braces, PencilRuler, Wrench];
 
 export default function Skills() {
   return (
