@@ -15,7 +15,7 @@ export default function Projects() {
   const others = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="py-28 px-6">
+    <section id="projects" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
 
