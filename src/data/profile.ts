@@ -113,6 +113,8 @@ export type Project = {
   demoUrl?: string;
   repoUrl?: string;
   featured?: boolean;
+  /** true = tampil sebagai kartu "Coming Soon" (tanpa link). Hapus/ganti saat proyeknya sudah ada. */
+  comingSoon?: boolean;
 };
 
 export const projects: Project[] = [
@@ -129,33 +131,32 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: { id: "Proyek Kedua", en: "Second Project" },
+    title: { id: "Proyek Berikutnya", en: "Next Project" },
     description: {
-      id: "Aplikasi contoh untuk mengelola data. Ganti dengan proyek nyata milikmu.",
-      en: "A sample data management app. Replace it with one of your real projects.",
+      id: "Proyek baru sedang dikerjakan. Nantikan, ya!",
+      en: "A new project is in the works. Stay tuned!",
     },
-    tags: ["React", "Node.js", "MongoDB"],
-    demoUrl: "#",
-    repoUrl: "#",
+    tags: [],
+    comingSoon: true,
     featured: true,
   },
   {
-    title: { id: "Proyek Ketiga", en: "Third Project" },
+    title: { id: "Proyek Berikutnya", en: "Next Project" },
     description: {
-      id: "Landing page responsif dengan animasi halus dan skor Lighthouse tinggi.",
-      en: "A responsive landing page with smooth animations and a high Lighthouse score.",
+      id: "Proyek baru sedang dikerjakan. Nantikan, ya!",
+      en: "A new project is in the works. Stay tuned!",
     },
-    tags: ["HTML", "CSS", "JavaScript"],
-    repoUrl: "#",
+    tags: [],
+    comingSoon: true,
   },
   {
-    title: { id: "Proyek Keempat", en: "Fourth Project" },
+    title: { id: "Proyek Berikutnya", en: "Next Project" },
     description: {
-      id: "REST API sederhana dengan autentikasi JWT dan dokumentasi Swagger.",
-      en: "A simple REST API with JWT authentication and Swagger documentation.",
+      id: "Proyek baru sedang dikerjakan. Nantikan, ya!",
+      en: "A new project is in the works. Stay tuned!",
     },
-    tags: ["Express", "PostgreSQL", "JWT"],
-    repoUrl: "#",
+    tags: [],
+    comingSoon: true,
   },
 ];
 
