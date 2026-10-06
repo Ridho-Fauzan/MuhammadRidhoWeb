@@ -15,7 +15,7 @@ export default function Contact() {
   const { t } = useLang();
 
   return (
-    <section id="contact" className="relative py-32 px-6 overflow-hidden">
+    <section id="contact" className="relative min-h-[70svh] flex items-center py-24 px-6 overflow-hidden">
       {/* Latar partikel React Bits — bergerak mengikuti kursor */}
       <div className="absolute inset-0 opacity-60 dark:opacity-100">
         <WebGLBoundary>
@@ -33,7 +33,7 @@ export default function Contact() {
       </div>
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_75%)]" />
 
-      <Reveal className="relative max-w-3xl mx-auto text-center">
+      <Reveal className="relative w-full max-w-3xl mx-auto text-center">
         <h2 className="text-4xl sm:text-6xl font-bold">
           {t.contact.title1} <span className="gradient-text">{t.contact.title2}</span>
         </h2>

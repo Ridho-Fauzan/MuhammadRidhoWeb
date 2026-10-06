@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, Hand, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
@@ -129,20 +130,20 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
             <Magnet padding={60} magnetStrength={4}>
-              <a
-                href="#projects"
+              <Link
+                href="/projects"
                 className="inline-block px-7 py-3.5 rounded-xl bg-accent text-white dark:text-zinc-950 font-semibold shadow-lg shadow-accent/25 hover:bg-accent-dark transition-colors"
               >
                 {t.hero.viewProjects}
-              </a>
+              </Link>
             </Magnet>
             <Magnet padding={60} magnetStrength={4}>
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className="inline-block px-7 py-3.5 rounded-xl border border-border bg-background/50 backdrop-blur hover:border-accent hover:text-accent transition-colors"
               >
                 {t.hero.contactMe}
-              </a>
+              </Link>
             </Magnet>
           </div>
 

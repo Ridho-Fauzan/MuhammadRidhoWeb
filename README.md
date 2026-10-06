@@ -22,9 +22,18 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 - CV: taruh di `public/` (mis. `public/cv.pdf`), lalu isi `resumeUrl: "/cv.pdf"`. Tombol CV akan muncul di navbar.
 - Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek.
 
-## Section
+## Halaman
 
-Hero (typewriter) → About + terminal interaktif → Skills → Projects → Experience (timeline) → Contact. Tersedia mode gelap dan terang.
+| URL | Isi |
+|---|---|
+| `/` | Hero (Lanyard), marquee teknologi, kartu "Jelajahi" ke halaman lain |
+| `/about` | Tentang saya, statistik, terminal interaktif |
+| `/skills` | Keahlian per kategori |
+| `/projects` | Proyek unggulan & lainnya |
+| `/experience` | Timeline pendidikan & karier |
+| `/contact` | Ajakan kontak + latar partikel |
+
+Daftar halaman ada di `src/data/pages.ts` (dipakai navbar, kartu Jelajahi, dan tombol "Selanjutnya"). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
 
 ## Dua Bahasa (ID / EN)
 

@@ -9,7 +9,7 @@ export default function Experience() {
   const { t, tx } = useLang();
 
   return (
-    <section id="experience" className="py-24 px-6 bg-surface/60 border-y border-border">
+    <section id="experience" className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <SectionTitle title={t.experience.title} subtitle={t.experience.subtitle} />
         <ol className="relative border-l border-border ml-2">
