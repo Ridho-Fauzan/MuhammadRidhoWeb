@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 import { tr } from "@/i18n/types";
 
-const mono = Poppins({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+const display = Space_Grotesk({ variable: "--font-heading", subsets: ["latin"], weight: ["500", "600", "700"] });
+const sans = Inter({ variable: "--font-body", subsets: ["latin"] });
+const mono = JetBrains_Mono({ variable: "--font-code", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: `${profile.name} | ${tr(profile.role, "en")}`,
@@ -29,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
-      <body className={`${mono.variable} font-mono antialiased`}>{children}</body>
+      <body className={`${display.variable} ${sans.variable} ${mono.variable} font-sans antialiased`}>{children}</body>
     </html>
   );
 }

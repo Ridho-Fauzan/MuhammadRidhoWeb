@@ -4,7 +4,7 @@ Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](
 
 ## Tech Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion · lucide-react
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · OGL · lucide-react · react-icons
 
 ## Menjalankan
 
@@ -32,3 +32,23 @@ Tombol **ID / EN** ada di navbar. Pilihan pengunjung disimpan di browser. Pengun
 
 - **Isi data** (`src/data/profile.ts`): tulis `{ id: "...", en: "..." }` untuk teks yang berbeda per bahasa, atau string biasa kalau sama, mis. `"Unity"`.
 - **Teks antarmuka** (tombol, judul section, footer, terminal): `src/i18n/ui.ts`.
+
+## Komponen & Aset Pihak Ketiga
+
+| Dipakai di | Komponen | Sumber | Lisensi |
+|---|---|---|---|
+| Latar hero (mode gelap) | Emerald Horizon | [ThreeUI Community](https://threeui.com) · `src/components/threeui/` | MIT |
+| Kartu foto hero (desktop) | ProfileCard | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
+| Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
+| Peran di hero | RotatingText | React Bits | MIT + Commons Clause |
+| Tombol CTA | Magnet | React Bits | MIT + Commons Clause |
+| Klik di hero | ClickSpark | React Bits | MIT + Commons Clause |
+| Marquee teknologi | LogoLoop | React Bits | MIT + Commons Clause |
+| Kartu skill / proyek / statistik | SpotlightCard | React Bits | MIT + Commons Clause |
+| Statistik About | CountUp | React Bits | MIT + Commons Clause |
+| Latar Contact | Particles | React Bits | MIT + Commons Clause |
+| Logo teknologi | Simple Icons | [react-icons](https://react-icons.github.io/react-icons/) | MIT / CC0 |
+
+Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
+
+Font: Space Grotesk (judul), Inter (teks), JetBrains Mono (kode/terminal), via `next/font/google`.

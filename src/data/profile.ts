@@ -20,11 +20,13 @@ export const profile: {
   email: string;
   resumeUrl: string;
   avatarUrl: string;
-  typewriter: L[];
+  handle: string;
+  status: L;
+  roles: L[];
   tagline: L;
   heroBadges: string[];
   about: L[];
-  stats: { value: string; label: L }[];
+  stats: { value: number; suffix?: string; label: L }[];
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
@@ -35,13 +37,16 @@ export const profile: {
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
   avatarUrl: "/plo.jpg",
-  /** Teks yang bergantian diketik di hero ("Halo, saya ..." / "Hi, I'm ...") */
-  typewriter: [
-    "Muhammad Ridho Fathi Fauzan",
-    { id: "seorang Game Developer", en: "a Game Developer" },
-    { id: "seorang Gamer Sejati", en: "a Dedicated Gamer" },
-    { id: "seorang Tech Enthusiast", en: "a Tech Enthusiast" },
-    { id: "seorang Web Developer", en: "a Web Developer" },
+  /** Username yang tampil di ProfileCard (tanpa @) */
+  handle: "Akashimoke",
+  /** Status kecil di ProfileCard */
+  status: { id: "Terbuka untuk kolaborasi", en: "Open to collaborate" },
+  /** Peran yang berganti-ganti di hero: "Saya seorang ..." / "I'm a ..." */
+  roles: [
+    "Game Developer",
+    "Web Developer",
+    "Tech Enthusiast",
+    { id: "Gamer Sejati", en: "Dedicated Gamer" },
   ],
   tagline: {
     id: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
@@ -63,9 +68,9 @@ export const profile: {
     },
   ],
   stats: [
-    { value: "2+", label: { id: "Tahun Belajar", en: "Years Learning" } },
-    { value: "10+", label: { id: "Proyek Selesai", en: "Projects Done" } },
-    { value: "5+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
+    { value: 2, suffix: "+", label: { id: "Tahun Belajar", en: "Years Learning" } },
+    { value: 10, suffix: "+", label: { id: "Proyek Selesai", en: "Projects Done" } },
+    { value: 5, suffix: "+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
   ],
 };
 

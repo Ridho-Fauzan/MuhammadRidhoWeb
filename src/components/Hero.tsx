@@ -1,101 +1,145 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, MapPin } from "lucide-react";
+import { ArrowDown, MapPin, MousePointer2 } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
+import DecryptedText from "./reactbits/DecryptedText";
+import Magnet from "./reactbits/Magnet";
+import RotatingText from "./reactbits/RotatingText";
 import SocialIcons from "./SocialIcons";
-import Typewriter from "./Typewriter";
+import WebGLBoundary from "./WebGLBoundary";
 
-// Inisial otomatis dari nama, mis. "Muhammad Ridho Fathi Fauzan" -> "MF" (huruf depan kata pertama & terakhir)
-const words = profile.name.trim().split(/\s+/);
-const initials = (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase();
+// Komponen berat (WebGL / tilt) dimuat hanya di browser agar halaman awal tetap ringan
+const EmeraldHorizon = dynamic(
+  () => import("./threeui/EmeraldHorizonBackground").then((m) => m.EmeraldHorizonBackground),
+  { ssr: false },
+);
+const ProfileCard = dynamic(() => import("./reactbits/ProfileCard"), { ssr: false });
 
 export default function Hero() {
   const { lang, t, tx } = useLang();
 
   return (
-    <section className="relative min-h-screen flex items-center px-6 pt-24 pb-16 overflow-hidden">
-      <div className="absolute inset-0 bg-grid pointer-events-none" />
-      <div className="absolute -top-40 -right-40 w-[28rem] h-[28rem] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -left-60 w-[28rem] h-[28rem] rounded-full bg-accent-2/10 blur-3xl pointer-events-none" />
+    <section className="relative min-h-[100svh] flex items-center px-6 pt-28 pb-20 overflow-hidden noise">
+      {/* Latar: shader ThreeUI + gradasi agar teks tetap terbaca */}
+      <div className="absolute inset-0 pointer-events-none hidden dark:block opacity-90">
+        <WebGLBoundary>
+          <EmeraldHorizon className="absolute inset-0" speed={0.6} glow={1.1} />
+        </WebGLBoundary>
+      </div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-background/10 via-background/30 to-background" />
+      {/* Mode terang: cahaya lembut sebagai pengganti shader */}
+      <div className="dark:hidden absolute -top-32 right-0 w-[36rem] h-[36rem] rounded-full bg-accent/15 blur-3xl pointer-events-none" />
+      <div className="dark:hidden absolute bottom-0 -left-40 w-[30rem] h-[30rem] rounded-full bg-accent-2/15 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto w-full grid md:grid-cols-[1.4fr_1fr] gap-12 items-center">
+      <div className="relative max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-8 items-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="order-2 md:order-1 text-center md:text-left"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center lg:text-left"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight min-h-[2.5em] sm:min-h-[2.4em]">
-            {t.hero.greeting} <br />
-            <Typewriter key={lang} texts={profile.typewriter.map(tx)} className="gradient-text" />
+          {/* Foto bulat hanya di mobile; di desktop diganti ProfileCard */}
+          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 rounded-full p-[3px] bg-gradient-to-br from-accent to-accent-2 shadow-[0_0_40px_-8px] shadow-accent/60">
+            <div className="relative w-full h-full rounded-full overflow-hidden bg-surface">
+              {profile.avatarUrl && <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />}
+            </div>
+          </div>
+
+          <p className="font-mono text-sm text-muted">{t.hero.greeting}</p>
+          <h1 className="mt-2 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05]">
+            <DecryptedText
+              key={lang}
+              text={profile.name}
+              animateOn="view"
+              sequential
+              speed={35}
+              revealDirection="start"
+              className="gradient-text"
+              encryptedClassName="text-accent/50"
+              parentClassName="inline-block"
+            />
           </h1>
 
-          <p className="mt-6 text-base sm:text-lg text-muted max-w-xl mx-auto md:mx-0">{tx(profile.tagline)}</p>
+          <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 text-lg sm:text-2xl font-medium">
+            <span className="text-muted">{t.hero.iAm}</span>
+            <RotatingText
+              key={lang}
+              texts={profile.roles.map(tx)}
+              mainClassName="px-3 py-1 rounded-lg bg-accent text-white dark:text-zinc-950 overflow-hidden justify-center"
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-0.5"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2600}
+            />
+          </div>
 
-          <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
+          <p className="mt-6 text-base sm:text-lg text-muted max-w-xl mx-auto lg:mx-0 leading-relaxed">{tx(profile.tagline)}</p>
+
+          <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-muted">
             <MapPin className="w-4 h-4 text-accent" /> {tx(profile.location)}
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-2 justify-center md:justify-start">
-            {profile.heroBadges.map((b, i) => (
-              <motion.span
-                key={b}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 + i * 0.07 }}
-                className="px-3 py-1 text-xs sm:text-sm rounded-md border border-border bg-surface text-muted"
+          <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
+            <Magnet padding={60} magnetStrength={4}>
+              <a
+                href="#projects"
+                className="inline-block px-7 py-3.5 rounded-xl bg-accent text-white dark:text-zinc-950 font-semibold shadow-lg shadow-accent/25 hover:bg-accent-dark transition-colors"
               >
-                {b}
-              </motion.span>
-            ))}
+                {t.hero.viewProjects}
+              </a>
+            </Magnet>
+            <Magnet padding={60} magnetStrength={4}>
+              <a
+                href="#contact"
+                className="inline-block px-7 py-3.5 rounded-xl border border-border bg-background/50 backdrop-blur hover:border-accent hover:text-accent transition-colors"
+              >
+                {t.hero.contactMe}
+              </a>
+            </Magnet>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
-            <a
-              href="#projects"
-              className="px-6 py-3 rounded-lg bg-accent text-white dark:text-zinc-950 font-semibold hover:bg-accent-dark transition-colors"
-            >
-              {t.hero.viewProjects}
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 rounded-lg border border-border hover:border-accent hover:text-accent transition-colors"
-            >
-              {t.hero.contactMe}
-            </a>
-          </div>
-
-          <SocialIcons className="mt-8 justify-center md:justify-start" />
+          <SocialIcons className="mt-8 justify-center lg:justify-start" />
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="order-1 md:order-2 flex justify-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="hidden lg:flex flex-col items-center"
         >
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
-            <div className="absolute -inset-3 rounded-full border-2 border-dashed border-accent/40 animate-spin-slow" />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent to-accent-2 p-1">
-              <div className="relative w-full h-full rounded-full bg-surface overflow-hidden flex items-center justify-center">
-                {profile.avatarUrl ? (
-                  <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />
-                ) : (
-                  <span className="text-5xl sm:text-7xl font-bold gradient-text">{initials}</span>
-                )}
-              </div>
-            </div>
-          </div>
+          <ProfileCard
+            avatarUrl={profile.avatarUrl}
+            miniAvatarUrl={profile.avatarUrl}
+            iconUrl=""
+            grainUrl=""
+            name={profile.name.split(" ").slice(0, 2).join(" ")}
+            title={tx(profile.role)}
+            handle={profile.handle}
+            status={tx(profile.status)}
+            contactText={t.hero.cardContact}
+            behindGlowColor="rgba(52, 211, 153, 0.55)"
+            innerGradient="linear-gradient(145deg, rgba(16,185,129,0.35) 0%, rgba(34,211,238,0.25) 100%)"
+            enableTilt
+            onContactClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+          />
+          <p className="mt-5 inline-flex items-center gap-1.5 text-xs text-muted font-mono">
+            <MousePointer2 className="w-3.5 h-3.5 text-accent" /> {t.hero.hint}
+          </p>
         </motion.div>
       </div>
 
       <a
-        href="#about"
+        href="#stack"
         aria-label={t.hero.scrollDown}
-        className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-muted hover:text-accent animate-bounce"
+        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 text-muted hover:text-accent animate-bounce"
       >
         <ArrowDown className="w-5 h-5" />
       </a>
