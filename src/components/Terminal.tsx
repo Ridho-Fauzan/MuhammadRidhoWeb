@@ -26,19 +26,19 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
     if (!page) {
       return (
         <p>
-          <span className="text-red-400">cd:</span> {target}: {t.terminal.noDir}{" "}
-          <span className="text-zinc-400">({pages.filter((p) => p.key !== "home").map((p) => p.key).join(", ")})</span>
+          <span className="text-[#ff6b6b]">cd:</span> {target}: {t.terminal.noDir}{" "}
+          <span className="text-[#b9a7e8]">({pages.filter((p) => p.key !== "home").map((p) => p.key).join(", ")})</span>
         </p>
       );
     }
     setTimeout(() => go(page.href), 350);
-    return <p className="text-emerald-400">→ {t.nav[page.key]}</p>;
+    return <p className="text-[#f9c74f]">→ {t.nav[page.key]}</p>;
   }
 
   if (c === "lang en" || c === "lang id") {
     const next = c.slice(5) as Lang;
     setLang(next);
-    return <p className="text-emerald-400">{ui[next].terminal.langChanged}</p>;
+    return <p className="text-[#f9c74f]">{ui[next].terminal.langChanged}</p>;
   }
 
   switch (c) {
@@ -47,30 +47,30 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
     case "help":
       return (
         <div className="space-y-0.5">
-          <p className="text-amber-300">{t.terminal.available}</p>
+          <p className="text-[#fff4d6]">{t.terminal.available}</p>
           {(Object.keys(t.terminal.cmds) as (keyof Ui["terminal"]["cmds"])[]).map((k) => (
             <p key={k} className="pl-4">
-              <span className="text-cyan-400">{k}</span> <span className="text-zinc-400">- {t.terminal.cmds[k]}</span>
+              <span className="text-[#f47b5c]">{k}</span> <span className="text-[#b9a7e8]">- {t.terminal.cmds[k]}</span>
             </p>
           ))}
-          <p className="pt-2 text-zinc-400">{t.terminal.tip}</p>
+          <p className="pt-2 text-[#b9a7e8]">{t.terminal.tip}</p>
         </div>
       );
     case "whoami":
       return (
         <p>
-          <span className="text-emerald-400">{profile.name}</span> — {tx(profile.role)} @ {tx(profile.location)}
+          <span className="text-[#f9c74f]">{profile.name}</span> — {tx(profile.role)} @ {tx(profile.location)}
         </p>
       );
     case "about":
-      return <p className="text-zinc-300">{tx(profile.about[0])}</p>;
+      return <p className="text-[#e8dcff]">{tx(profile.about[0])}</p>;
     case "skills":
       return (
         <div>
           {skills.map((s, i) => (
             <p key={i}>
-              <span className="text-amber-300">{tx(s.category)}</span>{" "}
-              <span className="text-zinc-300">{s.items.map(tx).join(", ")}</span>
+              <span className="text-[#fff4d6]">{tx(s.category)}</span>{" "}
+              <span className="text-[#e8dcff]">{s.items.map(tx).join(", ")}</span>
             </p>
           ))}
         </div>
@@ -80,7 +80,7 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {projects.map((p, i) => (
             <p key={i}>
-              <span className="text-cyan-400">{tx(p.title)}</span> <span className="text-zinc-400">{p.comingSoon ? "(coming soon)" : `[${p.tags.join(", ")}]`}</span>
+              <span className="text-[#f47b5c]">{tx(p.title)}</span> <span className="text-[#b9a7e8]">{p.comingSoon ? "(coming soon)" : `[${p.tags.join(", ")}]`}</span>
             </p>
           ))}
         </div>
@@ -90,7 +90,7 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {experiences.map((e, i) => (
             <p key={i}>
-              <span className="text-zinc-400">{tx(e.period)}</span> <span className="text-emerald-400">{tx(e.role)}</span> @ {tx(e.company)}
+              <span className="text-[#b9a7e8]">{tx(e.period)}</span> <span className="text-[#f9c74f]">{tx(e.role)}</span> @ {tx(e.company)}
             </p>
           ))}
         </div>
@@ -100,8 +100,8 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {socials.map((s) => (
             <p key={s.key}>
-              <span className="text-amber-300">{s.label.padEnd(12)}</span>{" "}
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">
+              <span className="text-[#fff4d6]">{s.label.padEnd(12)}</span>{" "}
+              <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-[#f47b5c] underline">
                 {s.url.replace(/^mailto:/, "")}
               </a>
             </p>
@@ -112,25 +112,25 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
       return (
         <p>
           {t.terminal.emailMe}{" "}
-          <a href={`mailto:${profile.email}`} className="text-cyan-400 underline">
+          <a href={`mailto:${profile.email}`} className="text-[#f47b5c] underline">
             {profile.email}
           </a>
         </p>
       );
     case "lang":
-      return <p className="text-zinc-400">{t.terminal.cmds.lang}</p>;
+      return <p className="text-[#b9a7e8]">{t.terminal.cmds.lang}</p>;
     case "date":
       return <p>{new Date().toLocaleString(lang === "id" ? "id-ID" : "en-US")}</p>;
     case "sudo":
     case "sudo rm -rf /":
-      return <p className="text-red-400">{t.terminal.denied}</p>;
+      return <p className="text-[#ff6b6b]">{t.terminal.denied}</p>;
     case "clear":
       return "clear";
     default:
       return (
         <p>
-          <span className="text-red-400">{t.terminal.notFound}</span> {cmd}. {t.terminal.type}{" "}
-          <span className="text-cyan-400">help</span>.
+          <span className="text-[#ff6b6b]">{t.terminal.notFound}</span> {cmd}. {t.terminal.type}{" "}
+          <span className="text-[#f47b5c]">help</span>.
         </p>
       );
   }
@@ -139,10 +139,10 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
 function Prompt() {
   return (
     <span className="shrink-0">
-      <span className="text-emerald-400">{user}@portfolio</span>
-      <span className="text-zinc-500">:</span>
-      <span className="text-cyan-400">~</span>
-      <span className="text-zinc-500">$ </span>
+      <span className="text-[#f9c74f]">{user}@portfolio</span>
+      <span className="text-[#7b6ab0]">:</span>
+      <span className="text-[#f47b5c]">~</span>
+      <span className="text-[#7b6ab0]">$ </span>
     </span>
   );
 }
@@ -199,21 +199,21 @@ export default function Terminal() {
 
   return (
     <div
-      className="font-mono rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 text-zinc-100 shadow-2xl shadow-accent/5 text-sm"
+      className="font-mono rounded-xl overflow-hidden border border-[#4b2f7e] bg-[#0b0819] text-[#f4e6c8] border-2 shadow-[6px_6px_0_var(--shadow)] text-sm"
       onClick={() => inputRef.current?.focus()}
     >
-      <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900 border-b border-zinc-800">
-        <span className="w-3 h-3 rounded-full bg-red-500" />
-        <span className="w-3 h-3 rounded-full bg-yellow-500" />
-        <span className="w-3 h-3 rounded-full bg-green-500" />
-        <span className="ml-3 text-zinc-400 text-xs">{user}@portfolio: ~</span>
+      <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1030] border-b border-[#4b2f7e]">
+        <span className="w-3 h-3 rounded-full bg-[#f47b5c]" />
+        <span className="w-3 h-3 rounded-full bg-[#f9c74f]" />
+        <span className="w-3 h-3 rounded-full bg-[#b9a7e8]" />
+        <span className="ml-3 text-[#b9a7e8] text-xs">{user}@portfolio: ~</span>
       </div>
       <div ref={bodyRef} className="terminal-scroll h-80 overflow-y-auto p-4 space-y-1.5 cursor-text">
         {showWelcome && (
           <>
             <p>{t.terminal.welcome}</p>
-            <p className="text-zinc-400">
-              {t.terminal.type} <span className="text-cyan-400">help</span> {t.terminal.forHelp}
+            <p className="text-[#b9a7e8]">
+              {t.terminal.type} <span className="text-[#f47b5c]">help</span> {t.terminal.forHelp}
             </p>
           </>
         )}
@@ -234,7 +234,7 @@ export default function Terminal() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
-            className="flex-1 min-w-0 bg-transparent outline-none caret-emerald-400"
+            className="flex-1 min-w-0 bg-transparent outline-none caret-[#f9c74f]"
             aria-label={t.terminal.input}
             autoComplete="off"
             spellCheck={false}

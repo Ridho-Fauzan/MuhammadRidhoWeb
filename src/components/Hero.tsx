@@ -15,11 +15,8 @@ import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
 import { drawCardArt } from "./lanyardArt";
 
-// Komponen berat (WebGL / tilt) dimuat hanya di browser agar halaman awal tetap ringan
-const EmeraldHorizon = dynamic(
-  () => import("./threeui/EmeraldHorizonBackground").then((m) => m.EmeraldHorizonBackground),
-  { ssr: false },
-);
+// Komponen berat (WebGL / fisika) dimuat hanya di browser agar halaman awal tetap ringan
+const RetroField = dynamic(() => import("./RetroField"), { ssr: false });
 const Lanyard = dynamic(() => import("./reactbits/Lanyard"), { ssr: false });
 
 export default function Hero() {
@@ -40,16 +37,14 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[100svh] flex items-center px-6 pt-28 pb-20 overflow-hidden noise">
-      {/* Latar: shader ThreeUI + gradasi agar teks tetap terbaca */}
-      <div className="absolute inset-0 pointer-events-none hidden dark:block opacity-90">
+      {/* Latar: shader dither "dusk" ThreeUI retro (matahari terbenam pixel) */}
+      <div className="absolute inset-0 pointer-events-none">
         <WebGLBoundary>
-          <EmeraldHorizon className="absolute inset-0" speed={0.6} glow={1.1} />
+          <RetroField className="absolute inset-0 opacity-100 dark:opacity-100 [:root:not(.dark)_&]:opacity-35 [:root:not(.dark)_&]:mix-blend-multiply" />
         </WebGLBoundary>
       </div>
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-background/10 via-background/30 to-background" />
-      {/* Mode terang: cahaya lembut sebagai pengganti shader */}
-      <div className="dark:hidden absolute -top-32 right-0 w-[36rem] h-[36rem] rounded-full bg-accent/15 blur-3xl pointer-events-none" />
-      <div className="dark:hidden absolute bottom-0 -left-40 w-[30rem] h-[30rem] rounded-full bg-accent-2/15 blur-3xl pointer-events-none" />
+      {/* Vignette agar teks tetap terbaca (gaya .atd-retro__vignette) */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_90%_at_30%_40%,color-mix(in_srgb,var(--background)_70%,transparent)_0%,transparent_60%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_55%,transparent)_0%,transparent_30%,transparent_70%,var(--background)_100%)]" />
 
       {/* Lanyard: kartu ID 3D yang tergantung dari atas & bisa ditarik (desktop) */}
       <motion.div
@@ -71,7 +66,7 @@ export default function Hero() {
             />
           </WebGLBoundary>
         )}
-        <p className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 text-xs text-muted font-mono">
+        <p className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-2 py-1 text-[11px] uppercase tracking-[0.2em] text-foreground bg-background/80 border-2 border-border">
           <Hand className="w-3.5 h-3.5 text-accent" /> {t.hero.hint}
         </p>
       </motion.div>
@@ -84,14 +79,14 @@ export default function Hero() {
           className="text-center lg:text-left"
         >
           {/* Foto bulat hanya di mobile; di desktop diganti Lanyard */}
-          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 rounded-full p-[3px] bg-border shadow-xl">
-            <div className="relative w-full h-full rounded-full overflow-hidden bg-surface">
+          <div className="lg:hidden mx-auto mb-8 relative w-28 h-28 retro-box bg-surface">
+            <div className="relative w-full h-full overflow-hidden" style={{ imageRendering: "pixelated" }}>
               {profile.avatarUrl && <Image src={profile.avatarUrl} alt={profile.name} fill className="object-cover" priority />}
             </div>
           </div>
 
-          <p className="font-mono text-sm text-muted">{t.hero.greeting}</p>
-          <h1 className="mt-2 text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05]">
+          <p className="text-sm uppercase tracking-[0.25em] text-accent">&gt; {t.hero.greeting}</p>
+          <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-[1.1] [text-shadow:4px_4px_0_var(--shadow)]">
             <DecryptedText
               key={lang}
               text={profile.name}
@@ -100,17 +95,17 @@ export default function Hero() {
               speed={35}
               revealDirection="start"
               className="gradient-text"
-              encryptedClassName="text-accent/50"
+              encryptedClassName="text-accent-2"
               parentClassName="inline-block"
             />
           </h1>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 text-lg sm:text-2xl font-medium">
+          <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 text-base sm:text-xl uppercase tracking-[0.12em]">
             <span className="text-muted">{t.hero.iAm}</span>
             <RotatingText
               key={lang}
               texts={profile.roles.map(tx)}
-              mainClassName="px-3 py-1 rounded-lg bg-accent text-white dark:text-zinc-950 overflow-hidden justify-center"
+              mainClassName="px-3 py-1.5 bg-accent text-on-accent border-2 border-foreground shadow-[3px_3px_0_var(--shadow)] overflow-hidden justify-center"
               staggerFrom="last"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -122,9 +117,9 @@ export default function Hero() {
             />
           </div>
 
-          <p className="mt-6 text-base sm:text-lg text-muted max-w-xl mx-auto lg:mx-0 leading-relaxed">{tx(profile.tagline)}</p>
+          <p className="mt-6 text-base sm:text-lg text-foreground/85 max-w-xl mx-auto lg:mx-0 leading-relaxed">{tx(profile.tagline)}</p>
 
-          <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-muted">
+          <p className="mt-4 inline-flex items-center gap-1.5 text-sm uppercase tracking-[0.15em] text-muted">
             <MapPin className="w-4 h-4 text-accent" /> {tx(profile.location)}
           </p>
 
@@ -132,15 +127,21 @@ export default function Hero() {
             <Magnet padding={60} magnetStrength={4}>
               <Link
                 href="/projects"
-                className="inline-block px-7 py-3.5 rounded-xl bg-accent text-white dark:text-zinc-950 font-semibold shadow-lg shadow-accent/25 hover:bg-accent-dark transition-colors"
+                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
               >
+                <svg viewBox="0 0 7 7" className="w-3 h-3 fill-current" style={{ shapeRendering: "crispEdges" }} aria-hidden>
+                  <rect x="1" y="0" width="2" height="7" />
+                  <rect x="3" y="1" width="2" height="5" />
+                  <rect x="5" y="2" width="1" height="3" />
+                  <rect x="6" y="3" width="1" height="1" />
+                </svg>
                 {t.hero.viewProjects}
               </Link>
             </Magnet>
             <Magnet padding={60} magnetStrength={4}>
               <Link
                 href="/contact"
-                className="inline-block px-7 py-3.5 rounded-xl border border-border bg-background/50 backdrop-blur hover:border-accent hover:text-accent transition-colors"
+                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
               >
                 {t.hero.contactMe}
               </Link>
