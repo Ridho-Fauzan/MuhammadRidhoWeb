@@ -17,7 +17,6 @@ const id = {
       contact: "Ajak kolaborasi atau sekadar menyapa.",
     },
   },
-  pager: { next: "Selanjutnya", back: "Kembali ke beranda" },
   about: { title: "Tentang Saya", terminalHint: "Coba terminal interaktif di bawah ini:" },
   skills: { title: "Keahlian", subtitle: "Teknologi dan tools yang saya gunakan sehari-hari." },
   projects: {
@@ -79,7 +78,6 @@ const en: typeof id = {
       contact: "Reach out to collaborate or just say hi.",
     },
   },
-  pager: { next: "Next", back: "Back to home" },
   about: { title: "About Me", terminalHint: "Try the interactive terminal below:" },
   skills: { title: "Skills", subtitle: "Technologies and tools I use every day." },
   projects: {
