@@ -26,18 +26,19 @@ export default function Explore() {
             const Icon = icons[p.key];
             return (
               <Reveal key={p.href} delay={i * 0.06} className={`h-full ${i === 0 ? "lg:col-span-2" : ""}`}>
-                <Link href={p.href} className="group block h-full rounded-2xl focus-visible:outline-2 focus-visible:outline-accent">
+                <Link href={p.href} className="group block h-full">
                   <SpotlightCard
-                    className="h-full p-6 bg-surface group-hover:border-accent group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    interactive
+                    className="lift h-full p-6 bg-surface"
                     spotlightColor="rgba(249, 199, 79, 0.14)"
                   >
                     <div className="relative flex items-start justify-between">
                       <div className="p-2.5 bg-accent text-on-accent border-2 border-foreground">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition duration-300 ease-[var(--ease-out)]" />
                     </div>
-                    <h3 className="relative mt-6 text-xl group-hover:text-accent">{t.nav[p.key]}</h3>
+                    <h3 className="relative mt-6 text-xl group-hover:text-accent transition-colors">{t.nav[p.key]}</h3>
                     <p className="relative mt-2 text-sm text-muted">{t.explore.cards[p.key]}</p>
                   </SpotlightCard>
                 </Link>

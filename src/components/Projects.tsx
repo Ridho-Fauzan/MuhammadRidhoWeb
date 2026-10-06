@@ -40,7 +40,8 @@ export default function Projects() {
             ) : (
               <Reveal key={i} delay={i * 0.1} className="h-full">
                 <SpotlightCard
-                  className="group h-full flex flex-col bg-surface hover:border-accent/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300"
+                  interactive
+                  className="lift group h-full flex flex-col bg-surface"
                   spotlightColor="rgba(249, 199, 79, 0.12)"
                 >
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-accent/20 via-surface to-accent-2/20">
@@ -49,7 +50,7 @@ export default function Projects() {
                         src={p.image}
                         alt={tx(p.title)}
                         fill
-                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-[var(--ease-out)]"
                         sizes="(min-width: 768px) 50vw, 100vw"
                       />
                     ) : (
@@ -125,7 +126,8 @@ export default function Projects() {
                 ) : (
                   <Reveal key={i} delay={i * 0.08} className="h-full">
                     <SpotlightCard
-                      className="h-full flex flex-col p-6 bg-surface hover:border-accent/40 transition-colors"
+                      interactive
+                      className="lift h-full flex flex-col p-6 bg-surface"
                       spotlightColor="rgba(249, 199, 79, 0.12)"
                     >
                       <FolderGit2 className="relative w-8 h-8 text-accent mb-4" />
@@ -218,7 +220,7 @@ function ProjectLinks({
           href={repo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-muted hover:text-accent transition-colors"
+          className="link-u inline-flex items-center gap-1.5 pb-0.5 text-muted hover:text-accent"
         >
           <SocialIcon k="github" className="w-4 h-4" /> {labels.code}
         </a>
@@ -228,7 +230,7 @@ function ProjectLinks({
           href={demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-muted hover:text-accent transition-colors"
+          className="link-u inline-flex items-center gap-1.5 pb-0.5 text-muted hover:text-accent"
         >
           <ExternalLink className="w-4 h-4" /> {labels.demo}
         </a>
