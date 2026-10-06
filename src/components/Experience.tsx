@@ -6,7 +6,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 bg-surface/60 border-y border-border">
       <div className="max-w-4xl mx-auto">
-        <SectionTitle index="04" title="Experience" subtitle="Perjalanan karier dan pendidikan saya." />
+        <SectionTitle title="Experience" subtitle="Perjalanan karier dan pendidikan saya." />
         <ol className="relative border-l border-border ml-2">
           {experiences.map((e, i) => (
             <li key={e.role + e.period} className="relative mb-10 pl-8 last:mb-0">

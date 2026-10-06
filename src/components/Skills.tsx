@@ -9,7 +9,7 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 px-6 bg-surface/60 border-y border-border">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle index="02" title="Skills" subtitle="Teknologi dan tools yang saya gunakan sehari-hari." />
+        <SectionTitle title="Skills" subtitle="Teknologi dan tools yang saya gunakan sehari-hari." />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {skills.map((s, i) => {
             const Icon = icons[i % icons.length];
