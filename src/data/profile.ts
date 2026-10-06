@@ -7,20 +7,19 @@
  */
 
 export const profile = {
-  name: "Nama Lengkap",
-  shortName: "nama",
-  initials: "NL",
-  role: "Software Developer",
-  location: "Kota, Indonesia",
-  email: "email@contoh.com",
+  name: "Muhammad Ridho Fathi Fauzan",
+  shortName: "Ridho",
+  role: "Game Developer",
+  location: "Jakarta, Indonesia",
+  email: "muhammadridho@gmail.com",
   /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
   avatarUrl: "",
   /** Teks yang bergantian diketik di hero ("Hi, I'm ...") */
-  typewriter: ["Nama Lengkap", "a Web Developer", "a Problem Solver"],
-  tagline: "Membangun aplikasi web yang cepat, rapi, dan mudah digunakan.",
-  heroBadges: ["TypeScript", "React", "Next.js", "Node.js", "Tailwind CSS", "PostgreSQL"],
+  typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer"],
+  tagline: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
+  heroBadges: ["Unity", "C#", 'three.js', "Unreal Engine"],
   openToWork: true,
   about: [
     "Halo! Ini adalah paragraf perkenalan singkat. Ceritakan siapa kamu, apa yang sedang kamu pelajari atau kerjakan, dan apa yang membuatmu tertarik di dunia teknologi.",
