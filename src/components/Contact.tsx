@@ -4,7 +4,6 @@ import { Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import { profile, whatsappUrl } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
-import Magnet from "./reactbits/Magnet";
 import Reveal from "./Reveal";
 import SocialIcons, { SocialIcon } from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
@@ -39,25 +38,21 @@ export default function Contact() {
         </h2>
         <p className="mt-6 text-muted text-lg">{t.contact.text}</p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Magnet padding={80} magnetStrength={3}>
-            <a
-              href={`mailto:${profile.email}`}
-              className="retro-btn inline-flex items-center gap-2 px-8 py-4 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
-            >
-              <Mail className="w-5 h-5" /> {t.contact.button}
-            </a>
-          </Magnet>
+          <a
+            href={`mailto:${profile.email}`}
+            className="retro-btn inline-flex items-center gap-2 px-8 py-4 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
+          >
+            <Mail className="w-5 h-5" /> {t.contact.button}
+          </a>
           {whatsappUrl && (
-            <Magnet padding={80} magnetStrength={3}>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="retro-btn inline-flex items-center gap-2 px-8 py-4 bg-[#25d366] text-[#1a1030] uppercase tracking-[0.15em] text-sm"
-              >
-                <SocialIcon k="whatsapp" className="w-5 h-5" /> {t.contact.whatsapp}
-              </a>
-            </Magnet>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="retro-btn inline-flex items-center gap-2 px-8 py-4 bg-[#25d366] text-[#1a1030] uppercase tracking-[0.15em] text-sm"
+            >
+              <SocialIcon k="whatsapp" className="w-5 h-5" /> {t.contact.whatsapp}
+            </a>
           )}
         </div>
         <SocialIcons className="mt-10 justify-center" />
