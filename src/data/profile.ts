@@ -17,7 +17,7 @@ export const profile = {
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
   avatarUrl: "/plo.jpg",
   /** Teks yang bergantian diketik di hero ("Hi, I'm ...") */
-  typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer"],
+  typewriter: ["Muhammad Ridho Fathi Fauzan", "a Game Developer", "a Dedicated Gamer", "a Tech Enthusiast", "Web Developer"],
   tagline: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
   heroBadges: ["Unity", "C#", 'three.js'],
   about: [
@@ -54,6 +54,10 @@ export const skills: { category: string; items: string[] }[] = [
   {
     category: "Game Design",
     items: ["Level Design", "Game Design", "Prototyping", "UI/UX", "Game Balancing"],
+  },
+  {
+    category: "Web Development",
+    items: ["HTML", "CSS", "JavaScript", "React", "Next.js", "Tailwind CSS"],
   },
   {
     category: "Tools",
