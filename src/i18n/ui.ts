@@ -4,7 +4,7 @@
  */
 const id = {
   nav: { about: "Tentang", skills: "Keahlian", projects: "Proyek", experience: "Pengalaman", contact: "Kontak" },
-  hero: { greeting: "Halo, saya", iAm: "Saya seorang", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah", cardContact: "Kontak", hint: "Gerakkan kursor ke kartu" },
+  hero: { greeting: "Halo, saya", iAm: "Saya seorang", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah", hint: "Tarik & lempar kartunya" },
   stack: { title: "Teknologi yang saya pakai" },
   about: { title: "Tentang Saya", terminalHint: "Coba terminal interaktif di bawah ini:" },
   skills: { title: "Keahlian", subtitle: "Teknologi dan tools yang saya gunakan sehari-hari." },
@@ -52,7 +52,7 @@ const id = {
 
 const en: typeof id = {
   nav: { about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" },
-  hero: { greeting: "Hi, I'm", iAm: "I'm a", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down", cardContact: "Contact", hint: "Move your cursor over the card" },
+  hero: { greeting: "Hi, I'm", iAm: "I'm a", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down", hint: "Drag & toss the card" },
   stack: { title: "Tech I work with" },
   about: { title: "About Me", terminalHint: "Try the interactive terminal below:" },
   skills: { title: "Skills", subtitle: "Technologies and tools I use every day." },
