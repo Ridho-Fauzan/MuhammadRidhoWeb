@@ -1,4 +1,4 @@
-import { ExternalLink, FolderGit2 } from "lucide-react";
+import { ExternalLink, FolderGit2, Star } from "lucide-react";
 import Image from "next/image";
 import { projects } from "@/data/profile";
 import Reveal from "./Reveal";
@@ -36,8 +36,8 @@ export default function Projects() {
                       </span>
                     </div>
                   )}
-                  <span className="absolute top-3 left-3 px-2 py-1 text-xs rounded-md bg-background/80 backdrop-blur text-accent">
-                    ★ Featured
+                  <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md bg-background/80 backdrop-blur text-accent">
+                    <Star className="w-3 h-3 fill-current" /> Featured
                   </span>
                 </div>
                 <div className="flex-1 flex flex-col p-6">
