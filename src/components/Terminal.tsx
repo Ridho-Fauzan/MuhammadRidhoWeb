@@ -6,17 +6,34 @@ import type { L, Lang } from "@/i18n/types";
 import { tr } from "@/i18n/types";
 import { ui } from "@/i18n/ui";
 import { setLang, useLang } from "@/i18n/useLang";
+import { pages } from "@/data/pages";
+import { useRouter } from "next/navigation";
 
 type Line = { type: "in" | "out"; content: React.ReactNode };
 type Ui = (typeof ui)["id"];
 
 const user = profile.shortName.toLowerCase().replace(/\s+/g, "");
-const COMMANDS = ["help", "whoami", "about", "skills", "projects", "experience", "social", "contact", "lang", "clear", "date", "sudo"];
+const COMMANDS = ["cd about", "cd skills", "cd projects", "cd experience", "cd contact", "cd ~", "help", "whoami", "about", "skills", "projects", "experience", "social", "contact", "lang", "clear", "date", "sudo"];
 
-function run(cmd: string, lang: Lang): React.ReactNode | "clear" {
+function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNode | "clear" {
   const c = cmd.trim().toLowerCase();
   const t: Ui = ui[lang];
   const tx = (v: L) => tr(v, lang);
+
+  if (c === "cd" || c.startsWith("cd ")) {
+    const target = c.slice(3).trim().replace(/^\/+|\/+$/g, "");
+    const page = target === "" || target === "~" || target === ".." ? pages[0] : pages.find((p) => p.key === target);
+    if (!page) {
+      return (
+        <p>
+          <span className="text-red-400">cd:</span> {target}: {t.terminal.noDir}{" "}
+          <span className="text-zinc-400">({pages.filter((p) => p.key !== "home").map((p) => p.key).join(", ")})</span>
+        </p>
+      );
+    }
+    setTimeout(() => go(page.href), 350);
+    return <p className="text-emerald-400">→ {t.nav[page.key]}</p>;
+  }
 
   if (c === "lang en" || c === "lang id") {
     const next = c.slice(5) as Lang;
@@ -132,6 +149,7 @@ function Prompt() {
 
 export default function Terminal() {
   const { lang, t } = useLang();
+  const router = useRouter();
   // Pesan sambutan dirender ulang sesuai bahasa; hanya output perintah yang disimpan di state
   const [lines, setLines] = useState<Line[]>([]);
   const [showWelcome, setShowWelcome] = useState(true);
@@ -146,7 +164,7 @@ export default function Terminal() {
   }, [lines]);
 
   const submit = () => {
-    const result = run(input, lang);
+    const result = run(input, lang, (href) => router.push(href));
     if (result === "clear") {
       setLines([]);
       setShowWelcome(false);

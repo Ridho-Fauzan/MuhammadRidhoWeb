@@ -14,7 +14,7 @@ export default function Skills() {
   const { t, tx } = useLang();
 
   return (
-    <section id="skills" className="relative py-28 px-6 bg-surface/50 border-y border-border">
+    <section id="skills" className="relative py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title={t.skills.title} subtitle={t.skills.subtitle} />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
