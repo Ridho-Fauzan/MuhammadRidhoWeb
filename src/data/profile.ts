@@ -21,7 +21,6 @@ export const profile: {
   resumeUrl: string;
   avatarUrl: string;
   handle: string;
-  status: L;
   roles: L[];
   tagline: L;
   heroBadges: string[];
@@ -37,10 +36,8 @@ export const profile: {
   resumeUrl: "",
   /** Taruh foto di /public lalu isi path-nya, mis. "/foto.jpg". Kosong = tampil inisial. */
   avatarUrl: "/plo.jpg",
-  /** Username yang tampil di ProfileCard (tanpa @) */
+  /** Username yang tampil di kartu Lanyard (tanpa @) */
   handle: "Akashimoke",
-  /** Status kecil di ProfileCard */
-  status: { id: "Terbuka untuk kolaborasi", en: "Open to collaborate" },
   /** Peran yang berganti-ganti di hero: "Saya seorang ..." / "I'm a ..." */
   roles: [
     "Game Developer",
