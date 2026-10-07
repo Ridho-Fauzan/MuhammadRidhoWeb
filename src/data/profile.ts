@@ -113,16 +113,17 @@ export const profile: {
 };
 
 /**
- * Foto untuk kartu "Pick your card" (beranda & bawah tiap halaman).
- * OPSIONAL: kosong = kartu tampil dengan ikon pixel besar.
- * Isi dengan path di /public, mis. "/cards/about.jpg". Foto tampil hitam-putih, berwarna saat di-hover.
+ * Gambar kartu "Pick your card" di beranda.
+ * - Sekarang: pixel art dari Kenney 1-Bit Pack (CC0), dibuat oleh scripts/kenney/build-card-art.py.
+ * - Ganti dengan foto (mis. "/cards/about.jpg"): foto tampil hitam-putih, berwarna saat di-hover.
+ * - Kosong ("") = kartu memakai ikon pixel besar.
  */
 export const cardImages: Partial<Record<Exclude<PageKey, "home">, string>> = {
-  about: "",
-  skills: "",
-  projects: "",
-  experience: "",
-  contact: "",
+  about: "/cards/about.pixel.png",
+  skills: "/cards/skills.pixel.png",
+  projects: "/cards/projects.pixel.png",
+  experience: "/cards/experience.pixel.png",
+  contact: "/cards/contact.pixel.png",
 };
 
 export type SocialKey = "github" | "linkedin" | "instagram" | "whatsapp" | "email";

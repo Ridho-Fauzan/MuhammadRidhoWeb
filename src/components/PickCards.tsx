@@ -4,7 +4,8 @@
  * "Pick your card" — kartu navigasi ke halaman lain.
  * - variant="hand": kartu dikipas seperti kartu di tangan (beranda). Hover = kartu naik & lurus.
  * - variant="row" : baris kartu kecil di bawah tiap halaman ("Pilih kartu berikutnya").
- * Tanpa foto: ikon pixel besar. Dengan foto (cardImages di profile.ts): foto hitam-putih, berwarna saat hover.
+ * Gambar dari cardImages (profile.ts): pixel art Kenney (*.pixel.png, tajam & berwarna) atau foto (hitam-putih, berwarna saat hover).
+ * Kosong: ikon pixel besar.
  * Animasi: Motion (whileInView, whileHover, whileTap).
  */
 import { ArrowUpRight } from "lucide-react";
@@ -29,6 +30,9 @@ const CARD_COLOR: Record<CardKey, string> = {
   contact: "#e8829b",
 };
 const INK = "#1a1030";
+
+/** File "*.pixel.png" = pixel art (lihat scripts/kenney): tidak di-blur oleh optimasi gambar & tidak dibuat hitam-putih */
+const isPixelArt = (src: string) => /\.pixel\.(png|gif|webp)$/i.test(src);
 
 const cardPages = pages.filter((p) => p.key !== "home") as { key: CardKey; href: string }[];
 
@@ -138,7 +142,23 @@ function PlayingCard({ k, index, active }: { k: CardKey; index: number; active: 
 
       {/* tengah: foto (jika ada) atau ikon pixel besar */}
       <div className="absolute inset-x-3 top-11 bottom-[4.5rem] sm:bottom-20 border-2 overflow-hidden" style={{ borderColor: INK }}>
-        {image ? (
+        {image && isPixelArt(image) ? (
+          // pixel art: tetap berwarna & tajam; saat hover adegannya sedikit "melompat"
+          <motion.div
+            className="absolute inset-0"
+            animate={{ y: active ? -3 : 0, scale: active ? 1.06 : 1 }}
+            transition={snappy}
+          >
+            <Image
+              src={image}
+              alt=""
+              fill
+              unoptimized
+              sizes="220px"
+              className="object-cover [image-rendering:pixelated]"
+            />
+          </motion.div>
+        ) : image ? (
           <Image
             src={image}
             alt=""
