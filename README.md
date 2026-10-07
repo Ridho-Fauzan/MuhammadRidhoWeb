@@ -23,7 +23,7 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 - Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek. Screenshot tambahan (opsional): `gallery: ["/projects/a-2.png", ...]` → tampil sebagai thumbnail di detail proyek.
 - Hero: `roles` = pilihan "kelas" (berganti otomatis, bisa diganti dengan ◀ ▶), `tagline` = teks kotak dialog yang diketik, `heroBadges` = chip "Gear" (mis. Unity, C#).
 - Kutipan footer: `quotes` di `profile`, tiap item `{ text, by, from }` (kutipan, tokoh, game). Bergantian otomatis; lama tiap kutipan = `quoteSeconds` detik.
-- Foto kartu "Pick your card" (opsional): isi `cardImages` (mis. `about: "/cards/about.jpg"`). Kosong = kartu memakai ikon pixel besar. Foto tampil hitam-putih dan berwarna saat di-hover.
+- Gambar kartu "Pick your card": `cardImages`. Default = pixel art dari Kenney 1-Bit Pack (`public/cards/*.pixel.png`, dibuat oleh `scripts/kenney/build-card-art.py`). Bisa diganti foto (mis. `"/cards/about.jpg"`, tampil hitam-putih lalu berwarna saat di-hover) atau dikosongkan (ikon pixel).
 
 ## Form Kontak
 
@@ -80,6 +80,7 @@ Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.
 | Latar halaman Skills | Dot Matrix (warna diubah ke palet retro) | [ThreeUI](https://threeui.com) · `src/components/threeui/` | MIT |
 | Latar halaman Projects & bagian "Pick your card" | ShapeGrid | React Bits | MIT + Commons Clause |
 | Latar halaman Experience | PixelSnow | React Bits | MIT + Commons Clause |
+| Gambar kartu "Pick your card" | 1-Bit Pack | [Kenney](https://kenney.nl/assets/1-bit-pack) · `scripts/kenney/` | CC0 |
 | Logo teknologi | Simple Icons | [react-icons](https://react-icons.github.io/react-icons/) | MIT / CC0 |
 
 Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
