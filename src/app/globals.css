@@ -252,3 +252,39 @@ html[data-booted] .boot {
   0% { transform: translateY(0); }
   100% { transform: translateY(3px); }
 }
+
+/* --- Hiasan pixel (PixelCritters.tsx) --- */
+/* 2 frame bergantian */
+.spr-a { animation: spr-a var(--spr-dur, 600ms) steps(1) infinite; }
+.spr-b { animation: spr-b var(--spr-dur, 600ms) steps(1) infinite; }
+@keyframes spr-a { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes spr-b { 0% { opacity: 0; } 50% { opacity: 1; } }
+/* kedipan mata */
+.spr-blink { animation: spr-blink 4.2s steps(1) infinite; }
+@keyframes spr-blink { 0% { opacity: 1; } 94% { opacity: 0; } 97% { opacity: 1; } }
+/* burung: sesekali lompat kecil 2x */
+.bird-hop { animation: bird-hop 6s steps(1) infinite; }
+@keyframes bird-hop {
+  0% { transform: translateY(0); }
+  88% { transform: translateY(-0.08em); }
+  91% { transform: translateY(0); }
+  93% { transform: translateY(-0.06em); }
+  96% { transform: translateY(0); }
+}
+/* slime mondar-mandir di atas terminal */
+.slime-walk { left: 8%; animation: slime-walk 22s linear infinite; }
+.slime-face { animation: slime-face 22s steps(1) infinite; }
+@keyframes slime-walk {
+  0% { left: 22%; }
+  44% { left: calc(100% - 46px); }
+  50% { left: calc(100% - 46px); }
+  94% { left: 22%; }
+  100% { left: 22%; }
+}
+@keyframes slime-face { 0% { transform: scaleX(1); } 47% { transform: scaleX(-1); } 97% { transform: scaleX(1); } }
+.critter-pause:hover .slime-walk,
+.critter-pause:hover .slime-face { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .spr-a, .spr-blink, .bird-hop, .slime-walk, .slime-face { animation: none; }
+  .spr-b { animation: none; opacity: 0; }
+}

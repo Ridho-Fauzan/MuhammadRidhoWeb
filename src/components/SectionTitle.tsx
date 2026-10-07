@@ -1,10 +1,17 @@
+import { PerchBird } from "./PixelCritters";
 import Reveal from "./Reveal";
 
 export default function SectionTitle({ title, subtitle, center = false }: { title: string; subtitle?: string; center?: boolean }) {
   return (
     <Reveal className={`mb-14 ${center ? "text-center" : ""}`}>
       <h2 className="text-3xl sm:text-5xl">
-        <span className="text-accent">&gt;</span> {title}
+        <span className="text-accent">&gt;</span>{" "}
+        {/* burung kecil hinggap di huruf pertama */}
+        <span className="relative inline-block">
+          {title.slice(0, 1)}
+          <PerchBird className="bottom-[0.8em] left-[-0.02em]" />
+        </span>
+        {title.slice(1)}
         <span className="text-accent animate-blink">_</span>
       </h2>
       {/* garis pixel bertingkat emas–koral–ungu */}
