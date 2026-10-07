@@ -211,6 +211,12 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
   }, [onClose]);
 
   const hasDemo = p.demoUrl && p.demoUrl !== "#";
+  // Legacy repo/demo links plus named resource links defined per project.
+  const links = [
+    ...(p.repoUrl ? [{ label: t.projects.code, url: p.repoUrl, github: true, primary: false }] : []),
+    ...(hasDemo ? [{ label: t.projects.demo, url: p.demoUrl, github: false, primary: true }] : []),
+    ...(p.resources?.filter((resource) => resource.url && resource.url !== "#").map((resource) => ({ label: tx(resource.label), url: resource.url, github: false, primary: resource.primary ?? false })) ?? []),
+  ];
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
@@ -307,30 +313,21 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
           )}
           <p className="mt-5 text-muted leading-relaxed">{tx(p.description)}</p>
 
-          {(p.repoUrl || hasDemo) && (
+          {links.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-3">
-              {p.repoUrl && (
+              {links.map((link) => (
                 <motion.a
+                  key={`${link.label}-${link.url}`}
                   {...pressButton}
-                  href={p.repoUrl}
+                  href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="retro-btn inline-flex items-center gap-2 px-5 py-3 bg-surface text-foreground uppercase tracking-[0.12em] text-sm hover:bg-accent-2 hover:text-on-accent"
+                  className={`retro-btn inline-flex items-center gap-2 px-5 py-3 uppercase tracking-[0.12em] text-sm ${link.primary ? "bg-accent text-on-accent" : "bg-surface text-foreground hover:bg-accent-2 hover:text-on-accent"}`}
                 >
-                  <SocialIcon k="github" className="w-4 h-4" /> {t.projects.code}
+                  {link.github ? <SocialIcon k="github" className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
+                  {link.label}
                 </motion.a>
-              )}
-              {hasDemo && (
-                <motion.a
-                  {...pressButton}
-                  href={p.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="retro-btn inline-flex items-center gap-2 px-5 py-3 bg-accent text-on-accent uppercase tracking-[0.12em] text-sm"
-                >
-                  {t.projects.demo} <ArrowUpRight className="w-4 h-4" />
-                </motion.a>
-              )}
+              ))}
             </div>
           )}
         </motion.div>
