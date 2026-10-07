@@ -102,7 +102,7 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
           {/* Tali + penjepit */}
           <div
             aria-hidden
-            className="w-6 h-16 border-x-2 border-[#f9c74f] bg-[#241548] bg-[repeating-linear-gradient(180deg,transparent_0_10px,#f47b5c_10px_14px)]"
+            className="w-6 h-16 border-x-2 border-[#c2410c] bg-[#f4e6c8] bg-[repeating-linear-gradient(180deg,transparent_0_10px,#6d28d9_10px_14px)] dark:border-[#f9c74f] dark:bg-[#241548] dark:bg-[repeating-linear-gradient(180deg,transparent_0_10px,#f47b5c_10px_14px)]"
           />
           <div aria-hidden className="w-10 h-3 bg-[#b9a7e8] border-2 border-[#1a1030]" />
           <div aria-hidden className="w-3 h-2 bg-[#b9a7e8] border-x-2 border-[#1a1030]" />
@@ -129,7 +129,7 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
               className="relative w-[180px] aspect-[839/1266] cursor-grab active:cursor-grabbing touch-none select-none outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {/* Depan */}
-              <div className="absolute inset-0 overflow-hidden border-2 border-[#f4e6c8] bg-[#1a1030] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden]">
+              <div className="absolute inset-0 overflow-hidden border-2 border-foreground bg-[#fff4d6] dark:bg-[#1a1030] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden]">
                 {front ? (
                   <Image src={front} alt={name} fill unoptimized draggable={false} className="object-cover" />
                 ) : (
@@ -138,11 +138,11 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
                 <motion.div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-overlay" style={{ background: glare }} />
               </div>
               {/* Belakang */}
-              <div className="absolute inset-0 overflow-hidden border-2 border-[#1a1030] bg-[#f4e6c8] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+              <div className="absolute inset-0 overflow-hidden border-2 border-[#1a1030] bg-[#1a1030] dark:bg-[#f4e6c8] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden] [transform:rotateY(180deg)]">
                 {back ? (
                   <Image src={back} alt="" fill unoptimized draggable={false} className="object-cover" />
                 ) : (
-                  <span className="absolute inset-0 flex items-center justify-center font-display text-2xl text-[#1a1030]">
+                  <span className="absolute inset-0 flex items-center justify-center font-display text-2xl text-[#f4e6c8] dark:text-[#1a1030]">
                     ~/{shortName}_
                   </span>
                 )}
