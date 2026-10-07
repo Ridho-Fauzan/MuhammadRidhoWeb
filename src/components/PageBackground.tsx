@@ -15,6 +15,9 @@ const FaultyTerminal = dynamic(() => import("./reactbits/FaultyTerminal"), {
 const PixelSnow = dynamic(() => import("./reactbits/PixelSnow"), {
   ssr: false,
 });
+const Waves = dynamic(() => import("./reactbits/Waves"), {
+  ssr: false,
+});
 const ShapeGrid = dynamic(() => import("./reactbits/ShapeGrid"), {
   ssr: false,
 });
@@ -25,7 +28,7 @@ const DotMatrix = dynamic(
 );
 
 export type BackgroundVariant =
-  "terminal" | "dots" | "grid" | "snow" | "grid-diagonal";
+  "terminal" | "dots" | "grid" | "snow" | "waves" | "grid-diagonal";
 
 export default function PageBackground({
   variant,
@@ -79,6 +82,23 @@ export default function PageBackground({
             density={0.28}
             direction={115}
             brightness={dark ? 1 : 0.9}
+          />
+        );
+      case "waves":
+        // garis-garis halus yang bergelombang pelan & menyibak mengikuti kursor
+        return (
+          <Waves
+            lineColor={dark ? "rgba(185, 167, 232, 0.32)" : "rgba(109, 40, 217, 0.22)"}
+            lineWidth={1}
+            waveSpeedX={0.008}
+            waveSpeedY={0.004}
+            waveAmpX={36}
+            waveAmpY={18}
+            xGap={14}
+            yGap={36}
+            friction={0.92}
+            tension={0.006}
+            maxCursorMove={90}
           />
         );
       case "grid":
