@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { TerminalSlime } from "./PixelCritters";
 import { experiences, profile, projects, skills, socials } from "@/data/profile";
 import type { L, Lang } from "@/i18n/types";
 import { tr } from "@/i18n/types";
@@ -198,6 +199,9 @@ export default function Terminal() {
   };
 
   return (
+    // pembungkus tanpa overflow-hidden supaya slime bisa berjalan di atas bingkai terminal
+    <div className="relative critter-pause">
+    <TerminalSlime />
     <div
       className="font-mono rounded-xl overflow-hidden border border-[#4b2f7e] bg-[#0b0819] text-[#f4e6c8] border-2 shadow-[6px_6px_0_var(--shadow)] text-sm"
       onClick={() => inputRef.current?.focus()}
@@ -241,6 +245,7 @@ export default function Terminal() {
           />
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -10,6 +10,7 @@
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { NavSpider } from "./PixelCritters";
 import RetroDock from "./RetroDock";
 
 const SHOW_NEAR_TOP = 120; // px dari atas: navbar selalu tampil
@@ -50,8 +51,9 @@ export default function Navbar() {
       }}
       style={{ pointerEvents: isHidden ? "none" : undefined }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         <RetroDock />
+        <NavSpider className="right-[74px] sm:right-[96px]" />
       </div>
     </motion.header>
   );
