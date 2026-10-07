@@ -4,7 +4,7 @@
  */
 const id = {
   nav: { home: "Beranda", about: "Tentang", skills: "Keahlian", projects: "Proyek", experience: "Pengalaman", contact: "Kontak" },
-  hero: { greeting: "Halo, saya", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah", hint: "Tarik & lempar kartunya", hintMobile: "Geser untuk ayun · ketuk untuk balik", flipCard: "Balik kartu", classLabel: "Kelas", prevClass: "Kelas sebelumnya", nextClass: "Kelas berikutnya", gear: "Gear" },
+  hero: { greeting: "Halo, saya", viewProjects: "Lihat Proyek", contactMe: "Hubungi Saya", scrollDown: "Scroll ke bawah", hint: "Tarik & lempar kartunya", hintMobile: "Geser untuk ayun · ketuk untuk balik", flipCard: "Balik kartu", classLabel: "Kelas", prevClass: "Kelas sebelumnya", nextClass: "Kelas berikutnya", gear: "Gear", roleModule: "MODUL PERAN" },
   stack: { title: "Teknologi yang saya pakai" },
   explore: {
     title: "Pilih Kartumu!",
@@ -87,7 +87,7 @@ const id = {
 
 const en: typeof id = {
   nav: { home: "Home", about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" },
-  hero: { greeting: "Hi, I'm", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down", hint: "Drag & toss the card", hintMobile: "Swipe to swing · tap to flip", flipCard: "Flip card", classLabel: "Class", prevClass: "Previous class", nextClass: "Next class", gear: "Gear" },
+  hero: { greeting: "Hi, I'm", viewProjects: "View Projects", contactMe: "Contact Me", scrollDown: "Scroll down", hint: "Drag & toss the card", hintMobile: "Swipe to swing · tap to flip", flipCard: "Flip card", classLabel: "Class", prevClass: "Previous class", nextClass: "Next class", gear: "Gear", roleModule: "ROLE MODULE" },
   stack: { title: "Tech I work with" },
   explore: {
     title: "Pick Your Card!",
