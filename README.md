@@ -21,6 +21,7 @@ Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, pro
 - Foto profil: taruh di `public/` (mis. `public/foto.jpg`), lalu isi `avatarUrl: "/foto.jpg"`.
 - CV: taruh di `public/` (mis. `public/cv.pdf`), lalu isi `resumeUrl: "/cv.pdf"`. Tombol CV akan muncul di navbar.
 - Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek. Screenshot tambahan (opsional): `gallery: ["/projects/a-2.png", ...]` → tampil sebagai thumbnail di detail proyek.
+- Hero: `roles` = pilihan "kelas" (berganti otomatis, bisa diganti dengan ◀ ▶), `tagline` = teks kotak dialog yang diketik, `heroBadges` = chip "Gear" (mis. Unity, C#).
 - Kutipan footer: `quotes` di `profile`, tiap item `{ text, by, from }` (kutipan, tokoh, game). Bergantian otomatis; lama tiap kutipan = `quoteSeconds` detik.
 - Foto kartu "Pick your card" (opsional): isi `cardImages` (mis. `about: "/cards/about.jpg"`). Kosong = kartu memakai ikon pixel besar. Foto tampil hitam-putih dan berwarna saat di-hover.
 
