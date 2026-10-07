@@ -192,6 +192,14 @@ export const skills: { category: L; items: L[] }[] = [
   },
 ];
 
+export type ProjectResource = {
+  /** Label tombol. Bisa teks sama untuk dua bahasa atau diterjemahkan dengan { id, en }. */
+  label: L;
+  url: string;
+  /** Tombol aksen emas; gunakan hanya untuk aksi utama. */
+  primary?: boolean;
+};
+
 export type Project = {
   title: L;
   description: L;
@@ -202,6 +210,8 @@ export type Project = {
   gallery?: string[];
   demoUrl?: string;
   repoUrl?: string;
+  /** Tautan eksternal bernama, misalnya file proyek atau desain poster. */
+  resources?: ProjectResource[];
   featured?: boolean;
   /** true = tampil sebagai kartu "Coming Soon" (tanpa link). Hapus/ganti saat proyeknya sudah ada. */
   comingSoon?: boolean;
@@ -215,9 +225,14 @@ export const projects: Project[] = [
       en: "A university team project: a mobile Augmented Reality app that helps elementary-school students learn about fruit and vegetables interactively. Users scan images in a textbook to display real-time 3D models, with history and settings screens.",
     },
     tags: ["Unity 6", "Vuforia", "AR", "Figma", "Sketchfab"],
-    image: "/projects/floradex.png",
-    gallery: ["/projects/floradex-poster.png"],
+    // Poster dipakai sebagai cover; screenshot Unity tetap tersedia di galeri detail.
+    image: "/projects/floradex-poster.png",
+    gallery: ["/projects/floradex.png"],
     demoUrl: "https://drive.google.com/file/d/1bHFDKU9AxAHVx9sJva1fLaW7T7o_JUZ1/view",
+    resources: [
+      { label: "File Project", url: "https://lnkd.in/gTBz3ps9" },
+      { label: "Poster Design", url: "https://lnkd.in/g-Er_tAP" },
+    ],
     featured: true,
   },
   {
