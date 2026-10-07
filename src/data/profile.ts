@@ -109,7 +109,7 @@ export const profile: {
     { text: "Where other men blindly follow the truth, remember… nothing is true.", by: "Ezio Auditore", from: "Assassin's Creed Revelations" },
   ],
   /** Lama tiap kutipan tampil sebelum berganti (detik) */
-  quoteSeconds: 6,
+  quoteSeconds: 4.5,
 };
 
 /**
