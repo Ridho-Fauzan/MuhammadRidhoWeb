@@ -11,6 +11,7 @@ import { useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
 import { pressButton } from "./motion/press";
+import { FormCat } from "./PixelCritters";
 
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID || profile.formspreeId;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -71,6 +72,7 @@ export default function ContactForm() {
       noValidate
       className="relative text-left p-5 sm:p-7 bg-surface/95 border-2 border-foreground shadow-[6px_6px_0_var(--shadow)]"
     >
+      <FormCat happy={status === "sent" || status === "opened"} className="right-20 sm:right-28" />
       <div className="flex items-center justify-between gap-3 mb-6">
         <h3 className="text-xl sm:text-2xl">{f.title}</h3>
         <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.15em] text-muted">
