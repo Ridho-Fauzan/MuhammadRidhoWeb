@@ -14,7 +14,7 @@ import { useLang } from "@/i18n/useLang";
 
 export default function RotatingQuote({ className = "" }: { className?: string }) {
   const { tx, lang } = useLang();
-  const quotes = profile.quotes.map(tx);
+  const quotes = profile.quotes.map((q) => ({ text: tx(q.text), by: q.by, from: q.from }));
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -31,11 +31,20 @@ export default function RotatingQuote({ className = "" }: { className?: string }
   if (!count) return null;
   const current = index % count;
 
-  const text = (q: string) => (
+  const block = (q: (typeof quotes)[number]) => (
     <>
-      <span className="text-accent">&ldquo;</span>
-      {q}
-      <span className="text-accent">&rdquo;</span>
+      <span className="block font-display text-xl sm:text-3xl leading-tight text-foreground">
+        <span className="text-accent">&ldquo;</span>
+        {q.text}
+        <span className="text-accent">&rdquo;</span>
+      </span>
+      {(q.by || q.from) && (
+        <span className="block mt-3 font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-muted">
+          — {q.by}
+          {q.by && q.from && " · "}
+          {q.from && <span className="text-accent-2">{q.from}</span>}
+        </span>
+      )}
     </>
   );
 
@@ -49,27 +58,27 @@ export default function RotatingQuote({ className = "" }: { className?: string }
       onBlurCapture={() => setPaused(false)}
     >
       {/* semua kutipan ditumpuk di satu sel grid: yang tak terlihat hanya menjaga tinggi */}
-      <div className="grid font-display text-2xl sm:text-4xl leading-tight text-foreground">
+      <div className="grid">
         {quotes.map((q, i) => (
           <p key={`ghost-${i}`} aria-hidden className="invisible col-start-1 row-start-1">
-            {text(q)}
+            {block(q)}
           </p>
         ))}
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={`${lang}-${current}`}
-            className="col-start-1 row-start-1"
+            className="col-start-1 row-start-1 self-end"
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
             exit={reduce ? { opacity: 0, transition: { duration: 0.15 } } : { opacity: 0, y: -10, transition: { duration: 0.3, ease: "easeIn" } }}
           >
-            {text(quotes[current])}
+            {block(quotes[current])}
           </motion.p>
         </AnimatePresence>
       </div>
 
       {count > 1 && (
-        <div className="mt-5 flex items-center gap-2" role="group" aria-label="Quotes">
+        <div className="mt-5 flex flex-wrap items-center gap-2" role="group" aria-label="Quotes">
           {quotes.map((_, i) => (
             <button
               key={i}

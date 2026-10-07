@@ -30,7 +30,7 @@ export const profile: {
   heroBadges: string[];
   about: L[];
   stats: { value: number; suffix?: string; label: L }[];
-  quotes: L[];
+  quotes: { text: L; by?: string; from?: string }[];
   quoteSeconds: number;
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
@@ -88,22 +88,25 @@ export const profile: {
     { value: 5, suffix: "+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
   ],
   /**
-   * Kutipan besar di footer — bergantian otomatis. Tambah / hapus / ganti sesukamu.
-   * Boleh teks biasa ("...") atau dua bahasa ({ id: "...", en: "..." }).
+   * Kutipan besar di footer — bergantian otomatis.
+   * Tiap kutipan: { text, by, from }. `text` boleh teks biasa atau dua bahasa ({ id: "...", en: "..." }).
+   * Tidak perlu menulis tanda kutip “ ” — sudah ditambahkan otomatis.
    */
   quotes: [
-    {
-      id: "Belum game over selama masih mau menekan tombol continue.",
-      en: "It's never game over as long as you keep pressing continue.",
-    },
-    {
-      id: "Setiap bug adalah boss fight kecil. Kalahkan, lalu naik level.",
-      en: "Every bug is a tiny boss fight. Beat it, then level up.",
-    },
-    {
-      id: "Mulai dari prototipe kecil. Game besar juga lahir dari satu kotak yang bisa bergerak.",
-      en: "Start with a tiny prototype. Big games also began as one box that could move.",
-    },
+    { text: "Arthur, don't forget the quarter!", by: "Hosea Matthews", from: "Red Dead Redemption 2" },
+    { text: "Tahiti. Tahiti. Tahiti.", by: "Dutch van der Linde", from: "Red Dead Redemption 2" },
+    { text: "I have a plan, Arthur. I have a plan.", by: "Dutch van der Linde", from: "Red Dead Redemption 2" },
+    { text: "You were almost a Jill sandwich!", by: "Barry Burton", from: "Resident Evil" },
+    { text: "It's time to kick ass and chew bubble gum… and I'm all out of gum.", by: "Duke Nukem", from: "Duke Nukem 3D" },
+    { text: "When life gives you lemons, don't make lemonade. Make life take the lemons back!", by: "Cave Johnson", from: "Portal 2" },
+    { text: "Boy.", by: "Kratos", from: "God of War" },
+    { text: "Hey, you. You're finally awake.", by: "Ralof", from: "Skyrim" },
+    { text: "The right man in the wrong place can make all the difference in the world.", by: "G-Man", from: "Half-Life 2" },
+    { text: "Wake the fuck up, Samurai.", by: "Johnny Silverhand", from: "Cyberpunk 2077" },
+    { text: "It's-a me, Mario!", by: "Mario", from: "Super Mario" },
+    { text: "Did I ever tell you the definition of insanity?", by: "Vaas Montenegro", from: "Far Cry 3" },
+    { text: "I am Ezio Auditore da Firenze.", by: "Ezio Auditore", from: "Assassin's Creed II" },
+    { text: "Where other men blindly follow the truth, remember… nothing is true.", by: "Ezio Auditore", from: "Assassin's Creed Revelations" },
   ],
   /** Lama tiap kutipan tampil sebelum berganti (detik) */
   quoteSeconds: 6,
