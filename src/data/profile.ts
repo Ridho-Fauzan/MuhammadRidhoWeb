@@ -234,7 +234,7 @@ export const experiences: {
     company: "Bina Nusantara University",
     period: { id: "2024 — Sekarang", en: "2024 — Now" },
     description: {
-      id: "Sedang menempuh studi Ilmu Komputer dengan fokus pada pengembangan perangkat lunak dan multimedia interaktif.",
+      id: "Sedang menempuh studi Computer Science dengan fokus pada pengembangan perangkat lunak dan multimedia interaktif.",
       en: "Actively pursuing a degree in Computer Science, focusing on software development and interactive multimedia.",
     },
     tech: [
