@@ -10,11 +10,12 @@ import { getLenis } from "./SmoothScroll";
 import MotionLink from "./motion/MotionLink";
 import { pressButton } from "./motion/press";
 import PixelBuddy from "./PixelBuddy";
+import RotatingQuote from "./RotatingQuote";
 import { PixelIcon } from "./pixelIcons";
 import SocialIcons from "./SocialIcons";
 
 export default function Footer() {
-  const { t, tx } = useLang();
+  const { t } = useLang();
 
   const toTop = () => {
     const lenis = getLenis();
@@ -30,17 +31,14 @@ export default function Footer() {
       <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-8">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] items-start">
           <div>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-2xl sm:text-4xl leading-tight text-foreground"
             >
-              <span className="text-accent">&ldquo;</span>
-              {tx(profile.quote)}
-              <span className="text-accent">&rdquo;</span>
-            </motion.p>
+              <RotatingQuote />
+            </motion.div>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <MotionLink
                 {...pressButton}
