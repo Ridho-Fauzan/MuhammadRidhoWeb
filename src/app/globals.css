@@ -246,3 +246,9 @@ html[data-booted] .boot {
   0%, 10%, 20%, 30% { opacity: 1; }
   5%, 15%, 25%, 35%, 100% { opacity: 0; }
 }
+
+/* ▼ di kotak dialog hero: naik-turun 2 langkah seperti indikator "lanjut" di game */
+@keyframes dialog-bob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(3px); }
+}

@@ -1,16 +1,16 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowDown, Hand, MapPin } from "lucide-react";
+import { ArrowDown, Hand } from "lucide-react";
 import dynamic from "next/dynamic";
 import MotionLink from "./motion/MotionLink";
 import { pressButton } from "./motion/press";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
+import HeroIntro from "./HeroIntro";
 import MobileIdCard from "./MobileIdCard";
 import DecryptedText from "./reactbits/DecryptedText";
-import RotatingText from "./reactbits/RotatingText";
 import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
 import { drawCardArt } from "./lanyardArt";
@@ -106,28 +106,7 @@ export default function Hero() {
             />
           </h1>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 text-base sm:text-xl uppercase tracking-[0.12em]">
-            <span className="text-muted">{t.hero.iAm}</span>
-            <RotatingText
-              key={lang}
-              texts={profile.roles.map(tx)}
-              mainClassName="px-3 py-1.5 bg-accent text-on-accent border-2 border-foreground shadow-[3px_3px_0_var(--shadow)] overflow-hidden justify-center"
-              staggerFrom="last"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden pb-0.5"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={2600}
-            />
-          </div>
-
-          <p className="mt-6 text-base sm:text-lg text-foreground/85 max-w-xl mx-auto lg:mx-0 leading-relaxed">{tx(profile.tagline)}</p>
-
-          <p className="mt-4 inline-flex items-center gap-1.5 text-sm uppercase tracking-[0.15em] text-muted">
-            <MapPin className="w-4 h-4 text-accent" /> {tx(profile.location)}
-          </p>
+          <HeroIntro />
 
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
             <MotionLink
