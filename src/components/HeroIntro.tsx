@@ -15,6 +15,75 @@ import RotatingText, { type RotatingTextRef } from "./reactbits/RotatingText";
 
 /* ---------------------------------- 1. Pemilih kelas ---------------------------------- */
 
+const ROLE_MODULES = [
+  { accent: "#f9c74f", key: "gamepad" },
+  { accent: "#f47b5c", key: "code" },
+  { accent: "#b9a7e8", key: "spark" },
+  { accent: "#7fd1ae", key: "trophy" },
+] as const;
+
+/** Ikon pixel 7×7 per role — bagian dari tampilan cartridge, bukan sekadar icon library */
+function RoleGlyph({ kind }: { kind: (typeof ROLE_MODULES)[number]["key"] }) {
+  const pixels = (() => {
+    switch (kind) {
+      case "gamepad":
+        return (
+          <>
+            <rect x="0" y="2" width="7" height="3" />
+            <rect x="1" y="1" width="5" height="5" />
+            <rect x="2" y="0" width="3" height="7" />
+            <rect x="2" y="2" width="1" height="3" fill="var(--role-ink)" />
+            <rect x="1" y="3" width="3" height="1" fill="var(--role-ink)" />
+            <rect x="5" y="2" width="1" height="1" fill="var(--role-ink)" />
+            <rect x="5" y="4" width="1" height="1" fill="var(--role-ink)" />
+          </>
+        );
+      case "code":
+        return (
+          <>
+            <rect x="1" y="1" width="1" height="1" />
+            <rect x="0" y="2" width="1" height="3" />
+            <rect x="1" y="5" width="1" height="1" />
+            <rect x="5" y="1" width="1" height="1" />
+            <rect x="6" y="2" width="1" height="3" />
+            <rect x="5" y="5" width="1" height="1" />
+            <rect x="3" y="0" width="1" height="7" />
+          </>
+        );
+      case "spark":
+        return (
+          <>
+            <rect x="3" y="0" width="1" height="2" />
+            <rect x="1" y="2" width="2" height="1" />
+            <rect x="4" y="2" width="2" height="1" />
+            <rect x="2" y="3" width="3" height="2" />
+            <rect x="1" y="5" width="1" height="1" />
+            <rect x="5" y="5" width="1" height="1" />
+            <rect x="3" y="5" width="1" height="2" />
+          </>
+        );
+      case "trophy":
+        return (
+          <>
+            <rect x="1" y="0" width="5" height="1" />
+            <rect x="1" y="1" width="5" height="3" />
+            <rect x="0" y="1" width="1" height="2" />
+            <rect x="6" y="1" width="1" height="2" />
+            <rect x="2" y="4" width="3" height="1" />
+            <rect x="3" y="5" width="1" height="1" />
+            <rect x="2" y="6" width="3" height="1" />
+          </>
+        );
+    }
+  })();
+
+  return (
+    <svg viewBox="0 0 7 7" className="w-6 h-6 fill-current" style={{ shapeRendering: "crispEdges" }} aria-hidden>
+      {pixels}
+    </svg>
+  );
+}
+
 function ClassSelect() {
   const { t, tx } = useLang();
   const roles = profile.roles.map(tx);
@@ -22,6 +91,7 @@ function ClassSelect() {
   const [index, setIndex] = useState(0);
   const [auto, setAuto] = useState(true);
   const resume = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const roleModule = ROLE_MODULES[index % ROLE_MODULES.length];
 
   // pilihan manual menghentikan putaran otomatis sebentar
   const manual = (go: () => void) => {
@@ -42,24 +112,52 @@ function ClassSelect() {
         onPick={(i) => manual(() => ref.current?.jumpTo(i))}
         className="lg:ml-9"
       />
-      <div className="flex items-stretch">
-        <ArrowButton dir="left" label={t.hero.prevClass} onClick={() => manual(() => ref.current?.previous())} className="w-9" />
-        <RotatingText
-          ref={ref}
-          texts={roles}
-          auto={auto}
-          onNext={setIndex}
-          mainClassName="px-4 py-2 text-base sm:text-xl uppercase tracking-[0.12em] bg-accent text-on-accent border-2 border-foreground shadow-[4px_4px_0_var(--shadow)] overflow-hidden justify-center"
-          staggerFrom="last"
-          initial={{ y: "100%" }}
-          animate={{ y: 0 }}
-          exit={{ y: "-120%" }}
-          staggerDuration={0.025}
-          splitLevelClassName="overflow-hidden pb-0.5"
-          transition={{ type: "spring", damping: 30, stiffness: 400 }}
-          rotationInterval={2800}
-        />
-        <ArrowButton dir="right" label={t.hero.nextClass} onClick={() => manual(() => ref.current?.next())} className="w-9" />
+      <div className="flex items-center max-w-full">
+        <ArrowButton dir="left" label={t.hero.prevClass} onClick={() => manual(() => ref.current?.previous())} className="w-8 sm:w-9 shrink-0" />
+        <motion.button
+          type="button"
+          onClick={() => manual(() => ref.current?.next())}
+          aria-label={`${t.hero.roleModule}: ${roles[index]}. ${t.hero.nextClass}`}
+          className="role-cartridge"
+          style={{ ["--role-accent" as string]: roleModule.accent, ["--role-ink" as string]: "var(--background)" }}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.98, y: 1 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        >
+          <span className="role-cartridge__grip" aria-hidden>
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="role-cartridge__icon" aria-hidden>
+            <RoleGlyph kind={roleModule.key} />
+          </span>
+          <span className="role-cartridge__copy">
+            <span className="role-cartridge__meta">
+              {t.hero.roleModule} <b>R-{String(index + 1).padStart(2, "0")}</b>
+            </span>
+            <RotatingText
+              ref={ref}
+              texts={roles}
+              auto={auto}
+              onNext={setIndex}
+              mainClassName="role-cartridge__role"
+              staggerFrom="last"
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-120%", opacity: 0 }}
+              staggerDuration={0.018}
+              splitLevelClassName="overflow-hidden pb-0.5"
+              transition={{ type: "spring", damping: 28, stiffness: 360 }}
+              rotationInterval={2800}
+            />
+          </span>
+          <span className="role-cartridge__status" aria-hidden>
+            <i />
+            <i />
+          </span>
+        </motion.button>
+        <ArrowButton dir="right" label={t.hero.nextClass} onClick={() => manual(() => ref.current?.next())} className="w-8 sm:w-9 shrink-0" />
       </div>
     </div>
   );
