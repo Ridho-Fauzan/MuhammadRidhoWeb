@@ -10,16 +10,8 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/rea
 import { useCallback, useEffect, useRef, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
+import { ArrowButton, PixelDots } from "./PixelPager";
 import RotatingText, { type RotatingTextRef } from "./reactbits/RotatingText";
-
-const Arrow = ({ dir }: { dir: "left" | "right" }) => (
-  <svg viewBox="0 0 4 7" className={`w-2 h-3.5 fill-current ${dir === "left" ? "rotate-180" : ""}`} style={{ shapeRendering: "crispEdges" }} aria-hidden>
-    <rect x="0" y="0" width="1" height="7" />
-    <rect x="1" y="1" width="1" height="5" />
-    <rect x="2" y="2" width="1" height="3" />
-    <rect x="3" y="3" width="1" height="1" />
-  </svg>
-);
 
 /* ---------------------------------- 1. Pemilih kelas ---------------------------------- */
 
@@ -29,43 +21,29 @@ function ClassSelect() {
   const ref = useRef<RotatingTextRef>(null);
   const [index, setIndex] = useState(0);
   const [auto, setAuto] = useState(true);
-  const [nudge, setNudge] = useState<"left" | "right" | null>(null);
   const resume = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // pilihan manual menghentikan putaran otomatis sebentar
-  const pick = (dir: "left" | "right") => {
-    if (dir === "left") ref.current?.previous();
-    else ref.current?.next();
-    setNudge(dir);
+  const manual = (go: () => void) => {
+    go();
     setAuto(false);
     if (resume.current) clearTimeout(resume.current);
     resume.current = setTimeout(() => setAuto(true), 8000);
   };
   useEffect(() => () => void (resume.current && clearTimeout(resume.current)), []);
 
-  const arrowBtn = (dir: "left" | "right") => (
-    <motion.button
-      type="button"
-      onClick={() => pick(dir)}
-      aria-label={dir === "left" ? t.hero.prevClass : t.hero.nextClass}
-      whileHover={{ x: dir === "left" ? -2 : 2 }}
-      whileTap={{ scale: 0.85 }}
-      animate={nudge === dir ? { x: [0, dir === "left" ? -4 : 4, 0] } : { x: 0 }}
-      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-      onAnimationComplete={() => setNudge(null)}
-      className="flex items-center justify-center w-9 self-stretch text-accent hover:text-foreground"
-    >
-      <Arrow dir={dir} />
-    </motion.button>
-  );
-
   return (
-    <div className="flex flex-col items-center lg:items-start gap-2">
-      <span className="text-[11px] uppercase tracking-[0.3em] text-muted">
-        {t.hero.classLabel} <span className="text-accent tabular-nums">{String(index + 1).padStart(2, "0")}</span>/{String(roles.length).padStart(2, "0")}
-      </span>
+    <div className="flex flex-col items-center lg:items-start gap-3">
+      <PixelDots
+        count={roles.length}
+        index={index}
+        labels={roles}
+        groupLabel={t.hero.classLabel}
+        onPick={(i) => manual(() => ref.current?.jumpTo(i))}
+        className="lg:ml-9"
+      />
       <div className="flex items-stretch">
-        {arrowBtn("left")}
+        <ArrowButton dir="left" label={t.hero.prevClass} onClick={() => manual(() => ref.current?.previous())} className="w-9" />
         <RotatingText
           ref={ref}
           texts={roles}
@@ -81,7 +59,7 @@ function ClassSelect() {
           transition={{ type: "spring", damping: 30, stiffness: 400 }}
           rotationInterval={2800}
         />
-        {arrowBtn("right")}
+        <ArrowButton dir="right" label={t.hero.nextClass} onClick={() => manual(() => ref.current?.next())} className="w-9" />
       </div>
     </div>
   );

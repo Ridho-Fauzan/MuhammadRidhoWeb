@@ -39,7 +39,7 @@ const id = {
     button: "Kirim Email",
     whatsapp: "Chat WhatsApp",
   },
-  footer: { builtWith: "Dibuat dengan Next.js & Tailwind CSS.", getInTouch: "Hubungi saya", menu: "Menu", backToTop: "Kembali ke atas" },
+  footer: { builtWith: "Dibuat dengan Next.js & Tailwind CSS.", getInTouch: "Hubungi saya", menu: "Menu", backToTop: "Kembali ke atas", quotes: "Kutipan", prevQuote: "Kutipan sebelumnya", nextQuote: "Kutipan berikutnya" },
   boot: { checking: "Memeriksa memori", loading: "Memuat portfolio", ready: "Siap", skip: "Klik untuk lewati" },
   form: {
     title: "Kirim pesan",
@@ -122,7 +122,7 @@ const en: typeof id = {
     button: "Send Email",
     whatsapp: "Chat on WhatsApp",
   },
-  footer: { builtWith: "Built with Next.js & Tailwind CSS.", getInTouch: "Get in touch", menu: "Menu", backToTop: "Back to top" },
+  footer: { builtWith: "Built with Next.js & Tailwind CSS.", getInTouch: "Get in touch", menu: "Menu", backToTop: "Back to top", quotes: "Quotes", prevQuote: "Previous quote", nextQuote: "Next quote" },
   boot: { checking: "Checking memory", loading: "Loading portfolio", ready: "Ready", skip: "Click to skip" },
   form: {
     title: "Send a message",
