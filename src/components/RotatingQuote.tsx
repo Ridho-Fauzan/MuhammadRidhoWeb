@@ -4,16 +4,17 @@
  * Kutipan footer yang bergantian otomatis (Motion AnimatePresence).
  * - Tinggi area dikunci ke kutipan terpanjang -> halaman tidak "loncat" saat kutipan berganti.
  * - Berhenti saat di-hover / difokus, dan saat footer tidak terlihat di layar.
- * - Titik pixel di bawah bisa diklik untuk memilih kutipan.
+ * - Titik pixel & tombol ◀ ▶ di bawah untuk memilih kutipan (timer mulai ulang setelah dipilih).
  * - Reduce motion: tetap berganti, tapi tanpa gerakan (langsung muncul).
  */
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
+import { ArrowButton, PixelDots } from "./PixelPager";
 
 export default function RotatingQuote({ className = "" }: { className?: string }) {
-  const { tx, lang } = useLang();
+  const { t, tx, lang } = useLang();
   const quotes = profile.quotes.map((q) => ({ text: tx(q.text), by: q.by, from: q.from }));
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -78,23 +79,10 @@ export default function RotatingQuote({ className = "" }: { className?: string }
       </div>
 
       {count > 1 && (
-        <div className="mt-5 flex flex-wrap items-center gap-2" role="group" aria-label="Quotes">
-          {quotes.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              aria-label={`${i + 1} / ${count}`}
-              aria-current={i === current}
-              className="p-1 -m-1"
-            >
-              <span
-                className={`block h-2 transition-[width,background-color] duration-300 ${
-                  i === current ? "w-6 bg-accent" : "w-2 bg-muted/50 hover:bg-muted"
-                }`}
-              />
-            </button>
-          ))}
+        <div className="mt-5 flex items-center gap-3">
+          <ArrowButton dir="left" label={t.footer.prevQuote} onClick={() => setIndex((i) => (i - 1 + count) % count)} className="w-6 h-6 -ml-1.5" />
+          <PixelDots count={count} index={current} onPick={setIndex} groupLabel={t.footer.quotes} />
+          <ArrowButton dir="right" label={t.footer.nextQuote} onClick={() => setIndex((i) => (i + 1) % count)} className="w-6 h-6" />
         </div>
       )}
     </div>
