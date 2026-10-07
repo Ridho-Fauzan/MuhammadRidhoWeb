@@ -14,13 +14,16 @@ const PALETTES = {
     name: "#f4e6c8", role: "#f47b5c", handle: "#b9a7e8", barcode: "#f9c74f",
     backBg: "#f4e6c8", backDots: "#c9b48a", logoMain: "#1a1030", logoAccent: "#c2410c", backRole: "#4b2f7e",
     strapBg: "#241548", strapEdge: "#f9c74f", strapText: "#f4e6c8", strapMark: "#f47b5c",
+    roleChip: "", roleChipText: "", smallBig: false,
   },
   light: {
-    bg: "#fff4d6", frame: "#1a1030", header: "#f4e6c8", rule: "#c9b48a", headerText: "#c2410c",
+    // header gelap + teks emas, role di label tinta: tetap kontras walau kena pencahayaan 3D
+    bg: "#f4e6c8", frame: "#1a1030", header: "#1a1030", rule: "#c2410c", headerText: "#f9c74f",
     photoBg: "#ead6ad", photoFrame: "#c2410c", photoShadow: "#1a1030",
-    name: "#1a1030", role: "#6d28d9", handle: "#5b4a86", barcode: "#1a1030",
-    backBg: "#1a1030", backDots: "#4b2f7e", logoMain: "#f4e6c8", logoAccent: "#f9c74f", backRole: "#b9a7e8",
+    name: "#1a1030", role: "#fff4d6", handle: "#1a1030", barcode: "#1a1030",
+    backBg: "#1a1030", backDots: "#4b2f7e", logoMain: "#f4e6c8", logoAccent: "#f9c74f", backRole: "#f4e6c8",
     strapBg: "#f4e6c8", strapEdge: "#c2410c", strapText: "#1a1030", strapMark: "#6d28d9",
+    roleChip: "#6d28d9", roleChipText: "#fff4d6", smallBig: true,
   },
 };
 
@@ -92,8 +95,8 @@ export async function drawCardArt(data: CardData) {
   ctx.fillRect(10, 110, W - 20, 4);
 
   ctx.fillStyle = c.headerText;
-  ctx.font = `400 26px ${mono}`;
-  ctx.letterSpacing = "5px";
+  ctx.font = c.smallBig ? `400 30px ${heading}` : `400 26px ${mono}`;
+  ctx.letterSpacing = c.smallBig ? "3px" : "5px";
   ctx.textBaseline = "middle";
   ctx.fillText("PLAYER CARD", 64, 62);
   ctx.textAlign = "right";
@@ -127,14 +130,27 @@ export async function drawCardArt(data: CardData) {
   ctx.textBaseline = "alphabetic";
   const lines = nameLines(ctx, data.name, pw);
   lines.forEach((l, i) => ctx.fillText(l.toUpperCase(), 64, 900 + i * 76));
-  ctx.fillStyle = c.role;
-  ctx.font = `400 34px ${mono}`;
-  ctx.letterSpacing = "4px";
-  ctx.fillText(`> ${data.role.toUpperCase()}`, 64, 900 + lines.length * 76 + 14);
+  const roleY = 900 + lines.length * 76 + 14;
+  const roleText = `> ${data.role.toUpperCase()}`;
+  if (c.roleChip) {
+    // label tinta (seperti tag) supaya role terbaca jelas di kartu terang
+    ctx.font = `400 36px ${heading}`;
+    ctx.letterSpacing = "3px";
+    const tw = ctx.measureText(roleText).width;
+    ctx.fillStyle = c.roleChip;
+    ctx.fillRect(56, roleY - 40, tw + 24, 54);
+    ctx.fillStyle = c.roleChipText;
+    ctx.fillText(roleText, 68, roleY);
+  } else {
+    ctx.fillStyle = c.role;
+    ctx.font = `400 34px ${mono}`;
+    ctx.letterSpacing = "4px";
+    ctx.fillText(roleText, 64, roleY);
+  }
   ctx.letterSpacing = "0px";
 
   ctx.fillStyle = c.handle;
-  ctx.font = `400 28px ${mono}`;
+  ctx.font = c.smallBig ? `400 32px ${heading}` : `400 28px ${mono}`;
   ctx.fillText(`@${data.handle}`, 64, H - 72);
   // "barcode" dekoratif
   ctx.fillStyle = c.barcode;
@@ -168,7 +184,7 @@ export async function drawCardArt(data: CardData) {
   });
   ctx.textAlign = "center";
   ctx.fillStyle = c.backRole;
-  ctx.font = `400 30px ${mono}`;
+  ctx.font = c.smallBig ? `400 34px ${heading}` : `400 30px ${mono}`;
   ctx.letterSpacing = "5px";
   ctx.fillText(data.role.toUpperCase(), W / 2, H / 2 + 80);
 
