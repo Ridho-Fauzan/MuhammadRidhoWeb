@@ -79,7 +79,7 @@ export const profile: {
     },
     {
       id: "Saat ini, saya sedang mencari kesempatan untuk mendapatkan pengalaman di dunia kerja, berkolaborasi dengan orang lain, dan terus berkembang sebagai game developer.",
-      en: "I am currently seeking opportunities to gain real-world experience, collaborate with others, and continue growing as a game developer.",
+      en: "I'm currently seeking opportunities to gain real-world experience, collaborate with others, and continue growing as a game developer.",
     },
   ],
   stats: [
