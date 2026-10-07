@@ -45,6 +45,11 @@ export default function RetroDock() {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dockRef = useRef<HTMLElement>(null);
+  // dibaca shader setiap frame -> ganti tema langsung mengganti palet tanpa membuat ulang WebGL
+  const lightRef = useRef(0);
+  useEffect(() => {
+    lightRef.current = dark ? 0 : 1;
+  }, [dark]);
 
   const active = pages.find((p) => (p.href === "/" ? pathname === "/" : pathname.startsWith(p.href)))?.key;
 
@@ -60,7 +65,7 @@ export default function RetroDock() {
     const host = hostRef.current;
     const canvas = canvasRef.current;
     if (!host || !canvas) return;
-    const field = createRetroPixelField(canvas, () => FIELD_OPTIONS);
+    const field = createRetroPixelField(canvas, () => ({ ...FIELD_OPTIONS, light: lightRef.current }));
     let frame = 0;
     let box = host.getBoundingClientRect();
     const resize = () => {

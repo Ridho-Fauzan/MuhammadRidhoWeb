@@ -230,6 +230,48 @@
   }
 }
 
+/* ==========================================================================
+   Mode siang: palet krem/bata/ungu sama seperti tema terang situs
+   (.dark dipasang di <html>; tanpa .dark = mode terang)
+   ========================================================================== */
+:root:not(.dark) .rd {
+  --rd-ink: #1a1030; /* garis tepi tinta gelap, seperti kartu & tombol lain */
+  --rd-rule: #c9b48a;
+  --rd-bar: #fff4d6;
+  --rd-cell: rgba(255, 244, 214, 0.84);
+  --rd-cell-near: rgba(234, 214, 173, 0.95);
+  --rd-text: #5b4a86;
+  --rd-hi: #1a1030;
+  --rd-gold: #c2410c; /* bata = aksen terang */
+  --rd-coral: #6d28d9; /* ungu = aksen kedua */
+  box-shadow: 6px 6px 0 #1a1030;
+}
+
+:root:not(.dark) .rd::after {
+  opacity: 0.18;
+}
+
+:root:not(.dark) .rd__brand {
+  background: rgba(255, 244, 214, 0.94);
+  color: var(--rd-gold);
+  text-shadow: 2px 2px 0 rgba(109, 40, 217, 0.35);
+}
+
+:root:not(.dark) .rd__brand:hover,
+:root:not(.dark) .rd__brand:focus-visible {
+  color: var(--rd-coral);
+}
+
+:root:not(.dark) .rd__actions {
+  border-left-color: var(--rd-ink);
+}
+
+:root:not(.dark) .rd__action:last-child,
+:root:not(.dark) .rd__action:last-child:hover,
+:root:not(.dark) .rd__action:last-child:focus-visible {
+  color: var(--rd-bar);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rd__item {
     transition: none;

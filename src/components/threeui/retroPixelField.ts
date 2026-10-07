@@ -4,6 +4,8 @@ export type RetroPixelOptions = {
   noise: number;
   levels: number;
   speed: number;
+  /** 1 = palet terang (mode siang): krem → tan → bata. 0 = palet "dusk" asli. */
+  light?: number;
 };
 
 export const RETRO_PIXEL_DEFAULTS: RetroPixelOptions = {
@@ -24,6 +26,7 @@ uniform vec2 uRes;
 uniform float uTime;
 uniform float uNoise;
 uniform float uLevels;
+uniform float uLight;
 
 float hash(vec2 p){ p = fract(p * vec2(127.1, 311.7)); p += dot(p, p + 34.23); return fract(p.x * p.y); }
 
@@ -56,6 +59,18 @@ vec3 stop(float index){
   if (index < 5.5) return vec3(0.827, 0.298, 0.325);
   if (index < 6.5) return vec3(0.945, 0.502, 0.286);
   return vec3(0.988, 0.784, 0.494);
+}
+
+/* palet mode siang: kertas krem ke bata, selaras dengan tema terang situs */
+vec3 lightStop(float index){
+  if (index < 0.5) return vec3(1.000, 0.957, 0.839);
+  if (index < 1.5) return vec3(0.957, 0.902, 0.784);
+  if (index < 2.5) return vec3(0.918, 0.839, 0.678);
+  if (index < 3.5) return vec3(0.875, 0.761, 0.561);
+  if (index < 4.5) return vec3(0.910, 0.659, 0.486);
+  if (index < 5.5) return vec3(0.878, 0.478, 0.353);
+  if (index < 6.5) return vec3(0.761, 0.255, 0.047);
+  return vec3(0.604, 0.204, 0.071);
 }
 
 void main(){
@@ -92,7 +107,8 @@ void main(){
   /* no scanline here: one drawing-buffer row is pixelSize screen rows tall,
      so darkening alternate rows draws chunky bars rather than a raster. The CRT
      line structure is a screen-resolution CSS overlay instead. */
-  gl_FragColor = vec4(stop(floor(quantised * levels) * (7.0 / (levels - 1.0))), 1.0);
+  float idx = floor(quantised * levels) * (7.0 / (levels - 1.0));
+  gl_FragColor = vec4(uLight > 0.5 ? lightStop(idx) : stop(idx), 1.0);
 }`;
 
 function compile(gl: WebGLRenderingContext, type: number, source: string) {
@@ -136,6 +152,7 @@ export function createRetroPixelField(canvas: HTMLCanvasElement, getOptions: () 
   const uTime = gl.getUniformLocation(program, "uTime");
   const uNoise = gl.getUniformLocation(program, "uNoise");
   const uLevels = gl.getUniformLocation(program, "uLevels");
+  const uLight = gl.getUniformLocation(program, "uLight");
 
   let width = 1;
   let height = 1;
@@ -169,6 +186,7 @@ export function createRetroPixelField(canvas: HTMLCanvasElement, getOptions: () 
     gl.uniform1f(uTime, clock);
     gl.uniform1f(uNoise, options.noise);
     gl.uniform1f(uLevels, options.levels);
+    gl.uniform1f(uLight, options.light ?? 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 

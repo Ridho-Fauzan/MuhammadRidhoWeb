@@ -221,13 +221,16 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: { id: "Proyek Berikutnya", en: "Next Project" },
+    title: "SpoJeDy",
     description: {
-      id: "Proyek baru sedang dikerjakan. Nantikan, ya!",
-      en: "A new project is in the works. Stay tuned!",
+      id: "Tugas kuliah: aplikasi web pemutar musik bergaya Spotify. Jelajahi lagu, cari judul/artis/genre, filter berdasarkan mood, putar lagu dengan kontrol play/next/shuffle/volume, tonton music video, dan atur tema terang/gelap di halaman profil.",
+      en: "A university assignment: a Spotify-style music player web app. Browse tracks, search by title/artist/genre, filter by mood, play songs with play/next/shuffle/volume controls, watch music videos, and switch light/dark theme from the profile page.",
     },
-    tags: [],
-    comingSoon: true,
+    tags: ["Vue 3", "Vue Router", "Tailwind CSS", "Vite"],
+    image: "/projects/spojedy.png",
+    gallery: ["/projects/spojedy-song.png", "/projects/spojedy-mv.png"],
+    demoUrl: "https://spojedy1.vercel.app",
+    repoUrl: "https://github.com/Akashimoke/Spojedy1",
     featured: true,
   },
   {
