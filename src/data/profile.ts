@@ -70,16 +70,16 @@ export const profile: {
   heroBadges: ["Unity", "C#", "three.js"],
   about: [
     {
-      id: "Halo! Ini adalah paragraf perkenalan singkat. Ceritakan siapa kamu, apa yang sedang kamu pelajari atau kerjakan, dan apa yang membuatmu tertarik di dunia teknologi.",
-      en: "Hi! This is a short introduction paragraph. Tell visitors who you are, what you are learning or working on, and what got you interested in technology.",
+      id: "Halo, saya Ridho, mahasiswa Computer Science di BINUS University yang saat ini mengambil penjurusan Interactive Multimedia melalui program mobility.",
+      en: "Hello, I'm Ridho, a Computer Science student at BINUS University currently specializing in Interactive Multimedia through the mobility program.",
     },
     {
-      id: "Paragraf kedua bisa berisi latar belakang pendidikan, pengalaman organisasi, atau proyek yang paling kamu banggakan.",
-      en: "The second paragraph can cover your education, organizational experience, or the project you are most proud of.",
+      id: "Saya tertarik pada pengembangan game dan pengalaman interaktif, khususnya pemrograman gameplay, desain game, dan teknologi kreatif. Saya menikmati mengubah ide menjadi proyek interaktif sambil terus belajar dan bereksperimen dengan alat dan teknik baru.",
+      en: "I’m interested in game development and interactive experiences, particularly gameplay programming, game design, and creative technology. I enjoy turning ideas into interactive projects while continuously learning and experimenting with new tools and techniques.",
     },
     {
-      id: "Paragraf ketiga: tujuan karier dan jenis peluang yang sedang kamu cari.",
-      en: "Third paragraph: your career goals and the kind of opportunities you are looking for.",
+      id: "Saat ini, saya sedang mencari kesempatan untuk mendapatkan pengalaman di dunia kerja, berkolaborasi dengan orang lain, dan terus berkembang sebagai game developer.",
+      en: "I am currently seeking opportunities to gain real-world experience, collaborate with others, and continue growing as a game developer.",
     },
   ],
   stats: [
