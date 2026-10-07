@@ -14,6 +14,7 @@ import DecryptedText from "./reactbits/DecryptedText";
 import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
 import { drawCardArt } from "./lanyardArt";
+import { useTheme } from "./ThemeToggle";
 
 // Komponen berat (WebGL / fisika) dimuat hanya di browser agar halaman awal tetap ringan
 const RetroField = dynamic(() => import("./RetroField"), { ssr: false });
@@ -22,18 +23,19 @@ const Lanyard = dynamic(() => import("./reactbits/Lanyard"), { ssr: false });
 export default function Hero() {
   const { lang, t, tx } = useLang();
   const role = tx(profile.role);
+  const { dark } = useTheme();
 
-  // Gambar kartu & tali dibuat dari data profile.ts, lalu dipasang ke Lanyard
+  // Gambar kartu & tali dibuat dari data profile.ts (warna ikut tema), lalu dipasang ke Lanyard
   const [art, setArt] = useState<{ front: string; back: string; strap: string } | null>(null);
   useEffect(() => {
     let alive = true;
-    drawCardArt({ name: profile.name, role, handle: profile.handle, avatarUrl: profile.avatarUrl, shortName: profile.shortName }).then(
+    drawCardArt({ name: profile.name, role, handle: profile.handle, avatarUrl: profile.avatarUrl, shortName: profile.shortName, light: !dark }).then(
       (a) => alive && setArt(a),
     );
     return () => {
       alive = false;
     };
-  }, [role]);
+  }, [role, dark]);
 
   return (
     <section className="relative min-h-[100svh] flex items-center px-6 pt-28 pb-20 overflow-hidden noise">
