@@ -1,10 +1,28 @@
 /**
  * Menggambar kartu ID & tali lanyard dari data profile.ts (di browser, via <canvas>).
  * Jadi kalau nama / role / foto / handle diganti, kartunya otomatis ikut berubah.
- * Warna mengikuti palet retro "dusk" ThreeUI (ungu, emas, koral, krem).
+ * Warna mengikuti tema: malam = palet retro "dusk" ThreeUI (ungu, emas, koral, krem),
+ * siang = palet kertas krem (tinta gelap, bata, ungu) seperti tema terang situs.
  */
 
-type CardData = { name: string; role: string; handle: string; avatarUrl: string; shortName: string };
+type CardData = { name: string; role: string; handle: string; avatarUrl: string; shortName: string; light?: boolean };
+
+const PALETTES = {
+  dark: {
+    bg: "#1a1030", frame: "#f4e6c8", header: "#241548", rule: "#4b2f7e", headerText: "#f9c74f",
+    photoBg: "#241548", photoFrame: "#f9c74f", photoShadow: "#050310",
+    name: "#f4e6c8", role: "#f47b5c", handle: "#b9a7e8", barcode: "#f9c74f",
+    backBg: "#f4e6c8", backDots: "#c9b48a", logoMain: "#1a1030", logoAccent: "#c2410c", backRole: "#4b2f7e",
+    strapBg: "#241548", strapEdge: "#f9c74f", strapText: "#f4e6c8", strapMark: "#f47b5c",
+  },
+  light: {
+    bg: "#fff4d6", frame: "#1a1030", header: "#f4e6c8", rule: "#c9b48a", headerText: "#c2410c",
+    photoBg: "#ead6ad", photoFrame: "#c2410c", photoShadow: "#1a1030",
+    name: "#1a1030", role: "#6d28d9", handle: "#5b4a86", barcode: "#1a1030",
+    backBg: "#1a1030", backDots: "#4b2f7e", logoMain: "#f4e6c8", logoAccent: "#f9c74f", backRole: "#b9a7e8",
+    strapBg: "#f4e6c8", strapEdge: "#c2410c", strapText: "#1a1030", strapMark: "#6d28d9",
+  },
+};
 
 const W = 839;
 const H = 1266;
@@ -56,23 +74,24 @@ export async function drawCardArt(data: CardData) {
   const heading = fontOf("h1", "monospace");
   const mono = fontOf(".font-mono", "monospace");
   const photo = await loadImage(data.avatarUrl);
+  const c = data.light ? PALETTES.light : PALETTES.dark;
 
   // ---------- Depan ----------
   const front = document.createElement("canvas");
   front.width = W;
   front.height = H;
   let ctx = front.getContext("2d")!;
-  ctx.fillStyle = "#1a1030";
+  ctx.fillStyle = c.bg;
   ctx.fillRect(0, 0, W, H);
   // bingkai krem + garis dalam ungu (gaya .atd-retro__bar)
-  ctx.fillStyle = "#f4e6c8";
+  ctx.fillStyle = c.frame;
   ctx.fillRect(0, 0, W, 10); ctx.fillRect(0, H - 10, W, 10); ctx.fillRect(0, 0, 10, H); ctx.fillRect(W - 10, 0, 10, H);
-  ctx.fillStyle = "#241548";
+  ctx.fillStyle = c.header;
   ctx.fillRect(10, 10, W - 20, 100);
-  ctx.fillStyle = "#4b2f7e";
+  ctx.fillStyle = c.rule;
   ctx.fillRect(10, 110, W - 20, 4);
 
-  ctx.fillStyle = "#f9c74f";
+  ctx.fillStyle = c.headerText;
   ctx.font = `400 26px ${mono}`;
   ctx.letterSpacing = "5px";
   ctx.textBaseline = "middle";
@@ -86,7 +105,7 @@ export async function drawCardArt(data: CardData) {
   ctx.save();
   roundRect(ctx, px, py, pw, ph, 0);
   ctx.clip();
-  ctx.fillStyle = "#241548";
+  ctx.fillStyle = c.photoBg;
   ctx.fillRect(px, py, pw, ph);
   if (photo) {
     // object-fit: cover, fokus agak ke atas (wajah)
@@ -96,29 +115,29 @@ export async function drawCardArt(data: CardData) {
   }
   ctx.restore();
   // bayangan keras + bingkai emas
-  ctx.fillStyle = "#050310";
+  ctx.fillStyle = c.photoShadow;
   ctx.fillRect(px + 12, py + ph, pw, 12);
   ctx.fillRect(px + pw, py + 12, 12, ph);
-  ctx.strokeStyle = "#f9c74f";
+  ctx.strokeStyle = c.photoFrame;
   ctx.lineWidth = 8;
   ctx.strokeRect(px, py, pw, ph);
 
-  ctx.fillStyle = "#f4e6c8";
+  ctx.fillStyle = c.name;
   ctx.font = `400 64px ${heading}`;
   ctx.textBaseline = "alphabetic";
   const lines = nameLines(ctx, data.name, pw);
   lines.forEach((l, i) => ctx.fillText(l.toUpperCase(), 64, 900 + i * 76));
-  ctx.fillStyle = "#f47b5c";
+  ctx.fillStyle = c.role;
   ctx.font = `400 34px ${mono}`;
   ctx.letterSpacing = "4px";
   ctx.fillText(`> ${data.role.toUpperCase()}`, 64, 900 + lines.length * 76 + 14);
   ctx.letterSpacing = "0px";
 
-  ctx.fillStyle = "#b9a7e8";
+  ctx.fillStyle = c.handle;
   ctx.font = `400 28px ${mono}`;
   ctx.fillText(`@${data.handle}`, 64, H - 72);
   // "barcode" dekoratif
-  ctx.fillStyle = "#f9c74f";
+  ctx.fillStyle = c.barcode;
   let x = W - 64;
   [6, 3, 12, 6, 3, 6, 12, 3, 6, 6, 12, 3, 6, 3, 6, 6].forEach((bw) => {
     x -= bw;
@@ -131,9 +150,9 @@ export async function drawCardArt(data: CardData) {
   back.width = W;
   back.height = H;
   ctx = back.getContext("2d")!;
-  ctx.fillStyle = "#f4e6c8";
+  ctx.fillStyle = c.backBg;
   ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = "#c9b48a";
+  ctx.fillStyle = c.backDots;
   for (let yy = 18; yy < H; yy += 36) for (let xx = 18; xx < W; xx += 36) ctx.fillRect(xx - 1, yy - 1, 3, 3);
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -143,12 +162,12 @@ export async function drawCardArt(data: CardData) {
   let lx = W / 2 - widths.reduce((a, b) => a + b, 0) / 2;
   ctx.textAlign = "left";
   logo.forEach((p, i) => {
-    ctx.fillStyle = i === 1 ? "#1a1030" : "#c2410c";
+    ctx.fillStyle = i === 1 ? c.logoMain : c.logoAccent;
     ctx.fillText(p, lx, H / 2 - 30);
     lx += widths[i];
   });
   ctx.textAlign = "center";
-  ctx.fillStyle = "#4b2f7e";
+  ctx.fillStyle = c.backRole;
   ctx.font = `400 30px ${mono}`;
   ctx.letterSpacing = "5px";
   ctx.fillText(data.role.toUpperCase(), W / 2, H / 2 + 80);
@@ -158,9 +177,9 @@ export async function drawCardArt(data: CardData) {
   strap.width = 1025;
   strap.height = 250;
   ctx = strap.getContext("2d")!;
-  ctx.fillStyle = "#241548";
+  ctx.fillStyle = c.strapBg;
   ctx.fillRect(0, 0, 1025, 250);
-  ctx.fillStyle = "#f9c74f";
+  ctx.fillStyle = c.strapEdge;
   ctx.fillRect(0, 0, 1025, 14); ctx.fillRect(0, 236, 1025, 14);
   ctx.font = `400 60px ${heading}`;
   ctx.letterSpacing = "8px";
@@ -171,11 +190,11 @@ export async function drawCardArt(data: CardData) {
   items.forEach((it, i) => {
     const cx = slot * i + slot / 2;
     if (it === "■") {
-      ctx.fillStyle = "#f47b5c";
+      ctx.fillStyle = c.strapMark;
       ctx.fillRect(cx - 14, 114, 28, 28);
       return;
     }
-    ctx.fillStyle = "#f4e6c8";
+    ctx.fillStyle = c.strapText;
     ctx.fillText(it, cx, 128, slot - 10);
   });
 
