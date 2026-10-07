@@ -209,6 +209,18 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "FloraDex — Fun 3D Learning",
+    description: {
+      id: "Proyek tugas kuliah tim: aplikasi mobile Augmented Reality untuk membantu siswa sekolah dasar belajar buah dan sayuran secara interaktif. Pengguna memindai gambar pada buku pelajaran untuk menampilkan model 3D secara real-time, lengkap dengan menu riwayat dan pengaturan.",
+      en: "A university team project: a mobile Augmented Reality app that helps elementary-school students learn about fruit and vegetables interactively. Users scan images in a textbook to display real-time 3D models, with history and settings screens.",
+    },
+    tags: ["Unity 6", "Vuforia", "AR", "Figma", "Sketchfab"],
+    image: "/projects/floradex.png",
+    gallery: ["/projects/floradex-poster.png"],
+    demoUrl: "https://drive.google.com/file/d/1bHFDKU9AxAHVx9sJva1fLaW7T7o_JUZ1/view",
+    featured: true,
+  },
+  {
     title: "Kawan Aksi",
     description: {
       id: "Platform web yang menghubungkan relawan dengan kegiatan sosial dari komunitas lokal dan NGO. Pengguna bisa menjelajahi kegiatan, melihat detail (lokasi, jadwal, penyelenggara, syarat), mendaftar sebagai relawan, dan menghubungi penyelenggara.",
