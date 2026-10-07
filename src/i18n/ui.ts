@@ -12,14 +12,15 @@ const id = {
     next: "Pilih kartu berikutnya",
     open: "Buka",
     cards: {
-      about: "Siapa saya, statistik singkat, dan terminal interaktif.",
+      about: "Siapa saya, statistik singkat, dan beberapa foto.",
       skills: "Kemampuan game development, programming, desain, dan web.",
       projects: "Karya dan proyek yang pernah saya buat.",
       experience: "Perjalanan pendidikan dan karier saya.",
       contact: "Ajak kolaborasi atau sekadar menyapa.",
     },
   },
-  about: { title: "Tentang Saya", terminalHint: "Coba terminal interaktif di bawah ini:" },
+  about: { title: "Tentang Saya", photoHint: "Seret / ketuk foto untuk melihat yang lain", photosLabel: "Foto-foto Ridho" },
+  terminalSection: { title: "Terminal", subtitle: "Lebih suka keyboard? Jelajahi portfolio ini lewat perintah.", hint: "Coba ketik help atau cd about:" },
   skills: { title: "Keahlian", subtitle: "Teknologi dan tools yang saya gunakan sehari-hari." },
   projects: {
     title: "Proyek",
@@ -33,6 +34,8 @@ const id = {
   },
   experience: { title: "Pengalaman", subtitle: "Perjalanan karier dan pendidikan saya." },
   contact: {
+    photoCaption: "Halo! 👋",
+    photoBadge: "P1 · READY",
     title1: "Ayo",
     title2: "Berkenalan",
     text: "Punya proyek, tawaran kerja, atau sekadar ingin menyapa? Inbox saya selalu terbuka.",
@@ -95,14 +98,15 @@ const en: typeof id = {
     next: "Pick your next card",
     open: "Open",
     cards: {
-      about: "Who I am, quick stats, and an interactive terminal.",
+      about: "Who I am, quick stats, and a few photos.",
       skills: "Game development, programming, design, and web skills.",
       projects: "Work and projects I have built.",
       experience: "My education and career journey.",
       contact: "Reach out to collaborate or just say hi.",
     },
   },
-  about: { title: "About Me", terminalHint: "Try the interactive terminal below:" },
+  about: { title: "About Me", photoHint: "Drag / tap a photo to see the next one", photosLabel: "Photos of Ridho" },
+  terminalSection: { title: "Terminal", subtitle: "Prefer the keyboard? Explore this portfolio with commands.", hint: "Try typing help or cd about:" },
   skills: { title: "Skills", subtitle: "Technologies and tools I use every day." },
   projects: {
     title: "Projects",
@@ -116,6 +120,8 @@ const en: typeof id = {
   },
   experience: { title: "Experience", subtitle: "My career and education journey." },
   contact: {
+    photoCaption: "Hey there! 👋",
+    photoBadge: "P1 · READY",
     title1: "Let's Get",
     title2: "Acquainted",
     text: "Have a project, a job offer, or just want to say hi? My inbox is always open.",
