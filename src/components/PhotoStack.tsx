@@ -37,7 +37,10 @@ export default function PhotoStack() {
           {String(i + 1).padStart(2, "0")}/{String(photos.length).padStart(2, "0")}
         </span>
       </div>
-      <p className="font-display text-lg text-foreground text-center py-3 truncate">~ {tx(p.caption)} ~</p>
+      {/* bingkai bawah polaroid — caption opsional, kosong = bingkai polos */}
+      <p className="font-display text-lg leading-7 text-foreground text-center py-3 min-h-[3.25rem] truncate">
+        {p.caption ? tx(p.caption) : null}
+      </p>
     </div>
   ));
 
