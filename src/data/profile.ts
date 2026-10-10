@@ -13,6 +13,9 @@
 import type { PageKey } from "@/data/pages";
 import type { L } from "@/i18n/types";
 
+/** Tahun mulai belajar (mulai kuliah Computer Science di BINUS) — dipakai untuk statistik "Tahun Belajar". */
+const LEARNING_SINCE = 2024;
+
 export const profile: {
   name: string;
   shortName: string;
@@ -82,11 +85,22 @@ export const profile: {
       en: "I'm currently seeking opportunities to gain real-world experience, collaborate with others, and continue growing as a game developer.",
     },
   ],
-  stats: [
-    { value: 2, suffix: "+", label: { id: "Tahun Belajar", en: "Years Learning" } },
-    { value: 10, suffix: "+", label: { id: "Proyek Selesai", en: "Projects Done" } },
-    { value: 5, suffix: "+", label: { id: "Teknologi Dikuasai", en: "Technologies" } },
-  ],
+  /**
+   * Angka statistik di halaman About — dihitung otomatis dari data di bawah,
+   * jadi tidak perlu diubah manual:
+   * - Tahun Belajar   = tahun ini − LEARNING_SINCE (mulai kuliah di BINUS)
+   * - Proyek Selesai  = jumlah `projects` yang bukan "Coming Soon"
+   * - Teknologi       = jumlah tag unik dari proyek-proyek yang sudah selesai
+   */
+  get stats() {
+    const done = projects.filter((p) => !p.comingSoon);
+    const tech = new Set(done.flatMap((p) => p.tags));
+    return [
+      { value: Math.max(1, new Date().getFullYear() - LEARNING_SINCE), label: { id: "Tahun Belajar", en: "Years Learning" } },
+      { value: done.length, label: { id: "Proyek Selesai", en: "Projects Done" } },
+      { value: tech.size, label: { id: "Teknologi Dipakai", en: "Technologies Used" } },
+    ];
+  },
   /**
    * Kutipan besar di footer — bergantian otomatis.
    * Tiap kutipan: { text, by, from }. `text` boleh teks biasa atau dua bahasa ({ id: "...", en: "..." }).
