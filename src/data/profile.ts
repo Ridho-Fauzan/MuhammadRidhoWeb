@@ -145,24 +145,23 @@ export const cardImages: Partial<Record<Exclude<PageKey, "home">, string>> = {
  * - Semua foto tampil sebagai tumpukan polaroid di halaman About (bisa digeser / diklik).
  * - `contactPhoto` = indeks foto yang tampil sebagai kartu miring di halaman Contact.
  * `focus` = posisi crop (CSS object-position), mis. "50% 20%" supaya wajah tidak terpotong.
+ * `caption` (opsional) = teks di bingkai bawah polaroid, mis. { id: "Jakarta, 2024", en: "Jakarta, 2024" }.
+ *   Kosongkan / hapus = bingkai bawah polos.
  */
-export const photos: { src: string; alt: L; caption: L; focus?: string }[] = [
+export const photos: { src: string; alt: L; caption?: L; focus?: string }[] = [
   {
     src: "/profile/IMG_20240911_120911.jpg",
     alt: { id: "Ridho memakai jas, duduk di studio foto", en: "Ridho in a suit, seated in a photo studio" },
-    caption: { id: "mode serius", en: "serious mode" },
     focus: "50% 30%",
   },
   {
     src: "/profile/IMG_20240417_212952.jpg",
     alt: { id: "Ridho berpose dengan kacamata hitam dan beanie", en: "Ridho posing with sunglasses and a beanie" },
-    caption: { id: "mode bos terakhir", en: "final boss mode" },
     focus: "50% 25%",
   },
   {
     src: "/profile/plo.jpg",
     alt: { id: "Foto close-up Ridho", en: "Close-up photo of Ridho" },
-    caption: { id: "mode santai", en: "chill mode" },
     focus: "50% 20%",
   },
 ];
