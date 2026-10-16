@@ -1,98 +1,41 @@
 # MuhammadRidhoWeb
 
-Website portfolio pribadi. Desainnya terinspirasi dari [augustopolonio-website](https://github.com/augustopolonio/augustopolonio-website) (gaya monospace, typewriter hero, dan terminal interaktif), tapi ditulis ulang dengan layout, warna, dan section sendiri.
+Website portfolio pribadi **Muhammad Ridho Fathi Fauzan** (Ridho) — mahasiswa Computer Science di BINUS University dengan penjurusan Interactive Multimedia, yang berfokus pada **game development** dan pengalaman interaktif.
 
-## Tech Stack
+Situs ini menampilkan profil, keahlian, proyek, dan pengalaman Ridho dalam balutan tema **retro / pixel-art** yang interaktif: nuansa monospace, terminal yang bisa diketik, kartu ID bertali (lanyard) 3D, latar beranimasi, dan efek-efek kecil yang menghidupkan setiap halaman. Tersedia dalam **dua bahasa** (Indonesia & Inggris).
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · Framer Motion / Motion · three.js · React Three Fiber · Rapier · OGL · lucide-react · react-icons
+## Isi Situs
 
-## Menjalankan
+Situs terdiri dari beberapa halaman, masing-masing dengan latar beranimasi sendiri dan baris navigasi "pilih kartu berikutnya" di bawahnya.
 
-```bash
-npm install
-npm run dev     # http://localhost:3000
-npm run build   # build produksi
-```
-
-## Mengganti Data Diri
-
-Semua konten ada di **`src/data/profile.ts`**: nama, tagline, about, skills, proyek, pengalaman, dan link sosial media.
-
-- Foto profil: taruh di `public/` (mis. `public/foto.jpg`), lalu isi `avatarUrl: "/foto.jpg"`.
-- CV: taruh di `public/` (mis. `public/cv.pdf`), lalu isi `resumeUrl: "/cv.pdf"`. Tombol CV akan muncul di navbar.
-- Gambar proyek: taruh di `public/projects/`, lalu isi `image` pada tiap proyek. Screenshot tambahan (opsional): `gallery: ["/projects/a-2.png", ...]` → tampil sebagai thumbnail di detail proyek.
-- Hero: `roles` = pilihan "kelas" (berganti otomatis, bisa diganti dengan ◀ ▶), `tagline` = teks kotak dialog yang diketik, `heroBadges` = chip "Gear" (mis. Unity, C#).
-- Kutipan footer: `quotes` di `profile`, tiap item `{ text, by, from }` (kutipan, tokoh, game). Bergantian otomatis; lama tiap kutipan = `quoteSeconds` detik.
-- Gambar kartu "Pick your card": `cardImages`. Default = pixel art dari Kenney 1-Bit Pack (`public/cards/*.pixel.png`, dibuat oleh `scripts/kenney/build-card-art.py`). Bisa diganti foto (mis. `"/cards/about.jpg"`, tampil hitam-putih lalu berwarna saat di-hover) atau dikosongkan (ikon pixel).
-
-## Form Kontak
-
-Form "Kirim pesan" di `/contact` mengirim pesan lewat [Formspree](https://formspree.io); ID form-nya ada di `src/data/profile.ts` → `formspreeId`. Pesan masuk ke email akun Formspree, dan tombol **Reply** di email langsung membalas ke pengirim.
-
-- Ganti form: ubah `formspreeId` (atau isi env `NEXT_PUBLIC_FORMSPREE_ID`, yang lebih diprioritaskan).
-- Kosongkan `formspreeId` → tombol **Kirim** membuka aplikasi email pengunjung dengan pesan yang sudah terisi.
-
-## Tema Retro
-
-Seluruh situs memakai tema dari [ThreeUI Animated Top Dock — Retro](https://threeui.com/css/animated-top-dock/retro): palet *dusk* (ungu, emas, koral, krem), sudut kotak, garis tebal, bayangan keras, dan scanline CRT. Warna diatur di `src/app/globals.css` (`:root` = mode terang/kertas, `.dark` = mode gelap/CRT). Navbar: `src/components/RetroDock.tsx` + `RetroDock.css`. Latar animasi tiap halaman: `src/components/PageBackground.tsx` (`variant`: `terminal`, `dots`, `grid`, `grid-diagonal`, `snow`).
-
-## Halaman
-
-| URL | Isi |
+| Halaman | Isi |
 |---|---|
-| `/` | Hero (Lanyard), marquee teknologi, kartu "Pick your card" ke halaman lain |
-| `/about` | Tentang saya, statistik, terminal interaktif |
-| `/skills` | Keahlian per kategori |
-| `/projects` | Kartu proyek kecil; diklik → detail (deskripsi, link kode & demo) |
-| `/experience` | Timeline pendidikan & karier |
-| `/contact` | Ajakan kontak + form "Kirim pesan" + latar partikel |
+| **Beranda** (`/`) | Sambutan utama dengan kartu ID 3D yang tergantung di tali (lanyard), peran yang berganti otomatis ("Game Developer", "Web Developer", dll), marquee logo teknologi, dan deretan kartu "Pick your card" sebagai pintu ke halaman lain. |
+| **About** (`/about`) | Perkenalan Ridho, statistik ringkas (mis. tahun belajar), dan terminal interaktif yang bisa diketik perintah seperti `cd projects` atau `lang en`. |
+| **Skills** (`/skills`) | Keahlian yang dikelompokkan per kategori. |
+| **Projects** (`/projects`) | Kartu-kartu proyek; diklik untuk membuka detail berisi deskripsi, tautan kode, dan demo. Mencakup proyek seperti FloraDex, KawanAksi, dan SpoJeDy, serta slot "Coming Soon" untuk karya yang akan datang. |
+| **Experience** (`/experience`) | Linimasa pendidikan dan perjalanan karier. |
+| **Contact** (`/contact`) | Ajakan untuk terhubung, pintasan WhatsApp & email, dan form "Kirim pesan" di atas latar partikel. |
 
-Di bawah tiap halaman ada baris "Pilih kartu berikutnya" ke halaman lain. Daftar halaman ada di `src/data/pages.ts` (dipakai navbar, kartu, dan footer). Navbar & footer ada di `src/app/layout.tsx`. Di terminal juga bisa ketik `cd projects`, `cd ~`, dst.
+## Pengalaman & Interaksi
 
-## Dua Bahasa (ID / EN)
+Yang membuat situs ini terasa hidup:
 
-Tombol **ID / EN** ada di navbar. Pilihan pengunjung disimpan di browser. Pengunjung pertama kali otomatis mengikuti bahasa browser-nya (Indonesia → ID, lainnya → EN). Di terminal juga bisa ketik `lang en` / `lang id`.
+- **Kartu ID bertali (Lanyard)** — kartu identitas 3D di beranda yang menggantung dan bergoyang mengikuti gerak, digambar otomatis dari data profil (nama, peran, username, foto). Versi ringkas tampil di perangkat mobile.
+- **Terminal interaktif** — di halaman About, pengunjung bisa mengetik perintah untuk berpindah halaman atau mengganti bahasa.
+- **Dua bahasa (ID / EN)** — tombol di navbar; pilihan pengunjung diingat, dan pengunjung baru otomatis mengikuti bahasa browser-nya.
+- **Tema retro menyeluruh** — palet senja (ungu, emas, koral, krem), garis tebal, bayangan keras, dan scanline ala CRT, lengkap dengan mode terang (kertas) dan gelap (CRT).
+- **Sentuhan kecil** — layar boot bergaya retro saat pertama membuka, kursor pixel yang mengikuti mouse, karakter pixel di footer, kutipan game yang bergantian, scroll yang halus, serta animasi hover dan klik di berbagai elemen.
+- **Ramah aksesibilitas** — efek berat otomatis dinonaktifkan bila pengunjung memilih *reduce motion*, dan situs tetap bisa dibaca tanpa JavaScript.
 
-- **Isi data** (`src/data/profile.ts`): tulis `{ id: "...", en: "..." }` untuk teks yang berbeda per bahasa, atau string biasa kalau sama, mis. `"Unity"`.
-- **Teks antarmuka** (tombol, judul section, footer, terminal): `src/i18n/ui.ts`.
+## Teknologi
 
-## Kartu Lanyard
+Dibangun dengan **Next.js (App Router)** dan **TypeScript**, ditata dengan **Tailwind CSS**. Animasi memakai **Motion / Framer Motion** dan scroll halus dari **Lenis**. Elemen 3D (kartu lanyard, latar beranimasi) memakai **three.js**, **React Three Fiber**, dan fisika **Rapier**, dengan sejumlah latar berbasis **OGL**. Ikon dari **lucide-react** dan **react-icons**.
 
-Gambar depan, belakang, dan tali kartu dibuat otomatis di browser dari `profile.ts` (`name`, `role`, `handle`, `avatarUrl`, `shortName`) lewat `src/components/lanyardArt.ts`. Ganti datanya, kartunya ikut berubah. Warna kartu sengaja netral (hitam/putih/abu).
+Tema dan banyak efek visual mengadaptasi komponen dari **React Bits**, **ThreeUI (Animated Top Dock — Retro)**, serta aset pixel-art dari **Kenney 1-Bit Pack**. Semua komponen dan aset pihak ketiga disertai berkas lisensinya masing-masing di dalam proyek.
 
-## Komponen & Aset Pihak Ketiga
+## Kredit & Inspirasi
 
-| Dipakai di | Komponen | Sumber | Lisensi |
-|---|---|---|---|
-| Kartu proyek (efek pixel saat hover) | PixelCard | React Bits | MIT + Commons Clause |
-| Animasi hover/klik, navbar sembunyi saat scroll, detail proyek, kartu, kursor | Motion (`motion/react`) | [motion.dev](https://motion.dev) | MIT |
-| Scroll halus (mouse/trackpad) | Lenis | [lenis](https://github.com/darkroomengineering/lenis) | MIT |
-| Tema seluruh situs, navbar dock & latar dither (hero) | Animated Top Dock — Retro | [ThreeUI](https://threeui.com/css/animated-top-dock/retro) · `src/components/threeui/` | MIT |
-| Kartu ID tergantung di hero (desktop) | Lanyard (model `public/lanyard/card.glb`) | [React Bits](https://reactbits.dev) · `src/components/reactbits/` | MIT + Commons Clause |
-| Nama di hero | DecryptedText | React Bits | MIT + Commons Clause |
-| Peran di hero | RotatingText | React Bits | MIT + Commons Clause |
-| Klik di hero | ClickSpark | React Bits | MIT + Commons Clause |
-| Marquee teknologi | LogoLoop | React Bits | MIT + Commons Clause |
-| Kartu skill / statistik | SpotlightCard | React Bits | MIT + Commons Clause |
-| Statistik About | CountUp | React Bits | MIT + Commons Clause |
-| Latar Contact | Particles | React Bits | MIT + Commons Clause |
-| Latar halaman About | FaultyTerminal | React Bits | MIT + Commons Clause |
-| Latar halaman Skills | Dot Matrix (warna diubah ke palet retro) | [ThreeUI](https://threeui.com) · `src/components/threeui/` | MIT |
-| Latar halaman Projects & bagian "Pick your card" | ShapeGrid | React Bits | MIT + Commons Clause |
-| Latar halaman Experience | PixelSnow | React Bits | MIT + Commons Clause |
-| Gambar kartu "Pick your card" | 1-Bit Pack | [Kenney](https://kenney.nl/assets/1-bit-pack) · `scripts/kenney/` | CC0 |
-| Logo teknologi | Simple Icons | [react-icons](https://react-icons.github.io/react-icons/) | MIT / CC0 |
+Desain terinspirasi dari [augustopolonio-website](https://github.com/augustopolonio/augustopolonio-website) (gaya monospace, hero typewriter, dan terminal interaktif), lalu ditulis ulang dengan layout, warna, dan section sendiri.
 
-Komponen pihak ketiga disalin ke `src/components/reactbits` dan `src/components/threeui` (beserta file lisensinya) dan dikecualikan dari ESLint. Commons Clause pada React Bits membolehkan pemakaian di website, tapi **tidak** boleh menjual/mendistribusikan ulang komponennya sendiri.
-
-Font: Silkscreen (judul, pixel), Fragment Mono (teks), dan Pixelify Sans (navbar) via `next/font/google` — semuanya SIL Open Font License.
-
-## Detail Interaksi
-
-- **Layar boot** (`BootScreen.tsx`): muncul sekali per sesi tab, bisa dilewati dengan klik/tombol apa saja; tidak tampil kalau pengunjung memilih *reduce motion* atau JavaScript mati.
-- **Kursor retro** (`RetroCursor.tsx`): bingkai pixel yang mengikuti mouse; hanya di perangkat dengan mouse, kursor asli tetap tampil.
-- **Karakter pixel di footer** (`PixelBuddy.tsx`): digambar dari peta karakter di file itu — ubah huruf/warna di `BODY` & `PALETTE` untuk mengganti penampilannya.
-
-## Proyek "Coming Soon"
-
-Di `src/data/profile.ts`, proyek dengan `comingSoon: true` tampil sebagai kartu **Segera Hadir / Coming Soon** tanpa link. Saat proyeknya sudah ada, hapus `comingSoon` lalu isi `title`, `description`, `tags`, `image`, `demoUrl`, dan `repoUrl`.
+Font yang dipakai: **Silkscreen**, **Fragment Mono**, dan **Pixelify Sans** (semuanya SIL Open Font License).
