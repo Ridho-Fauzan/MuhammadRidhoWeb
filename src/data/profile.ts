@@ -53,8 +53,8 @@ export const profile: {
    * Pesan dari pengunjung langsung masuk ke email. Kosong = form membuka aplikasi email pengunjung (mailto).
    */
   formspreeId: "xbgddovk",
-  /** Taruh file CV di folder /public lalu isi path-nya, mis. "/cv.pdf". Kosongkan jika belum ada. */
-  resumeUrl: "",
+  /** Link CV: path di /public (mis. "/cv.pdf") atau URL luar (mis. Google Drive). Kosong = tombol CV disembunyikan. */
+  resumeUrl: "https://drive.google.com/file/d/1LogQfSWozYEH9XgNhPPGIGhvlWALyj58/view?usp=sharing",
   /** Foto close-up untuk kartu ID (Lanyard & versi mobile). Taruh di /public lalu isi path-nya. */
   avatarUrl: "/profile/plo.jpg",
   /** Username yang tampil di kartu Lanyard (tanpa @) */
