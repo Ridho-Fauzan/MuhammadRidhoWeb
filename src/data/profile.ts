@@ -38,7 +38,7 @@ export const profile: {
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
-  role: "Game Developer",
+  role: "Frontend & Game Developer",
   location: "Jakarta, Indonesia",
   email: "muhammadridhofathifauzan@gmail.com",
   /**
@@ -61,28 +61,29 @@ export const profile: {
   handle: "Akashimoke",
   /** Peran yang berganti-ganti di hero: "Saya seorang ..." / "I'm a ..." */
   roles: [
+    "Frontend Developer",
     "Game Developer",
     "Web Developer",
     "Tech Enthusiast",
-    "Dedicated Gamer" ,
+    "Dedicated Gamer",
   ],
   tagline: {
-    id: "Membangun game yang imersif dan menyenangkan, sambil terus belajar dan berkembang di dunia game development.",
-    en: "Building immersive and fun games while continuously learning and growing in the world of game development.",
+    id: "Membangun antarmuka web yang responsif dan game yang imersif, sambil terus belajar dan berkembang di dunia pengembangan perangkat lunak.",
+    en: "Building responsive web interfaces and immersive games while continuously learning and growing in software development.",
   },
-  heroBadges: ["Unity", "C#", "three.js"],
+  heroBadges: ["React", "Next.js", "TypeScript", "Unity"],
   about: [
     {
       id: "Halo, saya Ridho, mahasiswa Computer Science di BINUS University yang saat ini mengambil penjurusan Interactive Multimedia melalui program mobility.",
       en: "Hello, I'm Ridho, a Computer Science student at BINUS University currently specializing in Interactive Multimedia through the mobility program.",
     },
     {
-      id: "Saya tertarik pada pengembangan game dan pengalaman interaktif, khususnya pemrograman gameplay, desain game, dan teknologi kreatif. Saya menikmati mengubah ide menjadi proyek interaktif sambil terus belajar dan bereksperimen dengan alat dan teknik baru.",
-      en: "I’m interested in game development and interactive experiences, particularly gameplay programming, game design, and creative technology. I enjoy turning ideas into interactive projects while continuously learning and experimenting with new tools and techniques.",
+      id: "Saya fokus pada pengembangan frontend dengan React, Next.js, Vue, dan Tailwind CSS, serta tertarik pada game development dan pengalaman interaktif menggunakan Unity dan three.js. Saya menikmati mengubah ide menjadi produk yang rapi, responsif, dan menyenangkan untuk digunakan.",
+      en: "I focus on frontend development with React, Next.js, Vue, and Tailwind CSS, and I'm also passionate about game development and interactive experiences with Unity and three.js. I enjoy turning ideas into polished, responsive, and enjoyable products.",
     },
     {
-      id: "Saat ini, saya sedang mencari kesempatan untuk mendapatkan pengalaman di dunia kerja, berkolaborasi dengan orang lain, dan terus berkembang sebagai game developer.",
-      en: "I'm currently seeking opportunities to gain real-world experience, collaborate with others, and continue growing as a game developer.",
+      id: "Saat ini, saya sedang mencari kesempatan magang, kerja remote, maupun freelance untuk mendapatkan pengalaman nyata, berkolaborasi dengan tim, dan terus berkembang sebagai frontend dan game developer.",
+      en: "I'm currently open to internships, remote roles, and freelance work to gain real-world experience, collaborate with teams, and keep growing as a frontend and game developer.",
     },
   ],
   /**
@@ -185,6 +186,10 @@ export const socials: { key: SocialKey; label: string; url: string }[] = [
 
 export const skills: { category: L; items: L[] }[] = [
   {
+    category: "Web Development",
+    items: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Vue 3", "Tailwind CSS"],
+  },
+  {
     category: "Game-Dev",
     items: ["Unity", "C#", "Gameplay Programming", "Game Mechanics", "2D / 3D Development", "Physics"],
   },
@@ -197,12 +202,8 @@ export const skills: { category: L; items: L[] }[] = [
     items: ["Level Design", "Game Design", "Prototyping", "UI/UX", "Game Balancing"],
   },
   {
-    category: "Web Development",
-    items: ["HTML", "CSS", "JavaScript", "React", "Next.js", "Tailwind CSS"],
-  },
-  {
     category: "Tools",
-    items: ["Git", "GitHub", "Visual Studio", "Figma"],
+    items: ["Git", "GitHub", "Vite", "Visual Studio", "Figma"],
   },
 ];
 

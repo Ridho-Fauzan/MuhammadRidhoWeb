@@ -13,7 +13,7 @@ const id = {
     open: "Buka",
     cards: {
       about: "Siapa saya, statistik singkat, dan beberapa foto.",
-      skills: "Kemampuan game development, programming, desain, dan web.",
+      skills: "Kemampuan web/frontend, game development, programming, dan desain.",
       projects: "Karya dan proyek yang pernah saya buat.",
       experience: "Perjalanan pendidikan dan karier saya.",
       contact: "Ajak kolaborasi atau sekadar menyapa.",
@@ -99,7 +99,7 @@ const en: typeof id = {
     open: "Open",
     cards: {
       about: "Who I am, quick stats, and a few photos.",
-      skills: "Game development, programming, design, and web skills.",
+      skills: "Web/frontend, game development, programming, and design skills.",
       projects: "Work and projects I have built.",
       experience: "My education and career journey.",
       contact: "Reach out to collaborate or just say hi.",

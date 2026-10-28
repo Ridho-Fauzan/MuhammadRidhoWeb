@@ -1,6 +1,6 @@
 # MuhammadRidhoWeb
 
-Website portfolio pribadi **Muhammad Ridho Fathi Fauzan** (Ridho) — mahasiswa Computer Science di BINUS University dengan penjurusan Interactive Multimedia, yang berfokus pada **game development** dan pengalaman interaktif.
+Website portfolio pribadi **Muhammad Ridho Fathi Fauzan** (Ridho) — mahasiswa Computer Science di BINUS University dengan penjurusan Interactive Multimedia, yang berfokus pada **frontend development** dan **game development** / pengalaman interaktif.
 
 Situs ini menampilkan profil, keahlian, proyek, dan pengalaman Ridho dalam balutan tema **retro / pixel-art** yang interaktif: nuansa monospace, terminal yang bisa diketik, kartu ID bertali (lanyard) 3D, latar beranimasi, dan efek-efek kecil yang menghidupkan setiap halaman. Tersedia dalam **dua bahasa** (Indonesia & Inggris).
 
@@ -10,7 +10,7 @@ Situs terdiri dari beberapa halaman, masing-masing dengan latar beranimasi sendi
 
 | Halaman | Isi |
 |---|---|
-| **Beranda** (`/`) | Sambutan utama dengan kartu ID 3D yang tergantung di tali (lanyard), peran yang berganti otomatis ("Game Developer", "Web Developer", dll), marquee logo teknologi, dan deretan kartu "Pick your card" sebagai pintu ke halaman lain. |
+| **Beranda** (`/`) | Sambutan utama dengan kartu ID 3D yang tergantung di tali (lanyard), peran yang berganti otomatis ("Frontend Developer", "Game Developer", dll), marquee logo teknologi, dan deretan kartu "Pick your card" sebagai pintu ke halaman lain. |
 | **About** (`/about`) | Perkenalan Ridho, statistik ringkas (mis. tahun belajar), dan terminal interaktif yang bisa diketik perintah seperti `cd projects` atau `lang en`. |
 | **Skills** (`/skills`) | Keahlian yang dikelompokkan per kategori. |
 | **Projects** (`/projects`) | Kartu-kartu proyek; diklik untuk membuka detail berisi deskripsi, tautan kode, dan demo. Mencakup proyek seperti FloraDex, KawanAksi, dan SpoJeDy, serta slot "Coming Soon" untuk karya yang akan datang. |
