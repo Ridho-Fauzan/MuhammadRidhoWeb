@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowDown, Hand } from "lucide-react";
+import { ArrowDown, FileText, Hand } from "lucide-react";
 import dynamic from "next/dynamic";
 import MotionLink from "./motion/MotionLink";
 import { pressButton } from "./motion/press";
@@ -131,6 +131,18 @@ export default function Hero() {
             >
               {t.hero.contactMe}
             </MotionLink>
+            {profile.resumeUrl && (
+              <motion.a
+                {...pressButton}
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
+              >
+                <FileText className="w-4 h-4" aria-hidden />
+                {t.hero.resume}
+              </motion.a>
+            )}
           </div>
 
           <SocialIcons className="mt-8 justify-center lg:justify-start" />
