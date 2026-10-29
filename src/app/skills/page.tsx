@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/data/seo";
 import { CardRow } from "@/components/PickCards";
 import PageBackground from "@/components/PageBackground";
 import Skills from "@/components/Skills";
 
-export const metadata: Metadata = { title: "Skills" };
+export const metadata: Metadata = pageMetadata("skills");
 
 export default function SkillsPage() {
   return (
