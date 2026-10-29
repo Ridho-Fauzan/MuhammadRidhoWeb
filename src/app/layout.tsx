@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fragment_Mono, Pixelify_Sans, Silkscreen } from "next/font/google";
 import "./globals.css";
-import { profile } from "@/data/profile";
-import { tr } from "@/i18n/types";
+import { jsonLd, rootMetadata } from "@/data/seo";
 import BootScreen from "@/components/BootScreen";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -15,13 +14,12 @@ const retro = Fragment_Mono({ variable: "--font-retro", subsets: ["latin"], weig
 // Navbar: Pixelify Sans — pixel tapi tetap tebal & mudah dibaca di ukuran kecil
 const nav = Pixelify_Sans({ variable: "--font-nav", subsets: ["latin"], weight: ["500", "600", "700"] });
 
-export const metadata: Metadata = {
-  title: { default: `${profile.name} | ${tr(profile.role, "en")}`, template: `%s | ${profile.name}` },
-  description: tr(profile.tagline, "id"),
-  openGraph: {
-    title: `${profile.name} | ${tr(profile.role, "en")}`,
-    description: tr(profile.tagline, "id"),
-  },
+export const metadata: Metadata = rootMetadata;
+
+// Warna bar browser di HP = --background tema gelap (tema default) di globals.css
+export const viewport: Viewport = {
+  themeColor: "#0b0819",
+  colorScheme: "dark light",
 };
 
 // Set tema & bahasa sebelum render agar tidak berkedip.
@@ -33,6 +31,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="id" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
         <noscript>
           <style>{".boot{display:none!important}"}</style>
         </noscript>
