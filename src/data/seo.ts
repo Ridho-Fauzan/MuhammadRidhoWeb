@@ -12,7 +12,7 @@ import { tr, type Lang } from "@/i18n/types";
 import { ui } from "@/i18n/ui";
 
 /** URL utama website (tanpa "/" di akhir). Ganti kalau pindah domain. */
-export const siteUrl = "https://bangepep.vercel.app";
+export const siteUrl = "https://bangepep.my.id";
 
 /** Bahasa teks metadata (judul, deskripsi, preview link). */
 export const seoLang: Lang = "en";
