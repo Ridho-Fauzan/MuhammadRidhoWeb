@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { TerminalSlime } from "./PixelCritters";
 import { experiences, profile, projects, skills, socials } from "@/data/profile";
 import type { L, Lang } from "@/i18n/types";
 import { tr } from "@/i18n/types";
@@ -14,6 +13,7 @@ type Line = { type: "in" | "out"; content: React.ReactNode };
 type Ui = (typeof ui)["id"];
 
 const user = profile.shortName.toLowerCase().replace(/\s+/g, "");
+const QUICK = ["help", "whoami", "projects", "cd about"];
 const COMMANDS = ["cd about", "cd skills", "cd projects", "cd experience", "cd contact", "cd ~", "help", "whoami", "about", "skills", "projects", "experience", "social", "contact", "lang", "clear", "date", "sudo"];
 
 function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNode | "clear" {
@@ -27,19 +27,19 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
     if (!page) {
       return (
         <p>
-          <span className="text-[#ff6b6b]">cd:</span> {target}: {t.terminal.noDir}{" "}
-          <span className="text-[#b9a7e8]">({pages.filter((p) => p.key !== "home").map((p) => p.key).join(", ")})</span>
+          <span className="text-red-600 dark:text-red-400">cd:</span> {target}: {t.terminal.noDir}{" "}
+          <span className="text-muted">({pages.filter((p) => p.key !== "home").map((p) => p.key).join(", ")})</span>
         </p>
       );
     }
     setTimeout(() => go(page.href), 350);
-    return <p className="text-[#f9c74f]">→ {t.nav[page.key]}</p>;
+    return <p className="text-accent">→ {t.nav[page.key]}</p>;
   }
 
   if (c === "lang en" || c === "lang id") {
     const next = c.slice(5) as Lang;
     setLang(next);
-    return <p className="text-[#f9c74f]">{ui[next].terminal.langChanged}</p>;
+    return <p className="text-accent">{ui[next].terminal.langChanged}</p>;
   }
 
   switch (c) {
@@ -48,30 +48,30 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
     case "help":
       return (
         <div className="space-y-0.5">
-          <p className="text-[#fff4d6]">{t.terminal.available}</p>
+          <p className="text-foreground font-semibold">{t.terminal.available}</p>
           {(Object.keys(t.terminal.cmds) as (keyof Ui["terminal"]["cmds"])[]).map((k) => (
             <p key={k} className="pl-4">
-              <span className="text-[#f47b5c]">{k}</span> <span className="text-[#b9a7e8]">- {t.terminal.cmds[k]}</span>
+              <span className="text-accent">{k}</span> <span className="text-muted">- {t.terminal.cmds[k]}</span>
             </p>
           ))}
-          <p className="pt-2 text-[#b9a7e8]">{t.terminal.tip}</p>
+          <p className="pt-2 text-muted">{t.terminal.tip}</p>
         </div>
       );
     case "whoami":
       return (
         <p>
-          <span className="text-[#f9c74f]">{profile.name}</span> — {tx(profile.role)} @ {tx(profile.location)}
+          <span className="text-accent">{profile.name}</span> — {tx(profile.role)} @ {tx(profile.location)}
         </p>
       );
     case "about":
-      return <p className="text-[#e8dcff]">{tx(profile.about[0])}</p>;
+      return <p className="text-foreground/80">{tx(profile.about[0])}</p>;
     case "skills":
       return (
         <div>
           {skills.map((s, i) => (
             <p key={i}>
-              <span className="text-[#fff4d6]">{tx(s.category)}</span>{" "}
-              <span className="text-[#e8dcff]">{s.items.map(tx).join(", ")}</span>
+              <span className="text-foreground font-semibold">{tx(s.category)}</span>{" "}
+              <span className="text-foreground/80">{s.items.map(tx).join(", ")}</span>
             </p>
           ))}
         </div>
@@ -81,7 +81,7 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {projects.map((p, i) => (
             <p key={i}>
-              <span className="text-[#f47b5c]">{tx(p.title)}</span> <span className="text-[#b9a7e8]">{p.comingSoon ? "(coming soon)" : `[${p.tags.join(", ")}]`}</span>
+              <span className="text-accent">{tx(p.title)}</span> <span className="text-muted">{p.comingSoon ? "(coming soon)" : `[${p.tags.join(", ")}]`}</span>
             </p>
           ))}
         </div>
@@ -91,7 +91,7 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {experiences.map((e, i) => (
             <p key={i}>
-              <span className="text-[#b9a7e8]">{tx(e.period)}</span> <span className="text-[#f9c74f]">{tx(e.role)}</span> @ {tx(e.company)}
+              <span className="text-muted">{tx(e.period)}</span> <span className="text-accent">{tx(e.role)}</span> @ {tx(e.company)}
             </p>
           ))}
         </div>
@@ -101,8 +101,8 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
         <div>
           {socials.map((s) => (
             <p key={s.key}>
-              <span className="text-[#fff4d6]">{s.label.padEnd(12)}</span>{" "}
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-[#f47b5c] underline">
+              <span className="text-foreground font-semibold">{s.label.padEnd(12)}</span>{" "}
+              <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-accent underline">
                 {s.url.replace(/^mailto:/, "")}
               </a>
             </p>
@@ -113,25 +113,25 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
       return (
         <p>
           {t.terminal.emailMe}{" "}
-          <a href={`mailto:${profile.email}`} className="text-[#f47b5c] underline">
+          <a href={`mailto:${profile.email}`} className="text-accent underline">
             {profile.email}
           </a>
         </p>
       );
     case "lang":
-      return <p className="text-[#b9a7e8]">{t.terminal.cmds.lang}</p>;
+      return <p className="text-muted">{t.terminal.cmds.lang}</p>;
     case "date":
       return <p>{new Date().toLocaleString(lang === "id" ? "id-ID" : "en-US")}</p>;
     case "sudo":
     case "sudo rm -rf /":
-      return <p className="text-[#ff6b6b]">{t.terminal.denied}</p>;
+      return <p className="text-red-600 dark:text-red-400">{t.terminal.denied}</p>;
     case "clear":
       return "clear";
     default:
       return (
         <p>
-          <span className="text-[#ff6b6b]">{t.terminal.notFound}</span> {cmd}. {t.terminal.type}{" "}
-          <span className="text-[#f47b5c]">help</span>.
+          <span className="text-red-600 dark:text-red-400">{t.terminal.notFound}</span> {cmd}. {t.terminal.type}{" "}
+          <span className="text-accent">help</span>.
         </p>
       );
   }
@@ -140,10 +140,10 @@ function run(cmd: string, lang: Lang, go: (href: string) => void): React.ReactNo
 function Prompt() {
   return (
     <span className="shrink-0">
-      <span className="text-[#f9c74f]">{user}@portfolio</span>
-      <span className="text-[#7b6ab0]">:</span>
-      <span className="text-[#f47b5c]">~</span>
-      <span className="text-[#7b6ab0]">$ </span>
+      <span className="text-accent">{user}@portfolio</span>
+      <span className="text-muted">:</span>
+      <span className="text-accent">~</span>
+      <span className="text-muted">$ </span>
     </span>
   );
 }
@@ -164,15 +164,15 @@ export default function Terminal() {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
   }, [lines]);
 
-  const submit = () => {
-    const result = run(input, lang, (href) => router.push(href));
+  const submit = (cmd = input) => {
+    const result = run(cmd, lang, (href) => router.push(href));
     if (result === "clear") {
       setLines([]);
       setShowWelcome(false);
     } else {
-      setLines((l) => [...l, { type: "in", content: input }, ...(result ? [{ type: "out" as const, content: result }] : [])]);
+      setLines((l) => [...l, { type: "in", content: cmd }, ...(result ? [{ type: "out" as const, content: result }] : [])]);
     }
-    if (input.trim()) setHistory((h) => [input, ...h]);
+    if (cmd.trim()) setHistory((h) => [cmd, ...h]);
     setHIdx(-1);
     setInput("");
   };
@@ -199,25 +199,22 @@ export default function Terminal() {
   };
 
   return (
-    // pembungkus tanpa overflow-hidden supaya slime bisa berjalan di atas bingkai terminal
-    <div className="relative critter-pause">
-    <TerminalSlime />
     <div
-      className="font-mono rounded-xl overflow-hidden border border-[#4b2f7e] bg-[#0b0819] text-[#f4e6c8] border-2 shadow-[6px_6px_0_var(--shadow)] text-sm"
+      className="font-mono overflow-hidden rounded-2xl border border-border bg-surface text-foreground text-sm shadow-[0_30px_60px_-30px_rgb(var(--shadow-color)/0.35)]"
       onClick={() => inputRef.current?.focus()}
     >
-      <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1030] border-b border-[#4b2f7e]">
-        <span className="w-3 h-3 rounded-full bg-[#f47b5c]" />
-        <span className="w-3 h-3 rounded-full bg-[#f9c74f]" />
-        <span className="w-3 h-3 rounded-full bg-[#b9a7e8]" />
-        <span className="ml-3 text-[#b9a7e8] text-xs">{user}@portfolio: ~</span>
+      <div className="flex items-center gap-2 px-4 py-3 bg-surface-2 border-b border-border">
+        <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+        <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+        <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+        <span className="flex-1 text-center text-muted text-xs pr-12">{user}@portfolio — zsh</span>
       </div>
-      <div ref={bodyRef} data-lenis-prevent className="terminal-scroll h-80 overflow-y-auto overscroll-contain p-4 space-y-1.5 cursor-text">
+      <div ref={bodyRef} data-lenis-prevent className="terminal-scroll h-80 overflow-y-auto overscroll-contain p-5 space-y-1.5 cursor-text">
         {showWelcome && (
           <>
             <p>{t.terminal.welcome}</p>
-            <p className="text-[#b9a7e8]">
-              {t.terminal.type} <span className="text-[#f47b5c]">help</span> {t.terminal.forHelp}
+            <p className="text-muted">
+              {t.terminal.type} <span className="text-accent">help</span> {t.terminal.forHelp}
             </p>
           </>
         )}
@@ -238,14 +235,30 @@ export default function Terminal() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
-            className="flex-1 min-w-0 bg-transparent outline-none caret-[#f9c74f]"
+            className="flex-1 min-w-0 bg-transparent outline-none caret-[var(--accent)]"
             aria-label={t.terminal.input}
             autoComplete="off"
             spellCheck={false}
           />
         </div>
       </div>
-    </div>
+      {/* Perintah cepat: klik untuk menjalankan tanpa mengetik */}
+      <div className="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-border bg-surface-2">
+        <span className="text-xs text-muted mr-1">{t.terminalSection.hint}</span>
+        {QUICK.map((q) => (
+          <button
+            key={q}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              submit(q);
+            }}
+            className="px-2.5 py-1 rounded-md border border-border bg-surface text-xs hover:border-foreground transition-colors"
+          >
+            {q}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

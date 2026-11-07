@@ -27,7 +27,7 @@ export function SocialIcon({ k, className = "w-5 h-5" }: { k: SocialKey; classNa
 
 export default function SocialIcons({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex items-center gap-2 ${className}`}>
       {socials.map((s) => (
         <motion.a
           {...pressButton}
@@ -37,7 +37,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
           rel="noopener noreferrer"
           aria-label={s.label}
           title={s.label}
-          className="retro-btn p-2.5 bg-surface text-foreground hover:bg-accent hover:text-on-accent"
+          className="grid place-items-center w-10 h-10 rounded-full border border-border bg-surface text-muted hover:text-background hover:bg-foreground hover:border-foreground transition-colors"
         >
           <SocialIcon k={s.key} className="w-4 h-4" />
         </motion.a>

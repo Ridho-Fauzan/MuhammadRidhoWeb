@@ -11,7 +11,6 @@ import { useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
 import { pressButton } from "./motion/press";
-import { FormCat } from "./PixelCritters";
 
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID || profile.formspreeId;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,7 +55,7 @@ export default function ContactForm() {
   };
 
   const field =
-    "w-full px-3 py-2.5 bg-background text-foreground placeholder:text-muted/60 border-2 border-border outline-none transition-colors focus:border-accent";
+    "w-full px-4 py-3 rounded-xl bg-background text-foreground placeholder:text-muted/60 border border-border outline-none transition-[border-color,box-shadow] focus:border-accent focus:shadow-[0_0_0_4px_var(--accent-soft)]";
 
   const notice: Partial<Record<Status, { text: string; ok: boolean }>> = {
     invalid: { text: f.invalid, ok: false },
@@ -70,28 +69,27 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="relative text-left p-5 sm:p-7 bg-surface/95 border-2 border-foreground shadow-[6px_6px_0_var(--shadow)]"
+      className="card relative text-left p-6 sm:p-8 shadow-[0_30px_60px_-30px_rgb(var(--shadow-color)/0.35)]"
     >
-      <FormCat happy={status === "sent" || status === "opened"} className="right-20 sm:right-28" />
       <div className="flex items-center justify-between gap-3 mb-6">
-        <h3 className="text-xl sm:text-2xl">{f.title}</h3>
-        <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.15em] text-muted">
-          <span className="w-2 h-2 bg-[#7fd1ae] animate-blink" /> online
+        <h2 className="text-2xl font-bold tracking-tight">{f.title}</h2>
+        <span className="inline-flex items-center gap-2 text-xs text-muted">
+          <span className="status-dot" aria-hidden /> {f.online}
         </span>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="block mb-1.5 text-xs uppercase tracking-[0.15em] text-muted">{f.name}</span>
+          <span className="block mb-2 text-sm font-medium">{f.name}</span>
           <input name="name" autoComplete="name" required placeholder={f.namePh} className={field} />
         </label>
         <label className="block">
-          <span className="block mb-1.5 text-xs uppercase tracking-[0.15em] text-muted">{f.email}</span>
+          <span className="block mb-2 text-sm font-medium">{f.email}</span>
           <input name="email" type="email" autoComplete="email" required placeholder={f.emailPh} className={field} />
         </label>
       </div>
       <label className="block mt-4">
-        <span className="block mb-1.5 text-xs uppercase tracking-[0.15em] text-muted">{f.message}</span>
+        <span className="block mb-2 text-sm font-medium">{f.message}</span>
         <textarea name="message" required rows={5} placeholder={f.messagePh} className={`${field} resize-y min-h-28`} />
       </label>
       {/* honeypot anti-spam: disembunyikan dari manusia */}
@@ -101,7 +99,7 @@ export default function ContactForm() {
         {...pressButton}
         type="submit"
         disabled={status === "sending"}
-        className="retro-btn mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm disabled:opacity-70"
+        className="btn btn-primary mt-6 w-full !h-12 disabled:opacity-70"
       >
         {status === "sending" ? f.sending : f.send} <Send className="w-4 h-4" />
       </motion.button>
@@ -115,7 +113,7 @@ export default function ContactForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className={`mt-4 flex items-start gap-2 text-sm ${msg.ok ? "text-[#7fd1ae]" : "text-accent-2"}`}
+            className={`mt-4 flex items-start gap-2 text-sm ${msg.ok ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
           >
             {msg.ok ? <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" /> : <TriangleAlert className="w-4 h-4 mt-0.5 shrink-0" />}
             {msg.text}

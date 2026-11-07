@@ -1,7 +1,7 @@
 'use client';
 // Source: React Bits (https://reactbits.dev) by David Haz — MIT + Commons Clause. See ./LICENSE.md
-// Diubah: memakai next/image, bingkai retro (border tebal + bayangan keras), tanpa peringatan mobile,
-// tooltip bergaya pixel, dan tidak bergerak saat "reduce motion".
+// Diubah: memakai next/image, sudut membulat + bayangan lembut, tanpa peringatan mobile,
+// tooltip berbentuk pil, dan tidak bergerak saat "reduce motion".
 
 import type { SpringOptions } from 'motion/react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
@@ -86,7 +86,7 @@ export default function TiltedCard({
       onMouseLeave={handleMouseLeave}
     >
       <motion.div className="relative [transform-style:preserve-3d]" style={{ width, height, rotateX, rotateY, scale }}>
-        <div className="absolute inset-0 overflow-hidden border-2 border-foreground bg-surface shadow-[6px_6px_0_var(--shadow)] [transform:translateZ(0)]">
+        <div className="absolute inset-0 overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_20px_40px_-16px_rgb(var(--shadow-color)/0.45)] [transform:translateZ(0)]">
           <Image src={imageSrc} alt={altText} fill sizes={sizes ?? `${width}px`} className="object-cover" style={{ objectPosition: imagePosition }} />
         </div>
         {overlayContent && (
@@ -96,7 +96,7 @@ export default function TiltedCard({
 
       {showTooltip && captionText && (
         <motion.figcaption
-          className="pointer-events-none absolute left-0 top-0 z-[3] hidden sm:block px-2 py-1 text-[11px] uppercase tracking-[0.15em] bg-accent text-on-accent border-2 border-foreground"
+          className="pointer-events-none absolute left-0 top-0 z-[3] hidden sm:block px-3 py-1 rounded-full text-xs font-semibold bg-foreground text-background whitespace-nowrap"
           style={{ x, y, opacity, rotate: rotateFigcaption }}
         >
           {captionText}

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { pageMetadata } from "@/data/seo";
-import { CardRow } from "@/components/PickCards";
-import PageBackground from "@/components/PageBackground";
 import About from "@/components/About";
+import PageBackground from "@/components/PageBackground";
+import PageIndex from "@/components/PageIndex";
+import { pageMetadata } from "@/data/seo";
 
 export const metadata: Metadata = pageMetadata("about");
 
 export default function AboutPage() {
   return (
-    <div className="relative pt-10 min-h-[100svh]">
-      <PageBackground variant="terminal" />
+    <div className="relative pt-24 min-h-[100svh]">
+      <PageBackground variant="dots" />
       <div className="relative">
         <About />
-        <CardRow current="about" />
+        <PageIndex current="about" />
       </div>
     </div>
   );

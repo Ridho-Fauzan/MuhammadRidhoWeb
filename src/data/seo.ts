@@ -56,7 +56,7 @@ const sharedOpenGraph = {
 /** Deskripsi tiap halaman di hasil Google & preview link. */
 const pageDescriptions: Record<Exclude<PageKey, "home">, string> = {
   about: `About ${profile.name}: a Computer Science student at BINUS University and ${role} from ${location}.`,
-  skills: `Frontend, web, and game development skills of ${profile.name}: ${skills
+  skills: `Frontend development and UI/UX design skills of ${profile.name}: ${skills
     .flatMap((s) => s.items.map((i) => tr(i, seoLang)))
     .slice(0, 8)
     .join(", ")}, and more.`,
@@ -89,7 +89,7 @@ export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: siteName, template: `%s | ${profile.name}` },
   description: siteDescription,
-  applicationName: `${profile.shortName}//OS`,
+  applicationName: profile.name,
   authors: [{ name: profile.name, url: siteUrl }],
   creator: profile.name,
   publisher: profile.name,

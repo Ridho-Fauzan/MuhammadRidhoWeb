@@ -1,147 +1,57 @@
 "use client";
 
 /**
- * Latar animasi bertema retro untuk tiap halaman.
- * Canvas dibuat "sticky" setinggi layar (bukan setinggi halaman) agar ringan,
- * dimuat hanya di browser, dan dibungkus error boundary.
+ * Latar interaktif tiap halaman, warnanya ikut tema (netral + aksen indigo):
+ * - "dots"   : React Bits DotGrid — titik-titik yang menyibak & memantul mengikuti kursor.
+ * - "matrix" : ThreeUI Dot Matrix — titik berdenyut pelan (WebGL).
+ * Canvas dibuat "sticky" setinggi layar (bukan setinggi halaman) agar ringan, dimuat hanya di browser,
+ * dibungkus error boundary, dan memudar ke bawah supaya teks tetap mudah dibaca.
  */
 import dynamic from "next/dynamic";
-import WebGLBoundary from "./WebGLBoundary";
 import { useTheme } from "./ThemeToggle";
+import WebGLBoundary from "./WebGLBoundary";
 
-const FaultyTerminal = dynamic(() => import("./reactbits/FaultyTerminal"), {
-  ssr: false,
-});
-const PixelSnow = dynamic(() => import("./reactbits/PixelSnow"), {
-  ssr: false,
-});
-const Waves = dynamic(() => import("./reactbits/Waves"), {
-  ssr: false,
-});
-const ShapeGrid = dynamic(() => import("./reactbits/ShapeGrid"), {
-  ssr: false,
-});
-const DotMatrix = dynamic(
-  () =>
-    import("./threeui/DotMatrixBackground").then((m) => m.DotMatrixBackground),
-  { ssr: false },
-);
+const DotGrid = dynamic(() => import("./reactbits/DotGrid"), { ssr: false });
+const DotMatrix = dynamic(() => import("./threeui/DotMatrixBackground").then((m) => m.DotMatrixBackground), { ssr: false });
 
-export type BackgroundVariant =
-  "terminal" | "dots" | "grid" | "snow" | "waves" | "grid-diagonal";
+export type BackgroundVariant = "dots" | "matrix";
 
-export default function PageBackground({
-  variant,
-}: {
-  variant: BackgroundVariant;
-}) {
+export default function PageBackground({ variant = "dots" }: { variant?: BackgroundVariant }) {
   const { dark } = useTheme();
 
-  const layer = (() => {
-    switch (variant) {
-      case "terminal":
-        return (
-          <FaultyTerminal
-            scale={1.6}
-            gridMul={[2, 1]}
-            digitSize={1.3}
-            timeScale={0.35}
-            scanlineIntensity={0.4}
-            glitchAmount={1}
-            flickerAmount={0.6}
-            noiseAmp={0.8}
-            curvature={0.12}
-            tint={dark ? "#f9c74f" : "#6d28d9"}
-            mouseReact={false}
-            pageLoadAnimation
-            brightness={dark ? 0.45 : 0.6}
-            lightMode={!dark}
-            dpr={1}
-          />
-        );
-      case "dots":
-        return (
-          <DotMatrix
-            className="absolute inset-0"
-            gridScale={42}
-            radius={0.18}
-            pulseSpeed={0.6}
-            opacity={dark ? 0.55 : 0.9}
-            mouseAmount={0.03}
-          />
-        );
-      case "snow":
-        return (
-          <PixelSnow
-            color={dark ? "#b9a7e8" : "#4b2f7e"}
-            variant="square"
-            flakeSize={0.012}
-            minFlakeSize={1.5}
-            pixelResolution={180}
-            speed={0.8}
-            density={0.28}
-            direction={115}
-            brightness={dark ? 1 : 0.9}
-          />
-        );
-      case "waves":
-        // garis-garis halus yang bergelombang pelan & menyibak mengikuti kursor
-        return (
-          <Waves
-            lineColor={dark ? "rgba(185, 167, 232, 0.32)" : "rgba(109, 40, 217, 0.22)"}
-            lineWidth={1}
-            waveSpeedX={0.008}
-            waveSpeedY={0.004}
-            waveAmpX={36}
-            waveAmpY={18}
-            xGap={14}
-            yGap={36}
-            friction={0.92}
-            tension={0.006}
-            maxCursorMove={90}
-          />
-        );
-      case "grid":
-      case "grid-diagonal":
-        return (
-          <ShapeGrid
-            direction={variant === "grid" ? "up" : "diagonal"}
-            speed={0.35}
-            squareSize={44}
-            shape="square"
-            borderColor={
-              dark ? "rgba(75, 47, 126, 0.55)" : "rgba(26, 16, 48, 0.12)"
-            }
-            hoverFillColor={dark ? "#241548" : "#e9d7ad"}
-          />
-        );
-    }
-  })();
-
   return (
-    <div
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-      aria-hidden="true"
-    >
-      <div className="sticky top-0 h-[100svh] w-full">
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div className="sticky top-0 h-[100svh] w-full [mask-image:linear-gradient(to_bottom,#000_0%,#000_45%,transparent_95%)]">
         <WebGLBoundary>
-          <div
-            className={`absolute inset-0 ${
-              variant === "terminal"
-                ? dark
-                  ? "opacity-60"
-                  : "opacity-25 mix-blend-multiply"
-                : dark
-                  ? "opacity-80"
-                  : "opacity-60 mix-blend-multiply"
-            }`}
-          >
-            {layer}
-          </div>
+          {variant === "dots" ? (
+            // pointer-events aktif hanya di canvas DotGrid (konten di atasnya tetap bisa diklik karena lapisan ini di belakang)
+            <DotGrid
+              dotSize={3}
+              gap={26}
+              baseColor={dark ? "#26262a" : "#dedcd8"}
+              activeColor={dark ? "#8b93ff" : "#4f46e5"}
+              proximity={130}
+              shockRadius={220}
+              shockStrength={3}
+              glow={0.3}
+              opacity={0.9}
+              clickShock={false}
+            />
+          ) : (
+            <DotMatrix
+              className="absolute inset-0"
+              gridScale={42}
+              radius={0.16}
+              pulseSpeed={0.6}
+              opacity={dark ? 0.45 : 0.6}
+              mouseAmount={0.03}
+              colorA={dark ? "#3a3a40" : "#cfcecb"}
+              colorB={dark ? "#8b93ff" : "#4f46e5"}
+            />
+          )}
         </WebGLBoundary>
-        {/* Vignette agar teks tetap mudah dibaca */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--background)_55%,transparent)_0%,color-mix(in_srgb,var(--background)_20%,transparent)_55%,var(--background)_100%)]" />
       </div>
+      <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[56rem] h-[30rem] rounded-full opacity-50 blur-3xl bg-[radial-gradient(closest-side,var(--accent-soft),transparent)]" />
     </div>
   );
 }

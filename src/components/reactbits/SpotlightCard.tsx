@@ -1,6 +1,6 @@
 'use client';
 // Source: React Bits (https://reactbits.dev) by David Haz — MIT + Commons Clause. See ./LICENSE.md
-// Diubah: border tebal + bayangan keras (tema retro); background & padding diatur lewat className;
+// Diubah: background, border & padding diatur lewat className;
 // prop `interactive` menambah gerak hover/klik dari Motion (motion.dev).
 
 import React, { useRef, useState } from 'react';
@@ -63,7 +63,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative border-2 border-border overflow-hidden shadow-[5px_5px_0_var(--shadow)] ${className}`}
+      className={`relative overflow-hidden ${className}`}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out"

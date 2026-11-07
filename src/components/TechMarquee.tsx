@@ -12,37 +12,37 @@ import {
   SiTailwindcss,
   SiThreedotjs,
   SiTypescript,
-  SiUnity,
+  SiVercel,
+  SiVite,
+  SiVuedotjs,
 } from "react-icons/si";
 import { useLang } from "@/i18n/useLang";
 import LogoLoop, { type LogoItem } from "./reactbits/LogoLoop";
 
-// Simple Icons tidak lagi menyediakan logo C#, jadi dibuat sebagai teks
-const CSharp = () => <span className="font-mono font-bold text-[1.05em] leading-none">C#</span>;
-
 const tech: { title: string; node: React.ReactNode }[] = [
-  { title: "Unity", node: <SiUnity /> },
-  { title: "C#", node: <CSharp /> },
-  { title: "three.js", node: <SiThreedotjs /> },
-  { title: "JavaScript", node: <SiJavascript /> },
-  { title: "TypeScript", node: <SiTypescript /> },
+  { title: "Figma", node: <SiFigma /> },
   { title: "React", node: <SiReact /> },
   { title: "Next.js", node: <SiNextdotjs /> },
+  { title: "TypeScript", node: <SiTypescript /> },
+  { title: "JavaScript", node: <SiJavascript /> },
+  { title: "Vue", node: <SiVuedotjs /> },
   { title: "Tailwind CSS", node: <SiTailwindcss /> },
   { title: "HTML", node: <SiHtml5 /> },
   { title: "CSS", node: <SiCss /> },
+  { title: "three.js", node: <SiThreedotjs /> },
+  { title: "Vite", node: <SiVite /> },
   { title: "Git", node: <SiGit /> },
   { title: "GitHub", node: <SiGithub /> },
-  { title: "Figma", node: <SiFigma /> },
+  { title: "Vercel", node: <SiVercel /> },
 ];
 
 const logos: LogoItem[] = tech.map((x) => ({
   title: x.title,
   ariaLabel: x.title,
   node: (
-    <span className="inline-flex items-center gap-2.5 text-muted hover:text-accent transition-colors">
+    <span className="inline-flex items-center gap-2.5 text-muted hover:text-foreground transition-colors">
       {x.node}
-      <span className="text-sm uppercase tracking-[0.12em]">{x.title}</span>
+      <span className="text-sm font-semibold tracking-tight">{x.title}</span>
     </span>
   ),
 }));
@@ -50,18 +50,17 @@ const logos: LogoItem[] = tech.map((x) => ({
 export default function TechMarquee() {
   const { t } = useLang();
   return (
-    <section id="stack" aria-label={t.stack.title} className="py-8 border-y-2 border-border bg-surface">
-      <p className="text-center font-mono text-xs uppercase tracking-[0.25em] text-muted mb-6">{t.stack.title}</p>
+    <section id="stack" aria-label={t.stack.title} className="py-10 border-y border-border">
+      <p className="eyebrow text-center mb-7">{t.stack.title}</p>
       <LogoLoop
         logos={logos}
-        speed={60}
+        speed={50}
         direction="left"
-        logoHeight={24}
-        gap={48}
+        logoHeight={22}
+        gap={56}
         pauseOnHover
-        scaleOnHover
         fadeOut
-        fadeOutColor="var(--surface)"
+        fadeOutColor="var(--background)"
         ariaLabel={t.stack.title}
       />
     </section>

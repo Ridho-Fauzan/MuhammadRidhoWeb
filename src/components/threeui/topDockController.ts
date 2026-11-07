@@ -1,4 +1,4 @@
-// Source: ThreeUI Community — Animated Top Dock (https://threeui.com/css/animated-top-dock/retro) — MIT. See ./LICENSE
+// Source: ThreeUI Community — Animated Top Dock Command Bar (https://threeui.com/css/animated-top-dock/modern) — MIT. See ./LICENSE
 export type TopDockAxis = "x" | "y";
 
 export type TopDockOptions = {

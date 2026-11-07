@@ -1,24 +1,28 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowDown, FileText, Hand } from "lucide-react";
+import { ArrowDown, ArrowUpRight, FileText, Hand, MapPin } from "lucide-react";
 import dynamic from "next/dynamic";
-import MotionLink from "./motion/MotionLink";
-import { pressButton } from "./motion/press";
 import { useEffect, useState } from "react";
 import { profile } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
-import HeroIntro from "./HeroIntro";
 import MobileIdCard from "./MobileIdCard";
-import DecryptedText from "./reactbits/DecryptedText";
+import MotionLink from "./motion/MotionLink";
+import { pressButton } from "./motion/press";
+import BlurText from "./reactbits/BlurText";
+import Magnet from "./reactbits/Magnet";
+import RotatingText from "./reactbits/RotatingText";
+import ShinyText from "./reactbits/ShinyText";
 import SocialIcons from "./SocialIcons";
 import WebGLBoundary from "./WebGLBoundary";
 import { drawCardArt } from "./lanyardArt";
 import { useTheme } from "./ThemeToggle";
 
-// Komponen berat (WebGL / fisika) dimuat hanya di browser agar halaman awal tetap ringan
-const RetroField = dynamic(() => import("./RetroField"), { ssr: false });
+// Kartu ID 3D (WebGL + fisika) dimuat hanya di browser agar halaman awal tetap ringan
 const Lanyard = dynamic(() => import("./reactbits/Lanyard"), { ssr: false });
+const Threads = dynamic(() => import("./reactbits/Threads"), { ssr: false });
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
   const { lang, t, tx } = useLang();
@@ -37,23 +41,39 @@ export default function Hero() {
     };
   }, [role, dark]);
 
+  const roles = profile.roles.map(tx);
+
   return (
-    <section className="relative min-h-[100svh] flex items-center px-6 pt-28 pb-20 overflow-hidden noise">
-      {/* Latar: shader dither "dusk" ThreeUI retro (matahari terbenam pixel) */}
-      <div className="absolute inset-0 pointer-events-none">
+    <section className="relative min-h-[100svh] flex items-center px-6 pt-32 pb-24 overflow-hidden">
+      {/* Latar: grid tipis yang memudar + benang bergelombang React Bits "Threads" + cahaya aksen lembut */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] opacity-70 [mask-image:linear-gradient(to_top,#000_20%,transparent)]">
         <WebGLBoundary>
-          <RetroField className="absolute inset-0 opacity-100 dark:opacity-100 [:root:not(.dark)_&]:opacity-35 [:root:not(.dark)_&]:mix-blend-multiply" />
+          <Threads
+            color={dark ? "#f5f5f4" : "#0c0c0d"}
+            accentColor={dark ? "#8b93ff" : "#4f46e5"}
+            amplitude={1.2}
+            distance={0.3}
+            lineCount={40}
+            thickness={0.5}
+            speed={0.35}
+            brightness={dark ? 0.9 : 1.1}
+            opacity={dark ? 0.55 : 0.4}
+            enableMouseInteraction
+          />
         </WebGLBoundary>
       </div>
-      {/* Vignette agar teks tetap terbaca (gaya .atd-retro__vignette) */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_90%_at_30%_40%,color-mix(in_srgb,var(--background)_70%,transparent)_0%,transparent_60%),linear-gradient(180deg,color-mix(in_srgb,var(--background)_55%,transparent)_0%,transparent_30%,transparent_70%,var(--background)_100%)]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[60rem] h-[36rem] rounded-full opacity-60 blur-3xl bg-[radial-gradient(closest-side,var(--accent-soft),transparent)]"
+      />
 
       {/* Lanyard: kartu ID 3D yang tergantung dari atas & bisa ditarik (desktop) */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="hidden lg:block absolute inset-y-0 right-0 w-[48%] z-10"
+        className="hidden lg:block absolute inset-y-0 right-0 w-[46%] z-10"
       >
         {art && (
           <WebGLBoundary>
@@ -68,20 +88,20 @@ export default function Hero() {
             />
           </WebGLBoundary>
         )}
-        <p className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-2 py-1 text-[11px] uppercase tracking-[0.2em] text-foreground bg-background/80 border-2 border-border">
+        <p className="pointer-events-none absolute bottom-10 left-1/2 -translate-x-1/2 chip">
           <Hand className="w-3.5 h-3.5 text-accent" /> {t.hero.hint}
         </p>
       </motion.div>
 
-      <div className="relative max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-8 items-center">
+      <div className="relative max-w-6xl mx-auto w-full grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-8 items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease }}
           className="text-center lg:text-left"
         >
-          {/* Mobile & tablet: kartu ID interaktif (ayun, balik, giroskop); di desktop diganti Lanyard 3D */}
-          <div className="lg:hidden -mt-10 mb-8">
+          {/* Mobile & tablet: kartu ID interaktif; di desktop diganti Lanyard 3D */}
+          <div className="lg:hidden -mt-10 mb-10">
             <MobileIdCard
               front={art?.front}
               back={art?.back}
@@ -93,59 +113,66 @@ export default function Hero() {
             />
           </div>
 
-          <p className="text-sm uppercase tracking-[0.25em] text-accent">&gt; {t.hero.greeting}</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-            <DecryptedText
-              key={lang}
-              text={profile.name}
-              animateOn="view"
-              sequential
-              speed={35}
-              revealDirection="start"
-              className="gradient-text"
-              encryptedClassName="text-accent-2"
-              parentClassName="inline-block"
-            />
+          <p className="chip">
+            <span className="status-dot" aria-hidden />
+            <ShinyText key={lang} text={tx(profile.availability)} color="var(--muted)" shineColor="var(--foreground)" speed={3} />
+          </p>
+
+          <p className="eyebrow mt-8">{t.hero.greeting}</p>
+          <h1 className="mt-3 font-extrabold uppercase text-ink text-[clamp(2.6rem,7.2vw,5.6rem)] leading-[0.95] tracking-[-0.045em]">
+            {profile.name}
           </h1>
 
-          <HeroIntro />
+          <div className="mt-6 flex flex-wrap items-baseline justify-center lg:justify-start gap-x-2 text-xl sm:text-2xl font-semibold">
+            <span className="text-muted">{t.hero.iAm}</span>
+            <RotatingText
+              key={lang}
+              texts={roles}
+              mainClassName="text-accent overflow-hidden"
+              staggerFrom="last"
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-120%", opacity: 0 }}
+              staggerDuration={0.02}
+              splitLevelClassName="overflow-hidden pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2600}
+            />
+          </div>
 
-          <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <MotionLink
-              {...pressButton}
-              href="/projects"
-              className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-on-accent uppercase tracking-[0.15em] text-sm"
-            >
-              <svg viewBox="0 0 7 7" className="w-3 h-3 fill-current" style={{ shapeRendering: "crispEdges" }} aria-hidden>
-                <rect x="1" y="0" width="2" height="7" />
-                <rect x="3" y="1" width="2" height="5" />
-                <rect x="5" y="2" width="1" height="3" />
-                <rect x="6" y="3" width="1" height="1" />
-              </svg>
-              {t.hero.viewProjects}
-            </MotionLink>
-            <MotionLink
-              {...pressButton}
-              href="/contact"
-              className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
-            >
+          <BlurText
+            key={`tagline-${lang}`}
+            text={tx(profile.tagline)}
+            animateBy="words"
+            direction="bottom"
+            delay={35}
+            trigger="load"
+            className="mt-6 max-w-xl mx-auto lg:mx-0 justify-center lg:justify-start text-base sm:text-lg text-muted leading-relaxed"
+          />
+
+          <div className="mt-9 flex flex-wrap gap-3 justify-center lg:justify-start">
+            <Magnet padding={60} magnetStrength={4}>
+              <MotionLink {...pressButton} href="/projects" className="btn btn-primary">
+                {t.hero.viewProjects} <ArrowUpRight className="w-4 h-4" />
+              </MotionLink>
+            </Magnet>
+            <MotionLink {...pressButton} href="/contact" className="btn">
               {t.hero.contactMe}
             </MotionLink>
             {profile.resumeUrl && (
-              <motion.a
-                {...pressButton}
-                href={profile.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="retro-btn inline-flex items-center gap-2 px-6 py-3.5 bg-surface text-foreground uppercase tracking-[0.15em] text-sm hover:bg-accent-2 hover:text-on-accent"
-              >
+              <motion.a {...pressButton} href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn">
                 <FileText className="w-4 h-4" aria-hidden />
                 {t.hero.resume}
               </motion.a>
             )}
           </div>
 
-          <SocialIcons className="mt-8 justify-center lg:justify-start" />
+          <div className="mt-10 pt-6 border-t border-border flex flex-wrap items-center justify-center lg:justify-between gap-5">
+            <SocialIcons />
+            <p className="inline-flex items-center gap-1.5 text-sm text-muted">
+              <MapPin className="w-4 h-4" aria-hidden /> {t.hero.basedIn} {tx(profile.location)}
+            </p>
+          </div>
         </motion.div>
 
         {/* Kolom kanan dikosongkan untuk Lanyard */}
@@ -155,9 +182,9 @@ export default function Hero() {
       <a
         href="#stack"
         aria-label={t.hero.scrollDown}
-        className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 text-muted hover:text-accent animate-bounce"
+        className="hidden md:grid place-items-center absolute bottom-6 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full border border-border text-muted hover:text-foreground hover:border-foreground transition-colors"
       >
-        <ArrowDown className="w-5 h-5" />
+        <ArrowDown className="w-4 h-4" />
       </a>
     </section>
   );
