@@ -2,12 +2,11 @@
 
 /**
  * Indeks halaman bergaya editorial memakai React Bits "FlowingMenu":
- * saat kursor melewati sebuah baris, pita marquee berisi deskripsi (dan foto) mengalir masuk.
+ * saat kursor melewati sebuah baris, pita marquee berisi deskripsi mengalir masuk.
  * - <PageIndex />                 : di beranda ("Jelajahi"), semua halaman selain beranda.
  * - <PageIndex current="about" /> : di bawah tiap halaman ("Lanjut jelajahi"), tanpa halaman yang sedang dibuka.
  */
 import { pages, type PageKey } from "@/data/pages";
-import { photos, projects } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
 import FlowingMenu, { type FlowingMenuItem } from "./reactbits/FlowingMenu";
 import Reveal from "./Reveal";
@@ -15,13 +14,6 @@ import SectionTitle from "./SectionTitle";
 
 type CardKey = Exclude<PageKey, "home">;
 const cardPages = pages.filter((p) => p.key !== "home") as unknown as { key: CardKey; href: string }[];
-
-/** Gambar kecil di pita marquee — diambil dari data yang sudah ada */
-const IMAGES: Partial<Record<CardKey, string>> = {
-  about: photos[0]?.src,
-  projects: projects.find((p) => p.image)?.image,
-  contact: photos[photos.length - 1]?.src,
-};
 
 export default function PageIndex({ current }: { current?: CardKey }) {
   const { t } = useLang();
@@ -32,7 +24,6 @@ export default function PageIndex({ current }: { current?: CardKey }) {
       text: t.nav[p.key],
       link: p.href,
       marquee: t.explore.cards[p.key],
-      image: IMAGES[p.key],
       meta: String(cardPages.findIndex((c) => c.key === p.key) + 1).padStart(2, "0"),
     }));
 
@@ -62,7 +53,6 @@ export default function PageIndex({ current }: { current?: CardKey }) {
               marqueeBgColor="var(--foreground)"
               marqueeTextColor="var(--background)"
               borderColor="var(--border)"
-              imageShape="pill"
             />
           </div>
         </Reveal>
