@@ -1,41 +1,58 @@
 # MuhammadRidhoWeb
 
-Website portfolio pribadi **Muhammad Ridho Fathi Fauzan** (Ridho) — mahasiswa Computer Science di BINUS University dengan penjurusan Interactive Multimedia, yang berfokus pada **frontend development** dan **game development** / pengalaman interaktif.
+Website portfolio pribadi **Muhammad Ridho Fathi Fauzan** (Ridho), mahasiswa Computer Science di BINUS University yang berfokus pada **frontend development** dan **UI/UX design**. Situs ini tersedia dalam Bahasa Indonesia dan Inggris.
 
-Situs ini menampilkan profil, keahlian, proyek, dan pengalaman Ridho dalam balutan tema **retro / pixel-art** yang interaktif: nuansa monospace, terminal yang bisa diketik, kartu ID bertali (lanyard) 3D, latar beranimasi, dan efek-efek kecil yang menghidupkan setiap halaman. Tersedia dalam **dua bahasa** (Indonesia & Inggris).
+Desainnya memakai pendekatan **editorial web portfolio**: tipografi besar, banyak ruang kosong, palet monokrom netral dengan aksen indigo, serta animasi yang mendukung navigasi dan konten, bukan sekadar hiasan.
 
 ## Isi Situs
 
-Situs terdiri dari beberapa halaman, masing-masing dengan latar beranimasi sendiri dan baris navigasi "pilih kartu berikutnya" di bawahnya.
-
 | Halaman | Isi |
 |---|---|
-| **Beranda** (`/`) | Sambutan utama dengan kartu ID 3D yang tergantung di tali (lanyard), peran yang berganti otomatis ("Frontend Developer", "Game Developer", dll), marquee logo teknologi, dan deretan kartu "Pick your card" sebagai pintu ke halaman lain. |
-| **About** (`/about`) | Perkenalan Ridho, statistik ringkas (mis. tahun belajar), dan terminal interaktif yang bisa diketik perintah seperti `cd projects` atau `lang en`. |
-| **Skills** (`/skills`) | Keahlian yang dikelompokkan per kategori. |
-| **Projects** (`/projects`) | Kartu-kartu proyek; diklik untuk membuka detail berisi deskripsi, tautan kode, dan demo. Mencakup proyek seperti FloraDex, KawanAksi, dan SpoJeDy, serta slot "Coming Soon" untuk karya yang akan datang. |
+| **Beranda** (`/`) | Hero dengan kartu ID lanyard 3D, peran yang berganti otomatis, tech marquee, layanan, proyek unggulan, indeks portfolio interaktif, dan command line. |
+| **About** (`/about`) | Perkenalan Ridho, statistik ringkas, dan tumpukan foto interaktif. |
+| **Skills** (`/skills`) | Keahlian frontend, UI/UX, web interaction, dan tools. |
+| **Projects** (`/projects`) | Kartu-kartu proyek yang membuka modal berisi deskripsi, galeri, kode, dan demo. |
 | **Experience** (`/experience`) | Linimasa pendidikan dan perjalanan karier. |
-| **Contact** (`/contact`) | Ajakan untuk terhubung, pintasan WhatsApp & email, dan form "Kirim pesan" di atas latar partikel. |
+| **Contact** (`/contact`) | Ajakan berkolaborasi, pintasan WhatsApp & email, serta form kontak. |
 
 ## Pengalaman & Interaksi
 
-Yang membuat situs ini terasa hidup:
+- **Kartu ID lanyard 3D** — kartu ID personal yang digambar otomatis dari data profil, menggantung dan bergerak secara fisik di desktop. Versi ringan dan interaktif tersedia di mobile.
+- **Navigasi dock proximity** — menu desktop mengadopsi pegas proximity dari ThreeUI. Item menu melebar saat pointer mendekat.
+- **Indeks portfolio FlowingMenu** — baris navigasi berubah menjadi pita marquee saat di-hover, menampilkan deskripsi dan foto terkait.
+- **Background interaktif** — React Bits DotGrid pada beberapa halaman merespons posisi pointer; ThreeUI Dot Matrix menambah gerakan halus pada halaman lain.
+- **Micro-interactions** — magnet pada CTA utama, kata yang menebal berdasarkan kedekatan pointer, headline bergerak mengikuti kecepatan scroll, dan animasi masuk yang menghormati preferensi *reduce motion*.
+- **Command line** — pengunjung dapat memakai perintah seperti `help`, `whoami`, dan `cd projects` untuk menjelajahi portfolio via keyboard.
+- **Dua bahasa dan mode terang/gelap** — kedua preferensi disimpan di browser. Light mode memakai `#FAFAF9`; dark mode memakai `#0A0A0B`.
 
-- **Kartu ID bertali (Lanyard)** — kartu identitas 3D di beranda yang menggantung dan bergoyang mengikuti gerak, digambar otomatis dari data profil (nama, peran, username, foto). Versi ringkas tampil di perangkat mobile.
-- **Terminal interaktif** — di halaman About, pengunjung bisa mengetik perintah untuk berpindah halaman atau mengganti bahasa.
-- **Dua bahasa (ID / EN)** — tombol di navbar; pilihan pengunjung diingat, dan pengunjung baru otomatis mengikuti bahasa browser-nya.
-- **Tema retro menyeluruh** — palet senja (ungu, emas, koral, krem), garis tebal, bayangan keras, dan scanline ala CRT, lengkap dengan mode terang (kertas) dan gelap (CRT).
-- **Sentuhan kecil** — layar boot bergaya retro saat pertama membuka, kursor pixel yang mengikuti mouse, karakter pixel di footer, kutipan game yang bergantian, scroll yang halus, serta animasi hover dan klik di berbagai elemen.
-- **Ramah aksesibilitas** — efek berat otomatis dinonaktifkan bila pengunjung memilih *reduce motion*, dan situs tetap bisa dibaca tanpa JavaScript.
+## Palet Warna
+
+| Token | Light | Dark | Peran |
+|---|---:|---:|---|
+| Background | `#FAFAF9` | `#0A0A0B` | Latar utama |
+| Surface | `#FFFFFF` | `#121214` | Kartu dan panel |
+| Foreground | `#0C0C0D` | `#F5F5F4` | Teks utama |
+| Muted | `#5F5F66` | `#A1A1AA` | Teks sekunder |
+| Accent | `#4F46E5` | `#8B93FF` | Aksi dan status |
+
+Semua pasangan teks utama dan latar memenuhi kontras WCAG AA minimal 4.5:1.
 
 ## Teknologi
 
-Dibangun dengan **Next.js (App Router)** dan **TypeScript**, ditata dengan **Tailwind CSS**. Animasi memakai **Motion / Framer Motion** dan scroll halus dari **Lenis**. Elemen 3D (kartu lanyard, latar beranimasi) memakai **three.js**, **React Three Fiber**, dan fisika **Rapier**, dengan sejumlah latar berbasis **OGL**. Ikon dari **lucide-react** dan **react-icons**.
+Dibangun dengan **Next.js (App Router)**, **TypeScript**, dan **Tailwind CSS**. Motion memakai **Motion / Framer Motion**, scroll halus memakai **Lenis**, dan kartu lanyard 3D memakai **three.js**, **React Three Fiber**, serta fisika **Rapier**. Ikon dari **lucide-react** dan **react-icons**.
 
-Tema dan banyak efek visual mengadaptasi komponen dari **React Bits**, **ThreeUI (Animated Top Dock — Retro)**, serta aset pixel-art dari **Kenney 1-Bit Pack**. Semua komponen dan aset pihak ketiga disertai berkas lisensinya masing-masing di dalam proyek.
+Komponen interaktif diadaptasi dari [React Bits](https://reactbits.dev) dan [ThreeUI](https://threeui.com). Berkas lisensi tersedia bersama kode yang diadaptasi: `src/components/reactbits/LICENSE.md` dan `src/components/threeui/LICENSE`.
 
-## Kredit & Inspirasi
+## Menjalankan Lokal
 
-Desain terinspirasi dari [augustopolonio-website](https://github.com/augustopolonio/augustopolonio-website) (gaya monospace, hero typewriter, dan terminal interaktif), lalu ditulis ulang dengan layout, warna, dan section sendiri.
+```bash
+npm install
+npm run dev
+```
 
-Font yang dipakai: **Silkscreen**, **Fragment Mono**, dan **Pixelify Sans** (semuanya SIL Open Font License).
+Untuk build produksi:
+
+```bash
+npm run build
+npm start
+```

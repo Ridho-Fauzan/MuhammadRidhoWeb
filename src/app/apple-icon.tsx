@@ -1,4 +1,4 @@
-/** Ikon saat website disimpan ke layar utama iPhone/iPad (180×180), dari logo pixel di assets/pixelLogo.ts. */
+/** Ikon saat website disimpan ke layar utama iPhone/iPad (180×180), dari logo "R." di assets/pixelLogo.ts. */
 import { ImageResponse } from "next/og";
 import { LOGO_SIZE, logoColors, logoGrid } from "@/assets/pixelLogo";
 

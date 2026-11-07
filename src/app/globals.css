@@ -3,56 +3,66 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
-   Tema RETRO — palet "dusk" dari ThreeUI Animated Top Dock (retro)
-   https://threeui.com/css/animated-top-dock/retro
-   Mode gelap  = layar CRT ungu malam.  Mode terang = kertas krem + tinta ungu.
+   Tema EDITORIAL — monokrom netral + satu aksen indigo.
+   Terinspirasi portfolio editorial (tipografi besar, banyak ruang kosong, garis tipis).
+   Mode terang = kertas off-white + tinta hampir hitam.
+   Mode gelap  = hampir hitam (bukan abu) + teks off-white.
+   Semua pasangan teks/latar lolos WCAG AA (≥ 4.5:1).
    ========================================================================== */
 
 :root {
-  /* mode terang: kertas krem */
-  --background: #f4e6c8;
-  --surface: #fff4d6;
-  --foreground: #1a1030;
-  --muted: #5b4a86;
-  --border: #1a1030;
-  --rule: #c9b48a;
-  --accent: #c2410c; /* bata */
-  --accent-dark: #9a3412;
-  --accent-2: #6d28d9; /* ungu */
-  --on-accent: #fff4d6;
-  --shadow: #1a1030;
+  --background: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f4f4f2;
+  --foreground: #0c0c0d;
+  --muted: #5f5f66;
+  --border: #e6e5e3;
+  --border-strong: #cfcecb;
+  --accent: #4f46e5; /* indigo 600 */
+  --accent-soft: color-mix(in srgb, #4f46e5 10%, transparent);
+  --on-accent: #ffffff;
+  --invert-bg: #0c0c0d; /* blok kontras (footer) */
+  --invert-fg: #fafaf9;
+  --shadow-color: 12 12 13;
 }
 
 .dark {
-  /* mode gelap: CRT ungu */
-  --background: #0b0819;
-  --surface: #1a1030;
-  --foreground: #f4e6c8;
-  --muted: #b9a7e8;
-  --border: #4b2f7e;
-  --rule: #4b2f7e;
-  --accent: #f9c74f; /* emas */
-  --accent-dark: #f4a93a;
-  --accent-2: #f47b5c; /* koral */
-  --on-accent: #1a1030;
-  --shadow: #050310;
+  --background: #0a0a0b;
+  --surface: #121214;
+  --surface-2: #19191c;
+  --foreground: #f5f5f4;
+  --muted: #a1a1aa;
+  --border: #26262a;
+  --border-strong: #3a3a40;
+  --accent: #8b93ff; /* indigo terang, kontras di latar gelap */
+  --accent-soft: color-mix(in srgb, #8b93ff 14%, transparent);
+  --on-accent: #0a0a0b;
+  --invert-bg: #f5f5f4;
+  --invert-fg: #0a0a0b;
+  --shadow-color: 0 0 0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --color-rule: var(--rule);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
-  --color-accent-dark: var(--accent-dark);
-  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
-  --color-shadow: var(--shadow);
-  --font-sans: var(--font-retro);
-  --font-mono: var(--font-retro);
-  --font-display: var(--font-pixel);
+  --color-invert-bg: var(--invert-bg);
+  --color-invert-fg: var(--invert-fg);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+}
+
+:root {
+  /* Kurva gerak bersama: cepat di awal, mendarat pelan */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
@@ -63,42 +73,23 @@ html {
    Sengaja pakai scroll-margin di elemen, BUKAN scroll-padding-top di <html>:
    Next.js membaca scroll-padding <html> saat pindah halaman, dan karena puncak
    halaman (y=0) < padding, Next mengira halaman belum terlihat lalu men-scroll
-   ke tengah (ke section #stack) alih-alih ke paling atas. */
+   ke tengah alih-alih ke paling atas. */
 [id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  transition: background-color 0.2s steps(3), color 0.2s steps(3);
+  font-feature-settings: "ss01", "cv11";
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Retro: semua sudut kotak (pixel grid). Tambah .keep-round untuk pengecualian. --- */
-*:not(.keep-round):not(.keep-round *) {
-  border-radius: 0 !important;
-}
-
-/* --- Scanline CRT tipis di seluruh layar --- */
-body::after {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  content: "";
-  opacity: 0.22;
-  background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0 1px, transparent 1px 3px);
-}
-:root:not(.dark) body::after {
-  opacity: 0.07;
-}
-
-/* --- Judul memakai font pixel --- */
 h1, h2, h3, h4 {
-  font-family: var(--font-pixel), ui-monospace, monospace;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
 ::selection {
@@ -106,46 +97,102 @@ h1, h2, h3, h4 {
   color: var(--on-accent);
 }
 
-/* --- Kartu & tombol retro: garis tepi tebal + bayangan keras --- */
-.retro-box {
-  border: 2px solid var(--border);
-  box-shadow: 5px 5px 0 var(--shadow);
-}
-/* Kurva gerak bersama: cepat di awal, mendarat pelan — terasa halus tanpa terlihat "dianimasikan" */
-:root {
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-.retro-btn {
-  border: 2px solid var(--foreground);
-  box-shadow: 4px 4px 0 var(--shadow);
-  transition: box-shadow 0.18s var(--ease-out), background-color 0.15s ease, color 0.15s ease;
-}
-/* Posisi (naik / tertekan) digerakkan Motion — lihat components/motion/press.ts */
-.retro-btn:hover {
-  box-shadow: 6px 6px 0 var(--shadow);
-}
-.retro-btn:active {
-  box-shadow: 1px 1px 0 var(--shadow);
-  transition-duration: 0.06s;
+/* --- Label kecil bergaya editorial (mono, huruf kapital, renggang) --- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-/* Kartu interaktif: bayangan memanjang & garis emas saat hover (gerak posisinya oleh Motion) */
+/* --- Judul raksasa dengan gradasi tinta (seperti referensi editorial) --- */
+.text-ink {
+  background: linear-gradient(180deg, var(--foreground) 15%, color-mix(in srgb, var(--foreground) 45%, var(--background)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text-ink-invert {
+  background: linear-gradient(180deg, var(--invert-fg) 10%, color-mix(in srgb, var(--invert-fg) 35%, var(--invert-bg)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Tombol --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.875rem;
+  padding: 0 1.35rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s var(--ease-out);
+}
+.btn:hover {
+  border-color: var(--foreground);
+}
+.btn-primary {
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
+}
+.btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 10px 30px -10px var(--accent);
+}
+.btn-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+}
+
+/* --- Kartu --- */
+.card {
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--surface);
+}
 .lift {
-  transition: box-shadow 0.25s var(--ease-out), border-color 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }
 @media (hover: hover) {
   .lift:hover {
-    box-shadow: 8px 8px 0 var(--shadow);
-    border-color: var(--accent);
+    border-color: var(--border-strong);
+    box-shadow: 0 24px 48px -24px rgb(var(--shadow-color) / 0.28);
   }
 }
-.lift:active {
-  box-shadow: 3px 3px 0 var(--shadow);
-  transition-duration: 0.08s;
+
+/* --- Chip / tag --- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: color-mix(in srgb, var(--foreground) 85%, transparent);
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-/* Link teks: garis bawah tumbuh dari kiri saat di-hover */
+/* --- Link teks: garis bawah tumbuh dari kiri saat di-hover --- */
 .link-u {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
@@ -158,24 +205,39 @@ h1, h2, h3, h4 {
   background-size: 100% 1px;
 }
 
-/* Fokus keyboard yang jelas & seragam */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+/* --- Latar garis grid tipis yang memudar ke tepi --- */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+.bg-dots {
+  background-image: radial-gradient(color-mix(in srgb, var(--foreground) 14%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
 }
 
-/* Teks bergradasi emas → koral (ditampilkan bertingkat seperti palet pixel) */
-.gradient-text {
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent) 50%, var(--accent-2) 50%, var(--accent-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* --- Indikator status "tersedia" yang berdenyut halus --- */
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.6; }
+  80%, 100% { transform: scale(2.4); opacity: 0; }
 }
-
-/* Pola titik pixel untuk latar */
-.bg-pixel-dots {
-  background-image: radial-gradient(color-mix(in srgb, var(--rule) 70%, transparent) 1px, transparent 1px);
-  background-size: 12px 12px;
+.status-dot {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: #22c55e;
+}
+.status-dot::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  content: "";
+  animation: ping-soft 2s var(--ease-out) infinite;
 }
 
 @keyframes blink {
@@ -184,236 +246,11 @@ h1, h2, h3, h4 {
 }
 .animate-blink { animation: blink 1s step-end infinite; }
 
-.terminal-scroll::-webkit-scrollbar { width: 10px; }
-.terminal-scroll::-webkit-scrollbar-track { background: #0b0819; }
-.terminal-scroll::-webkit-scrollbar-thumb { background: #4b2f7e; }
+.terminal-scroll::-webkit-scrollbar { width: 8px; }
+.terminal-scroll::-webkit-scrollbar-track { background: transparent; }
+.terminal-scroll::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 9999px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-blink { animation: none; }
-  .retro-btn, .lift { transition: none; }
-}
-
-.noise { position: relative; }
-
-/* --- Layar boot: disembunyikan kalau sudah boot di sesi ini / reduce motion; pengaman 4 detik --- */
-html[data-booted] .boot {
-  display: none !important;
-}
-.boot {
-  animation: boot-failsafe 0s linear 4s forwards;
-}
-@keyframes boot-failsafe {
-  to {
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .boot {
-    display: none !important;
-  }
-}
-
-/* --- Footer: gradasi bertingkat ala pixel (tanpa gambar) --- */
-.footer-dither {
-  background: linear-gradient(
-    180deg,
-    transparent 0 25%,
-    color-mix(in srgb, var(--accent-2) 8%, transparent) 25% 50%,
-    color-mix(in srgb, var(--accent-2) 16%, transparent) 50% 75%,
-    color-mix(in srgb, var(--accent-2) 26%, transparent) 75% 100%
-  );
-}
-.footer-dither::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background-image: radial-gradient(color-mix(in srgb, var(--background) 60%, transparent) 1px, transparent 1px);
-  background-size: 6px 6px;
-}
-
-/* --- Karakter pixel di footer: melambai sebentar tiap beberapa detik --- */
-.pixel-buddy__b { opacity: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .pixel-buddy__a { animation: buddy-a 4s steps(1) infinite; }
-  .pixel-buddy__b { animation: buddy-b 4s steps(1) infinite; }
-}
-@keyframes buddy-a {
-  0%, 10%, 20%, 30% { opacity: 0; }
-  5%, 15%, 25%, 35%, 100% { opacity: 1; }
-}
-@keyframes buddy-b {
-  0%, 10%, 20%, 30% { opacity: 1; }
-  5%, 15%, 25%, 35%, 100% { opacity: 0; }
-}
-
-/* ▼ di kotak dialog hero: naik-turun 2 langkah seperti indikator "lanjut" di game */
-@keyframes dialog-bob {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(3px); }
-}
-
-/* --- Hiasan pixel (PixelCritters.tsx) --- */
-/* 2 frame bergantian */
-.spr-a { animation: spr-a var(--spr-dur, 600ms) steps(1) infinite; }
-.spr-b { animation: spr-b var(--spr-dur, 600ms) steps(1) infinite; }
-@keyframes spr-a { 0% { opacity: 1; } 50% { opacity: 0; } }
-@keyframes spr-b { 0% { opacity: 0; } 50% { opacity: 1; } }
-/* kedipan mata */
-.spr-blink { animation: spr-blink 4.2s steps(1) infinite; }
-@keyframes spr-blink { 0% { opacity: 1; } 94% { opacity: 0; } 97% { opacity: 1; } }
-/* burung: sesekali lompat kecil 2x */
-.bird-hop { animation: bird-hop 6s steps(1) infinite; }
-@keyframes bird-hop {
-  0% { transform: translateY(0); }
-  88% { transform: translateY(-0.08em); }
-  91% { transform: translateY(0); }
-  93% { transform: translateY(-0.06em); }
-  96% { transform: translateY(0); }
-}
-/* slime mondar-mandir di atas terminal */
-.slime-walk { left: 8%; animation: slime-walk 22s linear infinite; }
-.slime-face { animation: slime-face 22s steps(1) infinite; }
-@keyframes slime-walk {
-  0% { left: 22%; }
-  44% { left: calc(100% - 46px); }
-  50% { left: calc(100% - 46px); }
-  94% { left: 22%; }
-  100% { left: 22%; }
-}
-@keyframes slime-face { 0% { transform: scaleX(1); } 47% { transform: scaleX(-1); } 97% { transform: scaleX(1); } }
-.critter-pause:hover .slime-walk,
-.critter-pause:hover .slime-face { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) {
-  .spr-a, .spr-blink, .bird-hop, .slime-walk, .slime-face { animation: none; }
-  .spr-b { animation: none; opacity: 0; }
-}
-
-/* --- Hero role cartridge: dark retro module replacing the old yellow role box --- */
-.role-cartridge {
-  --role-accent: var(--accent);
-  --role-ink: var(--background);
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  width: min(100%, 21.5rem);
-  min-width: 0;
-  min-height: 3.85rem;
-  overflow: hidden;
-  border: 2px solid var(--foreground);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, var(--role-accent)) 0%, var(--surface) 100%);
-  box-shadow: 5px 5px 0 var(--shadow);
-  color: var(--foreground);
-  text-align: left;
-  cursor: pointer;
-  isolation: isolate;
-}
-.role-cartridge::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  content: "";
-  opacity: 0.26;
-  background: repeating-linear-gradient(180deg, transparent 0 3px, color-mix(in srgb, var(--role-accent) 35%, transparent) 3px 4px);
-}
-.role-cartridge::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 22px;
-  height: 22px;
-  content: "";
-  background: linear-gradient(135deg, transparent 0 48%, var(--role-accent) 49% 57%, transparent 58%);
-  opacity: 0.8;
-}
-.role-cartridge__icon {
-  display: flex;
-  flex: 0 0 3.65rem;
-  align-items: center;
-  justify-content: center;
-  border-right: 2px solid var(--foreground);
-  color: var(--role-ink);
-  background: var(--role-accent);
-  box-shadow: inset -3px 0 color-mix(in srgb, var(--foreground) 16%, transparent);
-}
-.role-cartridge__copy {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-  padding: 7px 30px 7px 10px;
-}
-.role-cartridge__meta {
-  display: block;
-  margin-bottom: 2px;
-  overflow: hidden;
-  color: var(--muted);
-  font-family: var(--font-retro), ui-monospace, monospace;
-  font-size: 9px;
-  letter-spacing: 0.17em;
-  line-height: 1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.role-cartridge__meta b {
-  color: var(--role-accent);
-  font-weight: 400;
-}
-.role-cartridge__role {
-  display: flex;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--foreground);
-  font-family: var(--font-nav), var(--font-pixel), ui-monospace, monospace;
-  font-size: clamp(0.9rem, 3vw, 1.12rem);
-  font-weight: 600;
-  letter-spacing: 0.035em;
-  line-height: 1.15;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.role-cartridge__role > span:not(.sr-only) {
-  min-width: 0;
-  flex-wrap: nowrap !important;
-}
-.role-cartridge__status {
-  position: absolute;
-  top: 9px;
-  right: 9px;
-  display: flex;
-  gap: 3px;
-}
-.role-cartridge__status i {
-  display: block;
-  width: 4px;
-  height: 4px;
-  background: var(--role-accent);
-  box-shadow: 0 6px 0 color-mix(in srgb, var(--role-accent) 45%, transparent);
-}
-.role-cartridge__status i:last-child {
-  opacity: 0.45;
-}
-.role-cartridge__grip {
-  position: absolute;
-  right: 8px;
-  bottom: 6px;
-  display: flex;
-  gap: 3px;
-  align-items: end;
-}
-.role-cartridge__grip i {
-  display: block;
-  width: 3px;
-  height: 7px;
-  background: color-mix(in srgb, var(--foreground) 30%, transparent);
-}
-.role-cartridge__grip i:nth-child(2) { height: 10px; }
-.role-cartridge__grip i:nth-child(3) { height: 5px; }
-@media (max-width: 420px) {
-  .role-cartridge { min-height: 3.55rem; }
-  .role-cartridge__icon { flex-basis: 3.2rem; }
-  .role-cartridge__role { font-size: 0.88rem; }
-  .role-cartridge__copy { padding-left: 8px; }
+  .animate-blink, .status-dot::after { animation: none; }
+  .btn, .lift { transition: none; }
 }

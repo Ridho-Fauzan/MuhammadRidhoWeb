@@ -40,7 +40,7 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
   // Kilau yang bergeser mengikuti kemiringan
   const glareX = useTransform(tiltY, [-30, 30], [0, 100]);
   const glareY = useTransform(tiltX, [-25, 25], [100, 0]);
-  const glare = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,244,214,0.45), transparent 55%)`;
+  const glare = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.4), transparent 55%)`;
 
   const [flipped, setFlipped] = useState(false);
   useEffect(() => {
@@ -100,12 +100,9 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
       >
         <motion.div className="flex flex-col items-center origin-top" style={{ rotate: swing }}>
           {/* Tali + penjepit */}
-          <div
-            aria-hidden
-            className="w-6 h-16 border-x-2 border-[#c2410c] bg-[#f4e6c8] bg-[repeating-linear-gradient(180deg,transparent_0_10px,#6d28d9_10px_14px)] dark:border-[#f9c74f] dark:bg-[#241548] dark:bg-[repeating-linear-gradient(180deg,transparent_0_10px,#f47b5c_10px_14px)]"
-          />
-          <div aria-hidden className="w-10 h-3 bg-[#b9a7e8] border-2 border-[#1a1030]" />
-          <div aria-hidden className="w-3 h-2 bg-[#b9a7e8] border-x-2 border-[#1a1030]" />
+          <div aria-hidden className="w-5 h-16 bg-[#4f46e5] bg-[repeating-linear-gradient(180deg,transparent_0_14px,rgba(255,255,255,0.25)_14px_16px)]" />
+          <div aria-hidden className="w-9 h-3 rounded-sm bg-gradient-to-b from-zinc-300 to-zinc-500" />
+          <div aria-hidden className="w-2.5 h-2 bg-zinc-400" />
 
           {/* Kartu */}
           <div className="[perspective:900px]">
@@ -126,10 +123,10 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
               }}
               whileTap={{ scale: 0.97 }}
               style={{ rotateX: tiltX, rotateY, transformStyle: "preserve-3d" }}
-              className="relative w-[180px] aspect-[839/1266] cursor-grab active:cursor-grabbing touch-none select-none outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="relative w-[180px] aspect-[839/1266] rounded-2xl cursor-grab active:cursor-grabbing touch-none select-none outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {/* Depan */}
-              <div className="absolute inset-0 overflow-hidden border-2 border-foreground bg-[#fff4d6] dark:bg-[#1a1030] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden]">
+              <div className="absolute inset-0 overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_24px_48px_-20px_rgb(var(--shadow-color)/0.45)] [backface-visibility:hidden]">
                 {front ? (
                   <Image src={front} alt={name} fill unoptimized draggable={false} className="object-cover" />
                 ) : (
@@ -138,12 +135,13 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
                 <motion.div aria-hidden className="pointer-events-none absolute inset-0 mix-blend-overlay" style={{ background: glare }} />
               </div>
               {/* Belakang */}
-              <div className="absolute inset-0 overflow-hidden border-2 border-[#1a1030] bg-[#1a1030] dark:bg-[#f4e6c8] shadow-[6px_6px_0_var(--shadow)] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+              <div className="absolute inset-0 overflow-hidden rounded-2xl border border-border bg-foreground shadow-[0_24px_48px_-20px_rgb(var(--shadow-color)/0.45)] [backface-visibility:hidden] [transform:rotateY(180deg)]">
                 {back ? (
                   <Image src={back} alt="" fill unoptimized draggable={false} className="object-cover" />
                 ) : (
-                  <span className="absolute inset-0 flex items-center justify-center font-display text-2xl text-[#f4e6c8] dark:text-[#1a1030]">
-                    ~/{shortName}_
+                  <span className="absolute inset-0 flex items-center justify-center text-5xl font-extrabold text-background">
+                    {shortName.charAt(0)}
+                    <span className="text-accent">.</span>
                   </span>
                 )}
               </div>
@@ -152,7 +150,7 @@ export default function MobileIdCard({ front, back, avatarUrl, name, shortName, 
         </motion.div>
       </motion.div>
 
-      <p className="mt-5 text-[11px] uppercase tracking-[0.2em] text-muted">{hint}</p>
+      <p className="mt-5 eyebrow">{hint}</p>
     </div>
   );
 }

@@ -5,14 +5,13 @@
  * Diklik -> kartu "membesar" jadi modal berisi deskripsi + link kode & demo.
  * Transisi membesar memakai shared layout Motion (layoutId) — https://motion.dev/docs/react-layout-animations
  */
-import { ArrowUpRight, Hourglass, Maximize2, Star, X } from "lucide-react";
+import { ArrowUpRight, Hourglass, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { projects, type Project } from "@/data/profile";
 import { useLang } from "@/i18n/useLang";
 import { pressButton, pressCard } from "./motion/press";
-import PixelCard from "./reactbits/PixelCard";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 import { getLenis } from "./SmoothScroll";
@@ -36,7 +35,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
+        <SectionTitle as="h1" eyebrow={t.projects.eyebrow} title={t.projects.title} subtitle={t.projects.subtitle} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((p, i) => (
@@ -90,27 +89,26 @@ function ProjectCard({
       <motion.div
         layoutId={`project-${index}`}
         transition={morph}
-        className="lift h-full border-2 border-border bg-surface shadow-[5px_5px_0_var(--shadow)]"
-        style={{ visibility: isOpen ? "hidden" : "visible" }}
+        className="card lift group relative h-full flex flex-col p-2.5 overflow-hidden"
+        style={{ visibility: isOpen ? "hidden" : "visible", borderRadius: 20 }}
       >
-        <PixelCard variant="retro" className="h-full flex flex-col">
-          <div className="relative aspect-[16/10] overflow-hidden border-b-2 border-border bg-gradient-to-br from-accent/20 via-surface to-accent-2/20">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[0.85rem] bg-surface-2">
             <ProjectImage project={p} index={index} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
             {p.featured && (
-              <span className="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 text-[11px] uppercase tracking-wider bg-background/85 text-accent border-2 border-accent/70">
-                <Star className="w-3 h-3 fill-current" /> {t.projects.featured}
+              <span className="absolute top-2.5 left-2.5 chip !bg-background/90 backdrop-blur">
+                <Star className="w-3 h-3 fill-current text-accent" /> {t.projects.featured}
               </span>
             )}
           </div>
 
-          <div className="relative flex-1 flex flex-col gap-3 p-4">
+          <div className="relative flex-1 flex flex-col gap-3 px-2.5 pt-4 pb-2.5">
             <div className="flex items-start justify-between gap-3">
-              <h3 className="text-lg leading-snug group-hover:text-accent transition-colors">{title}</h3>
-              <Maximize2 className="mt-1 w-4 h-4 shrink-0 text-muted group-hover:text-accent transition-colors" aria-hidden />
+              <h2 className="text-lg font-bold uppercase tracking-tight leading-snug">{title}</h2>
+              <span className="grid place-items-center shrink-0 w-8 h-8 rounded-full border border-border text-muted transition-[transform,color,border-color] duration-300 group-hover:rotate-45 group-hover:text-foreground group-hover:border-foreground" aria-hidden>
+                <ArrowUpRight className="w-4 h-4" />
+              </span>
             </div>
-            {p.tags.length > 0 && (
-              <p className="mt-auto text-[11px] uppercase tracking-[0.12em] text-muted">{p.tags.join(" · ")}</p>
-            )}
+            {p.tags.length > 0 && <p className="eyebrow mt-auto">{p.tags.join(" · ")}</p>}
           </div>
 
           {/* Seluruh kartu bisa diklik / difokus keyboard */}
@@ -122,7 +120,6 @@ function ProjectCard({
             aria-label={`${t.projects.open}: ${title}`}
             className="absolute inset-0 z-10 cursor-pointer focus-visible:outline-offset-[-4px]"
           />
-        </PixelCard>
       </motion.div>
     </motion.div>
   );
@@ -141,11 +138,7 @@ function ProjectImage({ project: p, index, sizes }: { project: Project; index: n
           className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-[var(--ease-out)]"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-muted">
-          <span className="text-accent">&lt;</span>
-          {tx(p.title)}
-          <span className="text-accent"> /&gt;</span>
-        </div>
+        <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-muted">{tx(p.title)}</div>
       )}
     </motion.div>
   );
@@ -154,13 +147,13 @@ function ProjectImage({ project: p, index, sizes }: { project: Project; index: n
 function ComingSoonCard({ project: p }: { project: Project }) {
   const { t, tx } = useLang();
   return (
-    <div aria-label={t.projects.comingSoon} className="h-full flex flex-col border-2 border-dashed border-muted bg-surface/40">
-      <div className="relative aspect-[16/10] flex items-center justify-center border-b-2 border-dashed border-muted bg-[repeating-linear-gradient(135deg,transparent_0,transparent_14px,color-mix(in_srgb,var(--border)_55%,transparent)_14px,color-mix(in_srgb,var(--border)_55%,transparent)_15px)]">
+    <div aria-label={t.projects.comingSoon} className="h-full flex flex-col p-2.5 rounded-[20px] border border-dashed border-border-strong">
+      <div className="relative aspect-[16/10] flex items-center justify-center rounded-[0.85rem] bg-surface-2 bg-[repeating-linear-gradient(135deg,transparent_0,transparent_14px,color-mix(in_srgb,var(--border)_70%,transparent)_14px,color-mix(in_srgb,var(--border)_70%,transparent)_15px)]">
         <Hourglass className="w-6 h-6 text-muted animate-pulse" aria-hidden />
       </div>
       <div className="flex-1 flex flex-col gap-2 p-4">
-        <span className="font-mono text-[11px] uppercase tracking-widest text-muted">{t.projects.comingSoon}</span>
-        <h3 className="text-lg text-muted">{tx(p.title)}</h3>
+        <span className="eyebrow">{t.projects.comingSoon}</span>
+        <h2 className="text-lg font-bold uppercase tracking-tight text-muted">{tx(p.title)}</h2>
       </div>
     </div>
   );
@@ -238,9 +231,10 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
         aria-modal="true"
         aria-labelledby={titleId}
         data-lenis-prevent
-        className="relative w-full max-w-2xl max-h-[88svh] overflow-y-auto overscroll-contain border-2 border-foreground bg-surface shadow-[8px_8px_0_var(--shadow)]"
+        className="relative w-full max-w-2xl max-h-[88svh] overflow-y-auto overscroll-contain border border-border bg-surface shadow-[0_40px_80px_-30px_rgb(var(--shadow-color)/0.6)]"
+        style={{ borderRadius: 24 }}
       >
-        <div className="relative aspect-video sm:aspect-[21/9] overflow-hidden border-b-2 border-border bg-gradient-to-br from-accent/20 via-surface to-accent-2/20">
+        <div className="relative aspect-video sm:aspect-[21/9] overflow-hidden bg-surface-2">
           <ProjectImage project={p} index={index} sizes="(min-width: 672px) 672px, 100vw" />
           <AnimatePresence>
             {shot > 0 && (
@@ -267,7 +261,7 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
                 onClick={() => setShot(i)}
                 aria-label={`${title} — ${i + 1}`}
                 aria-pressed={shot === i}
-                className={`relative shrink-0 w-24 aspect-video border-2 overflow-hidden transition-[border-color,opacity] ${shot === i ? "border-accent" : "border-border opacity-60 hover:opacity-100"}`}
+                className={`relative shrink-0 w-24 aspect-video rounded-lg border-2 overflow-hidden transition-[border-color,opacity] ${shot === i ? "border-foreground" : "border-transparent opacity-60 hover:opacity-100"}`}
               >
                 <Image src={src} alt="" fill sizes="96px" className="object-cover object-top" />
               </button>
@@ -282,7 +276,7 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
           onClick={onClose}
           aria-label={t.projects.close}
           title={t.projects.close}
-          className="retro-btn absolute top-3 right-3 z-10 p-2 bg-surface text-foreground hover:bg-accent hover:text-on-accent"
+          className="absolute top-3 right-3 z-10 grid place-items-center w-10 h-10 rounded-full bg-background/90 backdrop-blur text-foreground border border-border hover:border-foreground transition-colors"
         >
           <X className="w-4 h-4" />
         </motion.button>
@@ -295,17 +289,17 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
           className="p-6 sm:p-8"
         >
           {p.featured && (
-            <span className="inline-flex items-center gap-1 mb-3 px-2 py-0.5 text-[11px] uppercase tracking-wider text-accent border-2 border-accent/70">
-              <Star className="w-3 h-3 fill-current" /> {t.projects.featured}
+            <span className="chip mb-4">
+              <Star className="w-3 h-3 fill-current text-accent" /> {t.projects.featured}
             </span>
           )}
-          <h3 id={titleId} className="text-2xl sm:text-3xl text-accent">
+          <h3 id={titleId} className="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight">
             {title}
           </h3>
           {p.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {p.tags.map((tag) => (
-                <span key={tag} className="px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-on-accent">
+                <span key={tag} className="chip">
                   {tag}
                 </span>
               ))}
@@ -322,7 +316,7 @@ function ProjectModal({ project: p, index, onClose }: { project: Project; index:
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`retro-btn inline-flex items-center gap-2 px-5 py-3 uppercase tracking-[0.12em] text-sm ${link.primary ? "bg-accent text-on-accent" : "bg-surface text-foreground hover:bg-accent-2 hover:text-on-accent"}`}
+                  className={`btn ${link.primary ? "btn-primary" : ""}`}
                 >
                   {link.github ? <SocialIcon k="github" className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
                   {link.label}

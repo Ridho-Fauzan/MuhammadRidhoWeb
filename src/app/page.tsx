@@ -1,17 +1,20 @@
-import Explore from "@/components/Explore";
+import FeaturedProjects from "@/components/FeaturedProjects";
 import Hero from "@/components/Hero";
-import HeroSpark from "@/components/HeroSpark";
+import PageIndex from "@/components/PageIndex";
+import RoleBand from "@/components/RoleBand";
+import Services from "@/components/Services";
 import TechMarquee from "@/components/TechMarquee";
 import TerminalSection from "@/components/TerminalSection";
 
 export default function Home() {
   return (
     <>
-      <HeroSpark>
-        <Hero />
-      </HeroSpark>
+      <Hero />
       <TechMarquee />
-      <Explore />
+      <Services />
+      <RoleBand />
+      <FeaturedProjects />
+      <PageIndex />
       <TerminalSection />
     </>
   );

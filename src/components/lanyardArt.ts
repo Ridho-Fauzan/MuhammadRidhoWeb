@@ -1,31 +1,27 @@
 /**
  * Menggambar kartu ID & tali lanyard dari data profile.ts (di browser, via <canvas>).
  * Jadi kalau nama / role / foto / handle diganti, kartunya otomatis ikut berubah.
- * Warna mengikuti tema: malam = palet retro "dusk" ThreeUI (ungu, emas, koral, krem),
- * siang = palet kertas krem (tinta gelap, bata, ungu) seperti tema terang situs.
+ * Gaya: kartu ID modern yang bersih — monokrom + aksen indigo.
+ * Warna kartu berlawanan dengan tema supaya menonjol: situs gelap = kartu terang, situs terang = kartu gelap.
  */
 
 type CardData = { name: string; role: string; handle: string; avatarUrl: string; shortName: string; light?: boolean };
 
 const PALETTES = {
-  dark: {
-    bg: "#1a1030", frame: "#f4e6c8", header: "#241548", rule: "#4b2f7e", headerText: "#f9c74f",
-    photoBg: "#241548", photoFrame: "#f9c74f", photoShadow: "#050310",
-    name: "#f4e6c8", role: "#f47b5c", handle: "#b9a7e8", barcode: "#f9c74f",
-    backBg: "#f4e6c8", backDots: "#c9b48a", logoMain: "#1a1030", logoAccent: "#c2410c", backRole: "#4b2f7e",
-    strapBg: "#241548", strapEdge: "#f9c74f", strapText: "#f4e6c8", strapMark: "#f47b5c",
-    roleChip: "", roleChipText: "", smallBig: false,
+  // dipakai saat situs dalam mode gelap
+  lightCard: {
+    bg: "#f5f5f4", fg: "#0c0c0d", muted: "#6b6b72", rule: "#dcdbd8", photoBg: "#e7e6e3",
+    accent: "#4f46e5", badgeBg: "#0c0c0d", badgeFg: "#f5f5f4",
+    backBg: "#0c0c0d", backFg: "#f5f5f4", backMuted: "#8a8a92", backGrid: "rgba(255,255,255,0.06)",
   },
-  light: {
-    // header gelap + teks emas, role di label tinta: tetap kontras walau kena pencahayaan 3D
-    bg: "#f4e6c8", frame: "#1a1030", header: "#1a1030", rule: "#c2410c", headerText: "#f9c74f",
-    photoBg: "#ead6ad", photoFrame: "#c2410c", photoShadow: "#1a1030",
-    name: "#1a1030", role: "#fff4d6", handle: "#1a1030", barcode: "#1a1030",
-    backBg: "#1a1030", backDots: "#4b2f7e", logoMain: "#f4e6c8", logoAccent: "#f9c74f", backRole: "#f4e6c8",
-    strapBg: "#f4e6c8", strapEdge: "#c2410c", strapText: "#1a1030", strapMark: "#6d28d9",
-    roleChip: "#6d28d9", roleChipText: "#fff4d6", smallBig: true,
+  // dipakai saat situs dalam mode terang
+  darkCard: {
+    bg: "#0c0c0d", fg: "#f5f5f4", muted: "#9a9aa2", rule: "#2a2a2f", photoBg: "#1a1a1d",
+    accent: "#8b93ff", badgeBg: "#f5f5f4", badgeFg: "#0c0c0d",
+    backBg: "#f5f5f4", backFg: "#0c0c0d", backMuted: "#6b6b72", backGrid: "rgba(0,0,0,0.06)",
   },
 };
+const STRAP = { bg: "#4f46e5", fg: "#ffffff", dot: "#c7caff" };
 
 const W = 839;
 const H = 1266;
@@ -40,10 +36,10 @@ function loadImage(src: string) {
   });
 }
 
-/** Ambil nama font asli dari next/font (namanya di-hash) lewat elemen yang sudah memakainya */
-function fontOf(selector: string, fallback: string) {
-  const el = document.querySelector(selector);
-  return el ? getComputedStyle(el).fontFamily : fallback;
+/** Ambil nama font asli dari next/font (namanya di-hash) lewat CSS variable di <body> */
+function fontVar(name: string, fallback: string) {
+  const v = getComputedStyle(document.body).getPropertyValue(name).trim();
+  return v || fallback;
 }
 
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -74,10 +70,13 @@ function nameLines(ctx: CanvasRenderingContext2D, name: string, maxW: number) {
 
 export async function drawCardArt(data: CardData) {
   await document.fonts.ready;
-  const heading = fontOf("h1", "monospace");
-  const mono = fontOf(".font-mono", "monospace");
+  const sans = fontVar("--font-jakarta", "system-ui, sans-serif");
+  const mono = fontVar("--font-mono-face", "ui-monospace, monospace");
   const photo = await loadImage(data.avatarUrl);
-  const c = data.light ? PALETTES.light : PALETTES.dark;
+  const c = data.light ? PALETTES.darkCard : PALETTES.lightCard;
+  const year = new Date().getFullYear();
+  const initial = data.shortName.charAt(0).toUpperCase();
+  const P = 64; // padding tepi
 
   // ---------- Depan ----------
   const front = document.createElement("canvas");
@@ -86,27 +85,36 @@ export async function drawCardArt(data: CardData) {
   let ctx = front.getContext("2d")!;
   ctx.fillStyle = c.bg;
   ctx.fillRect(0, 0, W, H);
-  // bingkai krem + garis dalam ungu (gaya .atd-retro__bar)
-  ctx.fillStyle = c.frame;
-  ctx.fillRect(0, 0, W, 10); ctx.fillRect(0, H - 10, W, 10); ctx.fillRect(0, 0, 10, H); ctx.fillRect(W - 10, 0, 10, H);
-  ctx.fillStyle = c.header;
-  ctx.fillRect(10, 10, W - 20, 100);
-  ctx.fillStyle = c.rule;
-  ctx.fillRect(10, 110, W - 20, 4);
 
-  ctx.fillStyle = c.headerText;
-  ctx.font = c.smallBig ? `400 30px ${heading}` : `400 26px ${mono}`;
-  ctx.letterSpacing = c.smallBig ? "3px" : "5px";
+  // baris atas: monogram + label
+  ctx.fillStyle = c.badgeBg;
+  roundRect(ctx, P, 52, 76, 76, 20);
+  ctx.fill();
+  ctx.fillStyle = c.badgeFg;
+  ctx.font = `800 44px ${sans}`;
+  ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("PLAYER CARD", 64, 62);
+  ctx.fillText(initial, P + 38, 92);
+  ctx.textAlign = "left";
+  ctx.fillStyle = c.fg;
+  ctx.font = `800 30px ${sans}`;
+  ctx.letterSpacing = "1px";
+  ctx.fillText(data.shortName.toUpperCase(), P + 100, 80);
+  ctx.fillStyle = c.accent;
+  ctx.fillText(".", P + 100 + ctx.measureText(data.shortName.toUpperCase()).width + 2, 80);
+  ctx.fillStyle = c.muted;
+  ctx.font = `400 20px ${mono}`;
+  ctx.letterSpacing = "4px";
+  ctx.fillText("PORTFOLIO", P + 100, 110);
   ctx.textAlign = "right";
-  ctx.fillText("P1 · LV 01", W - 64, 62);
+  ctx.fillText(`ID · ${year}`, W - P, 92);
   ctx.textAlign = "left";
   ctx.letterSpacing = "0px";
 
-  const px = 64, py = 150, pw = W - 128, ph = 640;
+  // foto dengan sudut membulat
+  const px = P, py = 168, pw = W - P * 2, ph = 600;
   ctx.save();
-  roundRect(ctx, px, py, pw, ph, 0);
+  roundRect(ctx, px, py, pw, ph, 36);
   ctx.clip();
   ctx.fillStyle = c.photoBg;
   ctx.fillRect(px, py, pw, ph);
@@ -117,49 +125,38 @@ export async function drawCardArt(data: CardData) {
     ctx.drawImage(photo, px + (pw - dw) / 2, py + (ph - dh) * 0.3, dw, dh);
   }
   ctx.restore();
-  // bayangan keras + bingkai emas
-  ctx.fillStyle = c.photoShadow;
-  ctx.fillRect(px + 12, py + ph, pw, 12);
-  ctx.fillRect(px + pw, py + 12, 12, ph);
-  ctx.strokeStyle = c.photoFrame;
-  ctx.lineWidth = 8;
-  ctx.strokeRect(px, py, pw, ph);
 
-  ctx.fillStyle = c.name;
-  ctx.font = `400 64px ${heading}`;
+  // nama + peran
+  ctx.fillStyle = c.fg;
+  ctx.font = `800 66px ${sans}`;
+  ctx.letterSpacing = "-1.5px";
   ctx.textBaseline = "alphabetic";
   const lines = nameLines(ctx, data.name, pw);
-  lines.forEach((l, i) => ctx.fillText(l.toUpperCase(), 64, 900 + i * 76));
-  const roleY = 900 + lines.length * 76 + 14;
-  const roleText = `> ${data.role.toUpperCase()}`;
-  if (c.roleChip) {
-    // label tinta (seperti tag) supaya role terbaca jelas di kartu terang
-    ctx.font = `400 36px ${heading}`;
-    ctx.letterSpacing = "3px";
-    const tw = ctx.measureText(roleText).width;
-    ctx.fillStyle = c.roleChip;
-    ctx.fillRect(56, roleY - 40, tw + 24, 54);
-    ctx.fillStyle = c.roleChipText;
-    ctx.fillText(roleText, 68, roleY);
-  } else {
-    ctx.fillStyle = c.role;
-    ctx.font = `400 34px ${mono}`;
-    ctx.letterSpacing = "4px";
-    ctx.fillText(roleText, 64, roleY);
-  }
+  lines.forEach((l, i) => ctx.fillText(l, P, 870 + i * 74));
   ctx.letterSpacing = "0px";
+  const roleY = 870 + (lines.length - 1) * 74 + 70;
+  ctx.fillStyle = c.accent;
+  ctx.font = `600 34px ${sans}`;
+  ctx.fillText(data.role, P, roleY, pw);
 
-  ctx.fillStyle = c.handle;
-  ctx.font = c.smallBig ? `400 32px ${heading}` : `400 28px ${mono}`;
-  ctx.fillText(`@${data.handle}`, 64, H - 72);
-  // "barcode" dekoratif
-  ctx.fillStyle = c.barcode;
-  let x = W - 64;
-  [6, 3, 12, 6, 3, 6, 12, 3, 6, 6, 12, 3, 6, 3, 6, 6].forEach((bw) => {
-    x -= bw;
-    ctx.fillRect(x, H - 130, bw, 60);
-    x -= 6;
-  });
+  // baris bawah: garis + handle + status
+  ctx.fillStyle = c.rule;
+  ctx.fillRect(P, H - 150, pw, 2);
+  ctx.fillStyle = c.muted;
+  ctx.font = `400 28px ${mono}`;
+  ctx.fillText(`@${data.handle}`, P, H - 82);
+  ctx.textAlign = "right";
+  ctx.letterSpacing = "3px";
+  ctx.font = `400 22px ${mono}`;
+  const status = "AVAILABLE";
+  ctx.fillText(status, W - P, H - 84);
+  const sw = ctx.measureText(status).width;
+  ctx.fillStyle = "#22c55e";
+  ctx.beginPath();
+  ctx.arc(W - P - sw - 22, H - 92, 9, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.textAlign = "left";
+  ctx.letterSpacing = "0px";
 
   // ---------- Belakang ----------
   const back = document.createElement("canvas");
@@ -168,49 +165,51 @@ export async function drawCardArt(data: CardData) {
   ctx = back.getContext("2d")!;
   ctx.fillStyle = c.backBg;
   ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = c.backDots;
-  for (let yy = 18; yy < H; yy += 36) for (let xx = 18; xx < W; xx += 36) ctx.fillRect(xx - 1, yy - 1, 3, 3);
+  ctx.fillStyle = c.backGrid;
+  for (let x = 0; x < W; x += 60) ctx.fillRect(x, 0, 2, H);
+  for (let y = 0; y < H; y += 60) ctx.fillRect(0, y, W, 2);
+
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.font = `400 96px ${heading}`;
-  const logo = ["~/", data.shortName, "_"];
-  const widths = logo.map((p) => ctx.measureText(p).width);
-  let lx = W / 2 - widths.reduce((a, b) => a + b, 0) / 2;
-  ctx.textAlign = "left";
-  logo.forEach((p, i) => {
-    ctx.fillStyle = i === 1 ? c.logoMain : c.logoAccent;
-    ctx.fillText(p, lx, H / 2 - 30);
-    lx += widths[i];
-  });
-  ctx.textAlign = "center";
-  ctx.fillStyle = c.backRole;
-  ctx.font = c.smallBig ? `400 34px ${heading}` : `400 30px ${mono}`;
-  ctx.letterSpacing = "5px";
-  ctx.fillText(data.role.toUpperCase(), W / 2, H / 2 + 80);
+  ctx.font = `800 300px ${sans}`;
+  ctx.letterSpacing = "-10px";
+  const iw = ctx.measureText(initial).width;
+  ctx.fillStyle = c.backFg;
+  ctx.fillText(initial, W / 2 - 30, H / 2 - 60);
+  ctx.fillStyle = c.accent;
+  ctx.beginPath();
+  ctx.arc(W / 2 - 30 + iw / 2 + 36, H / 2 + 40, 28, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.letterSpacing = "6px";
+  ctx.fillStyle = c.backMuted;
+  ctx.font = `400 28px ${mono}`;
+  ctx.fillText(data.role.toUpperCase(), W / 2, H / 2 + 170, W - P * 2);
+  ctx.fillText(`@${data.handle.toUpperCase()}`, W / 2, H - 110);
+  ctx.letterSpacing = "0px";
 
   // ---------- Tali ----------
   const strap = document.createElement("canvas");
   strap.width = 1025;
   strap.height = 250;
   ctx = strap.getContext("2d")!;
-  ctx.fillStyle = c.strapBg;
+  ctx.fillStyle = STRAP.bg;
   ctx.fillRect(0, 0, 1025, 250);
-  ctx.fillStyle = c.strapEdge;
-  ctx.fillRect(0, 0, 1025, 14); ctx.fillRect(0, 236, 1025, 14);
-  ctx.font = `400 60px ${heading}`;
-  ctx.letterSpacing = "8px";
+  ctx.font = `700 64px ${sans}`;
+  ctx.letterSpacing = "6px";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
-  const items = [data.shortName.toUpperCase(), "■", data.role.toUpperCase(), "■"];
+  const items = [data.shortName.toUpperCase(), "•", data.role.split(/\s*&\s*/)[0].toUpperCase(), "•"];
   const slot = 1025 / items.length;
   items.forEach((it, i) => {
     const cx = slot * i + slot / 2;
-    if (it === "■") {
-      ctx.fillStyle = c.strapMark;
-      ctx.fillRect(cx - 14, 114, 28, 28);
+    if (it === "•") {
+      ctx.fillStyle = STRAP.dot;
+      ctx.beginPath();
+      ctx.arc(cx, 125, 12, 0, Math.PI * 2);
+      ctx.fill();
       return;
     }
-    ctx.fillStyle = c.strapText;
+    ctx.fillStyle = STRAP.fg;
     ctx.fillText(it, cx, 128, slot - 10);
   });
 

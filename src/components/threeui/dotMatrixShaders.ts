@@ -1,5 +1,5 @@
 // Source: ThreeUI Community — Dot Matrix (https://threeui.com) — MIT. See ./LICENSE
-// Diubah: warna titik cyan → palet retro (emas/koral) lewat uniform uColorA/uColorB.
+// Diubah: warna titik cyan → dua warna dari prop (uniform uColorA/uColorB), default netral → indigo.
 export const CORE_UPLINK_VERTEX_SHADER = `
 varying vec2 vUv;
 void main() {
@@ -16,6 +16,8 @@ uniform float uMouseAmount;
 uniform float uPulseSpeed;
 uniform float uRadius;
 uniform float uOpacity;
+uniform vec3 uColorA;
+uniform vec3 uColorB;
 varying vec2 vUv;
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
@@ -30,7 +32,7 @@ void main() {
   float alpha = smoothstep(radius, radius - 0.05, dist);
   vec2 center = vec2(0.5 * aspect, 0.5);
   float depthFade = smoothstep(1.2, 0.1, length(uv - center));
-  vec3 color = mix(vec3(0.957, 0.482, 0.361), vec3(0.976, 0.780, 0.310), pulse); // koral → emas
+  vec3 color = mix(uColorA, uColorB, pulse);
   gl_FragColor = vec4(color, alpha * depthFade * uOpacity);
 }
 `;

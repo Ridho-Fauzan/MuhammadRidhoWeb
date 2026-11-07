@@ -5,12 +5,11 @@
  *  mengubah kode komponen sama sekali.
  *
  *  DUA BAHASA:
- *  - Teks yang sama di kedua bahasa cukup ditulis biasa:  "Unity"
+ *  - Teks yang sama di kedua bahasa cukup ditulis biasa:  "React"
  *  - Teks yang beda per bahasa ditulis:  { id: "Sekarang", en: "Now" }
  *  Keduanya boleh dicampur di mana saja yang bertipe `L`.
  * ============================================================
  */
-import type { PageKey } from "@/data/pages";
 import type { L } from "@/i18n/types";
 
 /** Tahun mulai belajar (mulai kuliah Computer Science di BINUS) — dipakai untuk statistik "Tahun Belajar". */
@@ -33,12 +32,11 @@ export const profile: {
   heroBadges: string[];
   about: L[];
   stats: { value: number; suffix?: string; label: L }[];
-  quotes: { text: L; by?: string; from?: string }[];
-  quoteSeconds: number;
+  availability: L;
 } = {
   name: "Muhammad Ridho Fathi Fauzan",
   shortName: "Ridho",
-  role: "Frontend & Game Developer",
+  role: "Frontend Developer & UI/UX Designer",
   location: "Jakarta, Indonesia",
   email: "muhammadridhofathifauzan@gmail.com",
   /**
@@ -62,28 +60,28 @@ export const profile: {
   /** Peran yang berganti-ganti di hero: "Saya seorang ..." / "I'm a ..." */
   roles: [
     "Frontend Developer",
-    "Game Developer",
+    "UI/UX Designer",
     "Web Developer",
-    "Tech Enthusiast",
-    "Dedicated Gamer",
+    "Creative Technologist",
   ],
   tagline: {
-    id: "Membangun antarmuka web yang responsif dan game yang imersif, sambil terus belajar dan berkembang di dunia pengembangan perangkat lunak.",
-    en: "Building responsive web interfaces and immersive games while continuously learning and growing in software development.",
+    id: "Merancang dan membangun antarmuka web yang bersih, responsif, dan enak dipakai — dari wireframe di Figma sampai kode yang siap rilis.",
+    en: "Designing and building clean, responsive, and delightful web interfaces — from Figma wireframes to production-ready code.",
   },
-  heroBadges: ["React", "Next.js", "TypeScript", "Unity"],
+  heroBadges: ["React", "Next.js", "TypeScript", "Figma"],
+  availability: { id: "Terbuka untuk magang & freelance", en: "Open to internships & freelance" },
   about: [
     {
       id: "Halo, saya Ridho, mahasiswa Computer Science di BINUS University yang saat ini mengambil penjurusan Interactive Multimedia melalui program mobility.",
       en: "Hello, I'm Ridho, a Computer Science student at BINUS University currently specializing in Interactive Multimedia through the mobility program.",
     },
     {
-      id: "Saya fokus pada pengembangan frontend dengan React, Next.js, Vue, dan Tailwind CSS, serta tertarik pada game development dan pengalaman interaktif menggunakan Unity dan three.js. Saya menikmati mengubah ide menjadi produk yang rapi, responsif, dan menyenangkan untuk digunakan.",
-      en: "I focus on frontend development with React, Next.js, Vue, and Tailwind CSS, and I'm also passionate about game development and interactive experiences with Unity and three.js. I enjoy turning ideas into polished, responsive, and enjoyable products.",
+      id: "Saya fokus pada pengembangan frontend dengan React, Next.js, Vue, dan Tailwind CSS, serta desain UI/UX di Figma. Saya menikmati proses dari memahami kebutuhan pengguna, merancang alur dan tampilan, sampai mewujudkannya jadi produk web yang rapi, cepat, dan mudah diakses.",
+      en: "I focus on frontend development with React, Next.js, Vue, and Tailwind CSS, along with UI/UX design in Figma. I enjoy the whole process: understanding user needs, designing flows and interfaces, and shipping them as polished, fast, and accessible web products.",
     },
     {
-      id: "Saat ini, saya sedang mencari kesempatan magang, kerja remote, maupun freelance untuk mendapatkan pengalaman nyata, berkolaborasi dengan tim, dan terus berkembang sebagai frontend dan game developer.",
-      en: "I'm currently open to internships, remote roles, and freelance work to gain real-world experience, collaborate with teams, and keep growing as a frontend and game developer.",
+      id: "Saat ini, saya sedang mencari kesempatan magang, kerja remote, maupun freelance untuk mendapatkan pengalaman nyata, berkolaborasi dengan tim, dan terus berkembang sebagai frontend developer dan UI/UX designer.",
+      en: "I'm currently open to internships, remote roles, and freelance work to gain real-world experience, collaborate with teams, and keep growing as a frontend developer and UI/UX designer.",
     },
   ],
   /**
@@ -102,49 +100,51 @@ export const profile: {
       { value: tech.size, label: { id: "Teknologi Dipakai", en: "Technologies Used" } },
     ];
   },
-  /**
-   * Kutipan besar di footer — bergantian otomatis.
-   * Tiap kutipan: { text, by, from }. `text` boleh teks biasa atau dua bahasa ({ id: "...", en: "..." }).
-   * Tidak perlu menulis tanda kutip “ ” — sudah ditambahkan otomatis.
-   */
-  quotes: [
-    { text: "Arthur, don't forget the quarter!", by: "Hosea Matthews", from: "Red Dead Redemption 2" },
-    { text: "Tahiti. Tahiti. Tahiti.", by: "Dutch van der Linde", from: "Red Dead Redemption 2" },
-    { text: "I have a plan, Arthur. I have a plan.", by: "Dutch van der Linde", from: "Red Dead Redemption 2" },
-    { text: "You were almost a Jill sandwich!", by: "Barry Burton", from: "Resident Evil" },
-    { text: "It's time to kick ass and chew bubble gum… and I'm all out of gum.", by: "Duke Nukem", from: "Duke Nukem 3D" },
-    { text: "When life gives you lemons, don't make lemonade. Make life take the lemons back!", by: "Cave Johnson", from: "Portal 2" },
-    { text: "Boy.", by: "Kratos", from: "God of War" },
-    { text: "Hey, you. You're finally awake.", by: "Ralof", from: "Skyrim" },
-    { text: "The right man in the wrong place can make all the difference in the world.", by: "G-Man", from: "Half-Life 2" },
-    { text: "Wake the fuck up, Samurai.", by: "Johnny Silverhand", from: "Cyberpunk 2077" },
-    { text: "It's-a me, Mario!", by: "Mario", from: "Super Mario" },
-    { text: "Did I ever tell you the definition of insanity?", by: "Vaas Montenegro", from: "Far Cry 3" },
-    { text: "I am Ezio Auditore da Firenze.", by: "Ezio Auditore", from: "Assassin's Creed II" },
-    { text: "Where other men blindly follow the truth, remember… nothing is true.", by: "Ezio Auditore", from: "Assassin's Creed Revelations" },
-  ],
-  /** Lama tiap kutipan tampil sebelum berganti (detik) */
-  quoteSeconds: 4.5,
 };
 
 /**
- * Gambar kartu "Pick your card" di beranda.
- * - Sekarang: pixel art dari Kenney 1-Bit Pack (CC0), dibuat oleh scripts/kenney/build-card-art.py.
- * - Ganti dengan foto (mis. "/cards/about.jpg"): foto tampil hitam-putih, berwarna saat di-hover.
- * - Kosong ("") = kartu memakai ikon pixel besar.
+ * Layanan / hal yang saya kerjakan — tampil sebagai daftar yang bisa dibuka-tutup di beranda.
+ * `tools` = chip kecil di bawah deskripsi.
  */
-export const cardImages: Partial<Record<Exclude<PageKey, "home">, string>> = {
-  about: "/cards/about.pixel.png",
-  skills: "/cards/skills.pixel.png",
-  projects: "/cards/projects.pixel.png",
-  experience: "/cards/experience.pixel.png",
-  contact: "/cards/contact.pixel.png",
-};
+export const services: { title: L; description: L; tools: string[] }[] = [
+  {
+    title: "UI/UX Design",
+    description: {
+      id: "Riset kebutuhan pengguna, menyusun alur, wireframe, sampai desain high-fidelity dan prototipe interaktif yang siap diuji.",
+      en: "User research, flows, wireframes, all the way to high-fidelity designs and interactive prototypes ready for testing.",
+    },
+    tools: ["Figma", "Wireframing", "Prototyping"],
+  },
+  {
+    title: "Frontend Development",
+    description: {
+      id: "Mengubah desain jadi kode yang rapi dan mudah dirawat dengan komponen yang bisa dipakai ulang, performa cepat, dan aksesibilitas yang baik.",
+      en: "Turning designs into clean, maintainable code with reusable components, fast performance, and solid accessibility.",
+    },
+    tools: ["React", "Next.js", "Vue 3", "TypeScript"],
+  },
+  {
+    title: { id: "Website Responsif", en: "Responsive Websites" },
+    description: {
+      id: "Landing page dan web app yang tampil konsisten di HP, tablet, dan desktop, lengkap dengan animasi halus dan SEO dasar.",
+      en: "Landing pages and web apps that look consistent on phones, tablets, and desktops, with smooth motion and solid SEO basics.",
+    },
+    tools: ["Tailwind CSS", "Motion", "SEO"],
+  },
+  {
+    title: { id: "Pengalaman Interaktif", en: "Interactive Experiences" },
+    description: {
+      id: "Elemen 3D dan interaksi yang membuat produk terasa hidup, tanpa mengorbankan kecepatan halaman.",
+      en: "3D elements and interactions that make a product feel alive without sacrificing page speed.",
+    },
+    tools: ["three.js", "React Three Fiber", "AR"],
+  },
+];
 
 /**
  * Foto-foto diri (taruh di /public/profile).
- * - Semua foto tampil sebagai tumpukan polaroid di halaman About (bisa digeser / diklik).
- * - `contactPhoto` = indeks foto yang tampil sebagai kartu miring di halaman Contact.
+ * - Semua foto tampil sebagai tumpukan foto di halaman About (bisa digeser / diklik).
+ * - `contactPhoto` = indeks foto yang tampil di halaman Contact.
  * `focus` = posisi crop (CSS object-position), mis. "50% 20%" supaya wajah tidak terpotong.
  */
 export const photos: { src: string; alt: L; caption: L; focus?: string }[] = [
@@ -157,7 +157,7 @@ export const photos: { src: string; alt: L; caption: L; focus?: string }[] = [
   {
     src: "/profile/IMG_20240417_212952.jpg",
     alt: { id: "Ridho berpose dengan kacamata hitam dan beanie", en: "Ridho posing with sunglasses and a beanie" },
-    caption: { id: "mode bos terakhir", en: "final boss mode" },
+    caption: { id: "akhir pekan", en: "off duty" },
     focus: "50% 25%",
   },
   {
@@ -186,24 +186,20 @@ export const socials: { key: SocialKey; label: string; url: string }[] = [
 
 export const skills: { category: L; items: L[] }[] = [
   {
-    category: "Web Development",
+    category: "Frontend",
     items: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Vue 3", "Tailwind CSS"],
   },
   {
-    category: "Game-Dev",
-    items: ["Unity", "C#", "Gameplay Programming", "Game Mechanics", "2D / 3D Development", "Physics"],
+    category: "UI/UX Design",
+    items: ["Figma", "Wireframing", "Prototyping", "UI Design", "User Flow", "Design Systems"],
   },
   {
-    category: "Programming",
-    items: ["Object-Oriented Programming", "Game Systems", "AI / Enemy Behavior", "Input System", "Collision & Interaction", "Debugging"],
-  },
-  {
-    category: "Game Design",
-    items: ["Level Design", "Game Design", "Prototyping", "UI/UX", "Game Balancing"],
+    category: { id: "Web & Interaksi", en: "Web & Interaction" },
+    items: ["Responsive Design", { id: "Aksesibilitas", en: "Accessibility" }, "Motion / Animation", "three.js", "SEO"],
   },
   {
     category: "Tools",
-    items: ["Git", "GitHub", "Vite", "Visual Studio", "Figma"],
+    items: ["Git", "GitHub", "Vite", "VS Code", "Vercel"],
   },
 ];
 
@@ -211,7 +207,7 @@ export type ProjectResource = {
   /** Label tombol. Bisa teks sama untuk dua bahasa atau diterjemahkan dengan { id, en }. */
   label: L;
   url: string;
-  /** Tombol aksen emas; gunakan hanya untuk aksi utama. */
+  /** Tombol utama (warna penuh); gunakan hanya untuk aksi utama. */
   primary?: boolean;
 };
 

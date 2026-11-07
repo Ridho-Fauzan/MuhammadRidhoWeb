@@ -1,6 +1,6 @@
 "use client";
 
-import { Braces, Gamepad2, Globe, PencilRuler, Sparkles, Wrench, type LucideIcon } from "lucide-react";
+import { Code2, MousePointerClick, PenTool, Sparkles, Wrench, type LucideIcon } from "lucide-react";
 import { skills } from "@/data/profile";
 import { tr } from "@/i18n/types";
 import { useLang } from "@/i18n/useLang";
@@ -10,10 +10,9 @@ import SectionTitle from "./SectionTitle";
 
 // Icon dipilih berdasarkan nama kategori (versi EN) di profile.ts, jadi urutan kategori bebas diubah.
 const iconByCategory: Record<string, LucideIcon> = {
-  "Web Development": Globe,
-  "Game-Dev": Gamepad2,
-  Programming: Braces,
-  "Game Design": PencilRuler,
+  Frontend: Code2,
+  "UI/UX Design": PenTool,
+  "Web & Interaction": MousePointerClick,
   Tools: Wrench,
 };
 
@@ -21,31 +20,25 @@ export default function Skills() {
   const { t, tx } = useLang();
 
   return (
-    <section id="skills" className="relative py-20 px-6">
+    <section id="skills" className="relative py-16 px-6">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle title={t.skills.title} subtitle={t.skills.subtitle} />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <SectionTitle as="h1" eyebrow={t.skills.eyebrow} title={t.skills.title} subtitle={t.skills.subtitle} />
+        <div className="grid sm:grid-cols-2 gap-5">
           {skills.map((s, i) => {
             const Icon = iconByCategory[tr(s.category, "en")] ?? Sparkles;
             return (
               <Reveal key={i} delay={i * 0.08} className="h-full">
-                <SpotlightCard
-                  interactive
-                  className="lift group h-full p-6 bg-background"
-                  spotlightColor="rgba(249, 199, 79, 0.14)"
-                >
-                  <div className="relative flex items-center gap-3 mb-5">
-                    <div className="p-2.5 bg-accent text-on-accent border-2 border-foreground group-hover:-translate-y-0.5 transition-transform duration-300 ease-[var(--ease-out)]">
+                <SpotlightCard interactive className="card lift group h-full p-7 sm:p-8" spotlightColor="rgba(129, 140, 248, 0.14)">
+                  <div className="relative flex items-start justify-between gap-4 mb-8">
+                    <div className="grid place-items-center w-12 h-12 rounded-2xl bg-surface-2 border border-border text-foreground transition-colors duration-300 group-hover:bg-accent group-hover:text-on-accent group-hover:border-accent">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-lg">{tx(s.category)}</h3>
+                    <span className="font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <div className="relative flex flex-wrap gap-2">
+                  <h2 className="relative text-2xl font-bold uppercase tracking-tight">{tx(s.category)}</h2>
+                  <div className="relative mt-5 flex flex-wrap gap-2">
                     {s.items.map((it, j) => (
-                      <span
-                        key={j}
-                        className="px-2.5 py-1 text-xs bg-surface border-2 border-border text-foreground/85 hover:bg-accent hover:text-on-accent hover:border-foreground transition-colors duration-150"
-                      >
+                      <span key={j} className="chip">
                         {tx(it)}
                       </span>
                     ))}
